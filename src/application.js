@@ -1,4 +1,4 @@
-var app = require('stylesheets/application.css');
+var app = require('./stylesheets/application.css');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
