@@ -1,4 +1,4 @@
-//document.write(require('./components/Application.js'));
+var app = require('stylesheets/application.css');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
