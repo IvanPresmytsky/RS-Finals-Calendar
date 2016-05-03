@@ -1,0 +1,27 @@
+.login-popup {
+  position: absolute;
+  top: 10px;
+  right: 100px;
+  width: 260px;
+  background: blue;
+  display: none;
+}
+
+.login-form {
+  text-align: center;
+}
+
+.login-form p{
+  margin: 0;
+  padding: 0;
+}
+
+.login-form input{
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.login-form__submit {
+  display: block;
+  margin: 0 auto;
+}

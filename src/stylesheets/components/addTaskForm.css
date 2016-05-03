@@ -1,0 +1,26 @@
+.add-task-popup {
+  position: absolute;
+  top: 90px;
+  left: 216px;
+  width: 260px;
+  background: blue;
+}
+
+.add-task-form {
+  text-align: center;
+}
+
+.add-task-form p{
+  margin: 0;
+  padding: 0;
+}
+
+.add-task-form input{
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.add-task-form__submit {
+  display: block;
+  margin: 0 auto;
+}

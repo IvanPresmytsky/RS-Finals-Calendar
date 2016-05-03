@@ -1,0 +1,19 @@
+.month {
+  float: right;
+  color: red;
+  background: yellow;
+  border-collapse: collapse;
+}
+
+.month div {
+  width: 166px;
+  height: 100px;
+}
+
+.month td {
+  border: 1px solid black;
+}
+
+.month td:nth-child(n+6) {
+  background: pink;
+}

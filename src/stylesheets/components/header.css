@@ -1,0 +1,26 @@
+.main-header {
+  background: green;
+}
+
+.main-title {
+  float: left;
+  margin: 0;
+  padding: 0;
+  color: gold;
+}
+
+.main-nav {
+  float: right;
+}
+
+.main-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.main-header:after {
+  content: '';
+  display: table;
+  clear: both;
+}

@@ -1,0 +1,10 @@
+.main-toolbar {
+	float: left;
+  width: 200px;
+  background: yellow;
+  border: 2px solid red;
+}
+
+.tools-list {
+  list-style: none;
+}
