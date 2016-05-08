@@ -4,6 +4,7 @@
   left: 216px;
   width: 260px;
   background: blue;
+  display: none;
 }
 
 .add-task-form {

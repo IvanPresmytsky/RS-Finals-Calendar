@@ -4,7 +4,7 @@ var ReactDOM = require('react-dom');
 
 var AddTaskForm = React.createClass({
   componentDidMount: function () {
-    ReactDOM.findDOMNode(this.refs.user).focus();
+    ReactDOM.findDOMNode(this.refs.taskName).focus();
   },
 
   render: function () {
@@ -27,13 +27,26 @@ var AddTaskForm = React.createClass({
           defaultValue=""
           ref="taskDescription"
           />
-          <p>task time</p>
+          <p>task date</p>
+          <input
+          type="date"
+          className="add-task-form__task-date"
+          defaultValue=""
+          ref="taskDate"
+          />
+          <p>from</p>
           <input
           type="time"
-          className="add-task-form__task-date"
-          placeholder="enter task time"
+          className="add-task-form__task-start-time"
           defaultValue=""
-          ref="taskTime"
+          ref="taskStartTime"
+          />
+          <p>to</p>
+          <input
+          type="time"
+          className="add-task-form__task-end-time"
+          defaultValue=""
+          ref="taskEndTime"
           />
           <input
           type="submit"

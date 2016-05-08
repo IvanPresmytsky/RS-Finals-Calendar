@@ -1,0 +1,13 @@
+.month-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  background: yellow;
+}
+
+.month-header__day-name {
+  border: 1px solid red;
+  flex-basis: 50px;
+  flex-grow: 1;
+}

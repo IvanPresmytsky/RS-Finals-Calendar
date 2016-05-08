@@ -17,3 +17,7 @@
 .month td:nth-child(n+6) {
   background: pink;
 }
+
+.current-day {
+  border: 5px solid red;
+}

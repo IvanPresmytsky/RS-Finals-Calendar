@@ -1,0 +1,25 @@
+.month-view__week {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: stretch;
+  flex-grow: 1;
+}
+
+.month-view__day {
+  border: 1px solid red;
+  flex-basis: 50px;
+  flex-grow: 1;
+}
+
+.holiday-day {
+  background: pink;
+}
+
+.current-day {
+  background: green;
+}
+
+.no-current-month-day {
+  background: grey;
+}

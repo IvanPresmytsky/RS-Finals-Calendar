@@ -1,0 +1,7 @@
+.month-view {
+  display: flex;
+  background: yellow;
+  flex-direction: column;
+  justify-content: center;
+}
+

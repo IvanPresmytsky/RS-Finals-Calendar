@@ -7,7 +7,7 @@ var ToolBar = React.createClass({
       <section className="main-toolbar">
         <ul className="tools-list">
           <li>
-            <a href="#" className="add-task-btn">Add new task</a>
+            <a href="#" className="add-task-btn">Add new event</a>
           </li>
           <li>
             <a href="#" className="open-task-list-btn">Open tasks list</a>

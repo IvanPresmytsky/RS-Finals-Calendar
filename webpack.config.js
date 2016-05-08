@@ -1,29 +1,42 @@
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var webpack = require('webpack');
+var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+
 module.exports = {
-    entry: "./src/application.js",
+    entry: [
+      "webpack-dev-server/client?http://localhost:8080",
+      "webpack/hot/only-dev-server",
+      "./src/application.js"
+      ],
 
     output: {
-        path: "./dist/",
+        path: path.join(__dirname, "dist"),
         filename: "bundle.js"
     },
 
     module: {
       loaders: [
-        { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
+        { test: /\.js$/, exclude: /node_modules/, loaders: ["react-hot", "babel-loader"] },
         { test: /\.jpg$/, loader: "file-loader" },
         { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') }
       ]
     },
 
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin('bundle.css'),
         new HtmlWebpackPlugin({
           title: 'Calendar',
           template: './src/index-template.html',
           inject: 'body'
           })
-        ]
+        ],
+
+    devServer: {
+      hot: true,
+      contentBase: "./"
+    }
 };
  
