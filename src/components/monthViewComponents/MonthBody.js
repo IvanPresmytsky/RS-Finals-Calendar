@@ -1,48 +1,36 @@
-require('../../stylesheets/components/monthViewComponents/MonthBody.css');
+require('../../stylesheets/components/monthViewComponents/monthBody.css');
 var React = require('react');
-var days = require('../../utils/Date.js');
+var date = require('../../utils/Date.js');
+var Day = require('./Day.js');
+var Week = require('./Week.js');
 
 var MonthBody = React.createClass({
   render: function() {
     var index = this.props.currentMonthIndex;
-    var dayNumsArr = days.dayNums(index);
-    var currentMonth = days.currentMonth(dayNumsArr);
+    var dayNumsArr = date.dayNums(index);
+    var currentMonth = dayNumsArr[Math.round(dayNumsArr.length/2)].getMonth();
+    dayNumsArr = date.splitDaysToWeeks(dayNumsArr);
 
-    function createDayTemplate(day, index) {
+    function createDayTemplate(day) {
       var id = day.toLocaleString().slice(0,10);
-      var date = days.curentDateFormated();
-      var dayClass = 'month-view__day';
-
-      if(day.getDay() === 0 || day.getDay() === 6) {
-        dayClass += ' holiday-day'
-      }
-      if(date === id) {
-        dayClass += ' current-day'
-      }
-      if(day.getMonth() !== currentMonth) {
-        dayClass += ' no-current-month-day'
-      }
+      var currentDate = date.curentDateFormated();
 
       return (
-        <div key={id} className={dayClass}>
-          <span>{day.getDate()}</span>
-        </div>
+        <Day key={id} id={id} day={day} currentDate={currentDate} currentMonth={currentMonth} />
       );
     }
 
-    function createMonthDodyTemplate(week, index) {
-      var dayTemplate = week.map(createDayTemplate);
+    function createMonthBodyTemplate(week, index) {
+      var daysTemplate = week.map(createDayTemplate);
       return (
-        <div key={index} className="month-view__week">
-          {dayTemplate}
-        </div>
+        <Week key={index} daysTemplate={daysTemplate} />
       );
     }
 
-    var MonthBodyTemplate = dayNumsArr.map(createMonthDodyTemplate);
+    var MonthBodyTemplate = dayNumsArr.map(createMonthBodyTemplate);
 
     return (
-      <div className="month-view">
+      <div className="month-body">
         {MonthBodyTemplate}
       </div>
     );

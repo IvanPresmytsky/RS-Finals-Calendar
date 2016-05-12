@@ -1,8 +1,10 @@
 var Redux = require('redux');
-var rootReducer = require('../reducers/reducer.js');
+var rootReducer = require('../reducers/rootReducer.js');
+//var rootReducer = require('../reducers/monthBodyReducer.js');
+//var rootReducer = require('../reducers/addEventReducer.js');
 
-function configureStore (initialState) {
-  var store = Redux.createStore(rootReducer, initialState);
+function configureStore () {
+  var store = Redux.createStore(rootReducer);
   return store;
 }
 

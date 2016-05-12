@@ -9,7 +9,10 @@ var configureStore = require('./store/configureStore.js');
 var Provider = ReactRedux.Provider;
 
 var store = configureStore();
+console.log('---');
 console.log(store.getState());
+console.log(store);
+console.log('---');
 ReactDOM.render (
   <Provider store={store}>
     <App />

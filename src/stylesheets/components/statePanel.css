@@ -5,6 +5,16 @@
 }
 
 .btn {
+  box-sizing: border-box;
+  padding: 5px;
+  font-size: 13px;
+  text-decoration: none;
+  color: #000;
+  background: #EFEFEF;
+  border: 2px outset #EFEFEF;
+}
+
+.btn {
   margin-right: 10px;
 }
 .prev-btn {

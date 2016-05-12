@@ -1,7 +1,8 @@
-.month-body {
+.month-view__week {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-content: stretch;
-  flex-basis: 640px;
+  flex-grow: 1;
 }
+

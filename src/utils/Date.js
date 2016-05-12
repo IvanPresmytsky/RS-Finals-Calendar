@@ -13,26 +13,8 @@ function totalDaysNums(monthIncreaser) {
   var createDayNumsArray = createDayNumsArrayFunction(date);
   var dayNums = Array.from({length: totalDaysCount}, createDayNumsArray);
 
-  return splitToWeeks(dayNums);
+  return dayNums;
 };
-
-function getCurrentMonth(arr) {
-  arr = flatten(arr);
-  var currentMonth = arr.reduce(function (total, next) {
-    return (total + next.getMonth())/2;
-  }, arr[0].getMonth());
-
-  return Math.round(currentMonth)-1;
-}
-
-function getCurrentYear(arr) {
-  arr = flatten(arr);
-  var currentYear = arr.reduce(function (total, next) {
-    return (total + next.getFullYear())/2;
-  }, arr[0].getFullYear());
-
-  return Math.round(currentYear);
-}
 
 
 function createDayNumsArrayFunction(date) {
@@ -62,7 +44,7 @@ function getCurrentFormatedDate () {
   return date.toLocaleString().slice(0,10);
 }
 
-function getActualDate(year, month) {
+function getActualDate(arr) {
   var options1 = {
     year: 'numeric',
     month: 'long',
@@ -78,6 +60,11 @@ function getActualDate(year, month) {
   var currentDate = new Date();
   if (arguments.length === 0) return currentDate.toLocaleString('ru', options1);
 
+  //arr = flatten(arr);
+  var middleIndex = Math.round(arr.length/2);
+  var month = arr[middleIndex].getMonth();
+  var year = arr[middleIndex].getFullYear();
+
   var date = new Date(year, month);
   var isMonthEqual = currentDate.getMonth() === date.getMonth();
   var isYearEqual = currentDate.getFullYear() === date.getFullYear();
@@ -89,8 +76,7 @@ function getActualDate(year, month) {
 
 module.exports = {
   dayNums: totalDaysNums,
-  currentMonth: getCurrentMonth,
-  currentYear: getCurrentYear,
+  splitDaysToWeeks: splitToWeeks,
   actualDate: getActualDate,
   curentDateFormated: getCurrentFormatedDate
 }

@@ -3,7 +3,7 @@
   top: 90px;
   left: 216px;
   width: 260px;
-  background: blue;
+  background: #F2F0EA;
   display: none;
 }
 
@@ -24,4 +24,20 @@
 .add-task-form__submit {
   display: block;
   margin: 0 auto;
+}
+
+.add-task-form__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+}
+
+.add-task-form__close a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.form-visible {
+  display: block;
 }

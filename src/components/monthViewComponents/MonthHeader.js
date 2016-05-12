@@ -1,4 +1,4 @@
-require('../../stylesheets/components/monthViewComponents/MonthHeader.css');
+require('../../stylesheets/components/monthViewComponents/monthHeader.css');
 var React = require('react');
 var days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
