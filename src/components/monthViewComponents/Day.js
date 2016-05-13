@@ -2,8 +2,8 @@ require('../../stylesheets/components/monthViewComponents/monthDay.css');
 var React = require('react');
 
 var Day = React.createClass({
-  render: function() {
 
+  render: function() {
     var day = this.props.day;
     var id = this.props.id;
     var currentDate = this.props.currentDate;
@@ -32,7 +32,8 @@ Day.propTypes = {
   day: React.PropTypes.object.isRequired,
   id: React.PropTypes.string.isRequired,
   currentDate: React.PropTypes.string.isRequired,
-  currentMonth: React.PropTypes.number.isRequired
+  currentMonth: React.PropTypes.number.isRequired,
+  addEvent: React.PropTypes.func.isRequired
 }
 
 module.exports = Day;

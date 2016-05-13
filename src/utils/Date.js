@@ -1,5 +1,3 @@
-var flatten = require('array-flatten');
-
 function totalDaysNums(monthIncreaser) {
   var date = new Date();
   var year = date.getFullYear();
@@ -15,7 +13,6 @@ function totalDaysNums(monthIncreaser) {
 
   return dayNums;
 };
-
 
 function createDayNumsArrayFunction(date) {
   var year = date.getFullYear();
@@ -60,7 +57,6 @@ function getActualDate(arr) {
   var currentDate = new Date();
   if (arguments.length === 0) return currentDate.toLocaleString('ru', options1);
 
-  //arr = flatten(arr);
   var middleIndex = Math.round(arr.length/2);
   var month = arr[middleIndex].getMonth();
   var year = arr[middleIndex].getFullYear();

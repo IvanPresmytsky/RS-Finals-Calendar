@@ -1,0 +1,43 @@
+.login-popup {
+  position: absolute;
+  top: 10px;
+  right: 100px;
+  width: 260px;
+  background: #F5F3ED;
+  display: none;
+}
+
+.login-form {
+  text-align: center;
+}
+
+.login-form p{
+  margin: 0;
+  padding: 0;
+}
+
+.login-form input{
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.login-form__submit {
+  display: block;
+  margin: 0 auto;
+}
+
+.login-popup__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+}
+
+.login-popup__close a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.popup-visible {
+  display: block;
+}

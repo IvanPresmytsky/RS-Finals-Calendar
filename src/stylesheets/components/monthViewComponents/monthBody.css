@@ -1,7 +1,14 @@
 .month-body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-content: stretch;
-  flex-basis: 640px;
+  justify-content: flex-start;
+  align-items: stretch;
+  lex-basis: 96%;
+  flex-grow: 96;
+
+  lex-basis: 640px;
+
+  border-bottom: 1px solid #000;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
 }

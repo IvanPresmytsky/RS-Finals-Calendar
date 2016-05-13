@@ -1,7 +1,8 @@
-function addEvent (visibility) {
+function addEvent (visibility, position) {
   return {
     type: 'ADD_EVENT',
-    payLoad: visibility
+    payLoad: visibility,
+    position: position
   };
 }
 

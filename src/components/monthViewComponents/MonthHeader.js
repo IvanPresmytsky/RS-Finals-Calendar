@@ -6,9 +6,11 @@ var days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 var MonthHeader = React.createClass({
   render: function() {
 
-    function createMonthHeaderTemplate(day) {
+    function createMonthHeaderTemplate(day, index) {
+      var dayClass = "month-header__day-name";
+      if (index > 4) dayClass += " day-name-holiday";
       return (
-        <div key={day} className="month-header__day-name">
+        <div key={day} className={dayClass}>
           <span>{day}</span>
         </div>
       );

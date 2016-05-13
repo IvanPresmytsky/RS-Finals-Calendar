@@ -1,17 +1,22 @@
 .month-view__day {
-  border: 1px solid red;
   flex-basis: 50px;
   flex-grow: 1;
-}
 
-.holiday-day {
-  background: pink;
-}
-
-.current-day {
-  background: green;
+  border: 1px solid #000;
+  cursor: pointer;
 }
 
 .no-current-month-day {
-  background: grey;
+  color: grey;
+  background: #E9E9E9;
+}
+
+.holiday-day {
+  color: red;
+}
+.current-day {
+  color: green;
+  font-weight: bold;
+
+  background: #D3EEE0;
 }

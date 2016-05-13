@@ -1,26 +1,36 @@
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
-  color: red;
-  font-size: 20px;
+  height: 100%;
 }
 
 .root {
-  margin: 0;
-  padding: 0;
   color: black;
   font-size: 20px;
+  height: 100%;
 }
 
 .container {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
   padding: 0;
   margin: 0 auto;
-  background: grey;
+  height: 100%;
 }
 
-.container:after {
-  content: '';
-  display: table;
-  clear: both;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-grow: 1;
+  flex-basis: 70px;
 }
+

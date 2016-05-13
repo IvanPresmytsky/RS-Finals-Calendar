@@ -27,14 +27,20 @@ var StatePanel = React.createClass({
   render: function () {
     return (
       <section className="state-panel">
-        <a href="#"  onClick={this.onBtnAddEventClick} className="btn add-task-btn">Add new event</a>
-        <button onClick={this.onBtnChangeMonthClick} className="btn today-btn">Today</button>
-        <button onClick={this.onBtnChangeMonthClick} className="btn prev-btn"> previous </button>
-        <button onClick={this.onBtnChangeMonthClick} className="btn next-btn"> next </button>
+        <a href="#" onClick={this.onBtnAddEventClick} className="btn add-task-btn">Add new event</a>
+        <a href="#" onClick={this.onBtnChangeMonthClick} className="btn prev-btn"> prev </a>
+        <a href="#" onClick={this.onBtnChangeMonthClick} className="btn today-btn">Today</a>
+        <a href="#" onClick={this.onBtnChangeMonthClick} className="btn next-btn"> next </a>
         <span className="current-date">{visibleDate}</span>
       </section>
     );
   }
 });
+
+StatePanel.propTypes = {
+  changeMonth: React.PropTypes.func.isRequired,
+  addEvent: React.PropTypes.func.isRequired
+}
+
 
 module.exports = StatePanel;

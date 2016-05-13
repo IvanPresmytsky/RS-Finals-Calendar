@@ -1,7 +1,12 @@
 .month-view {
   display: flex;
-  background: yellow;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-basis: 220px;
+  flex-grow: 9;
+
+  background: #FBF7F0;
 }
 

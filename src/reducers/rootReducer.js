@@ -1,6 +1,13 @@
 var Redux = require('redux');
-var monthBodyReducer = require('./monthBodyReducer.js');
-var addEventReducer = require('./addEventReducer.js');
+var monthBody = require('./monthBody.js');
+var addEvent = require('./addEvent.js');
+var logIn = require('./logIn.js');
+var register = require('./register.js');
 
-module.exports = Redux.combineReducers({monthBodyReducer, addEventReducer});
+module.exports = Redux.combineReducers({
+  monthBody, 
+  addEvent,
+  logIn,
+  register
+});
 

@@ -1,26 +1,22 @@
 .main-header {
-  background: green;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 0 10px 0 10px;
+  background: #93B8D3;
+  flex-grow: 6;
+  flex-basis: 40px;
 }
 
 .main-title {
-  float: left;
   margin: 0;
   padding: 0;
-  color: gold;
-}
-
-.main-nav {
-  float: right;
+  color: #fff;
 }
 
 .main-nav ul {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.main-header:after {
-  content: '';
-  display: table;
-  clear: both;
 }

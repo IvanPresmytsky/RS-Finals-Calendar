@@ -1,0 +1,41 @@
+.add-task-popup {
+  osition: absolute;
+  box-sizing: border-box;
+  background: #F5F3ED;
+  display: none;
+}
+
+.add-task-form {
+  text-align: center;
+}
+
+.add-task-form p{
+  margin: 0;
+  padding: 0;
+}
+
+.add-task-form input{
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.add-task-form__submit {
+  display: block;
+  margin: 0 auto;
+}
+
+.add-task-popup__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+}
+
+.add-task-popup__close a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.popup-visible {
+  display: block;
+}
