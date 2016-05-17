@@ -15,10 +15,10 @@ var Day = React.createClass({
 
     function createEventsTemplate (event, index) {
       var eventKey = date.originalKey();
-      var title = event.title;
-      var time = event.startTime;
+      //var title = event.title;
+      //var time = event.startTime;
       return (
-        <Event key={eventKey + index} title={title} time={time} />
+        <Event key={eventKey + index} event={event} />
       );
     }
 

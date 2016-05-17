@@ -15,13 +15,20 @@ var AddEvent = React.createClass({
 
   onSubmit: function (e) {
     e.preventDefault();
+    var title = this.refs.eventName.value.trim();
+    var text = this.refs.eventDescription.value.trim();
+    var date = this.refs.eventDate.value || this.props.defaultDate;
+    var startTime = this.refs.eventStartTime.value;
+    var endTime = this.refs.eventEndTime.value;
     var event = {
-      title: this.refs.eventName.value.trim(),
-      text: this.refs.eventDescription.value.trim(),
-      date: this.refs.eventDate.value || this.props.defaultDate,
-      startTime: this.refs.eventStartTime.value,
-      endTime: this.refs.eventEndTime.value
+      id: title + date + startTime,
+      title: title,
+      text: text,
+      date: date,
+      startTime: startTime,
+      endTime: endTime,
     };
+    console.log(event);
 
     this.props.createEvent(event);
     this.props.addEvent(false);

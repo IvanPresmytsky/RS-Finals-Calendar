@@ -41,7 +41,7 @@ var App = React.createClass({
            <Header logIn={logIn} register={register} />
            <StatePanel changeMonth={setMonth} addEvent={addEvent} currentMonthIndex={currentMonthIndex} currentDate={currentDate}/>
          </div>
-         <MonthView addEvent={addEvent} changeMonth={setMonth} currentMonthIndex={currentMonthIndex} events={events}/>
+         <MonthView addEvent={addEvent} changeEvent={createEvent} changeMonth={setMonth} currentMonthIndex={currentMonthIndex} events={events}/>
          <LogIn logIn={logIn} visibility={logInVisibility} />
          <Register register={register} visibility={registerVisibility} />
          <AddEvent visibility={addEventVisibility} position={addEventPosition} defaultDate={addEventDefaultDate} addEvent={addEvent} createEvent={createEvent}/>

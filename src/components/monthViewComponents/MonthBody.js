@@ -9,7 +9,6 @@ var MonthBody = React.createClass({
 
   onEventMouseDown: function(e) {
      if (!e.target.classList.contains('event-body')) return;
-
      var eventBlock = e.target;
      console.log(e.pageX);
      console.log(e.pageY);
@@ -37,12 +36,24 @@ var MonthBody = React.createClass({
     if (!e.target.classList.contains('event-body')) return;
 
     e.target.style.display = 'none';
-    var el = document.elementFromPoint(e.pageX, e.pageY);
-    if (el.classList.contains('month-view__day')) {
-      el.appendChild(e.target);
+    var day = document.elementFromPoint(e.pageX, e.pageY);
+    if (day.classList.contains('month-view__day')) {
+      day.appendChild(e.target);
     }
+    
     e.target.style.display = '';
+    console.log(day.id);
+    var arr = this.props.events;
+    var draggedEvent = arr.find(function(event) {
+      //var id = event.title + event.date + event.startTime;
+    return event.id === e.target.id;
+    });
+    var changedProps = day.id;
+    console.log(draggedEvent);
+    this.props.changeEvent(draggedEvent, changedProps);
+
     e.target.style.position = 'static';
+
     return false;
   },
 
@@ -115,6 +126,7 @@ MonthBody.propTypes = {
   currentMonthIndex: React.PropTypes.number.isRequired,
   events: React.PropTypes.array.isRequired,
   addEvent: React.PropTypes.func.isRequired,
+  changeEvent: React.PropTypes.func.isRequired,
   changeMonth: React.PropTypes.func.isRequired
 }
 
