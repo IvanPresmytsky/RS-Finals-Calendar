@@ -8,10 +8,12 @@ var MonthView = React.createClass({
   render: function() {
     var currentMonthIndex = this.props.currentMonthIndex;
     var addEvent = this.props.addEvent;
+    var changeMonth = this.props.changeMonth;
+    var events = this.props.events;
     return (
       <div className="month-view">
         <MonthHeader />
-        <MonthBody addEvent={addEvent} currentMonthIndex={currentMonthIndex}/>
+        <MonthBody addEvent={addEvent} changeMonth={changeMonth} currentMonthIndex={currentMonthIndex} events={events} />
       </div>
     );
   }
@@ -19,7 +21,9 @@ var MonthView = React.createClass({
 
 MonthView.propTypes = {
   currentMonthIndex: React.PropTypes.number.isRequired,
-  addEvent: React.PropTypes.func.isRequired
+  events: React.PropTypes.array.isRequired,
+  addEvent: React.PropTypes.func.isRequired,
+  changeMonth: React.PropTypes.func.isRequired
 }
 
 module.exports = MonthView;

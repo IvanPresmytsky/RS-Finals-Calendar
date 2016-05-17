@@ -41,7 +41,7 @@ function getCurrentFormatedDate () {
   return date.toLocaleString().slice(0,10);
 }
 
-function getActualDate(arr) {
+function getActualDate(index) {
   var options1 = {
     year: 'numeric',
     month: 'long',
@@ -57,9 +57,10 @@ function getActualDate(arr) {
   var currentDate = new Date();
   if (arguments.length === 0) return currentDate.toLocaleString('ru', options1);
 
-  var middleIndex = Math.round(arr.length/2);
-  var month = arr[middleIndex].getMonth();
-  var year = arr[middleIndex].getFullYear();
+  var daysNumArr = totalDaysNums(index);
+  var middleIndex = Math.round(daysNumArr.length/2);
+  var month = daysNumArr[middleIndex].getMonth();
+  var year = daysNumArr[middleIndex].getFullYear();
 
   var date = new Date(year, month);
   var isMonthEqual = currentDate.getMonth() === date.getMonth();
@@ -70,10 +71,16 @@ function getActualDate(arr) {
   return date.toLocaleString('ru', options2);
 }
 
+function getOriginalId () {
+  var date = new Date();
+  return date.getTime();
+}
+
 module.exports = {
   dayNums: totalDaysNums,
   splitDaysToWeeks: splitToWeeks,
   actualDate: getActualDate,
-  curentDateFormated: getCurrentFormatedDate
+  curentDateFormated: getCurrentFormatedDate,
+  originalKey: getOriginalId
 }
 

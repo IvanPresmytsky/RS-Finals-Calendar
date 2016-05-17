@@ -1,7 +1,10 @@
+var date = require('../utils/Date.js');
+
 function setMonth (index) {
   return {
     type: 'SET_MONTH',
-    payLoad: index
+    monthIndex: index,
+    date: date.actualDate(index)
   };
 }
 

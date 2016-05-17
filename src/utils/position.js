@@ -14,4 +14,13 @@ function countAddEventPosition (dayPosition) {
   };
 }
 
-module.exports = countAddEventPosition;
+function moveAt (e) {
+    var eventBlock = e.target;
+    eventBlock.style.top = e.pageY - (eventBlock.offsetHeight/2) + 'px';
+    eventBlock.style.left = e.pageX - (eventBlock.offsetWidth/2) + 'px';
+}
+
+module.exports = {
+  countAddEventPosition: countAddEventPosition,
+  moveAt: moveAt
+}

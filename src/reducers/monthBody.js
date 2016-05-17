@@ -1,12 +1,16 @@
+var date = require('../utils/Date.js');
+
+
 var initialState = {
-  index: 0
+  monthIndex: 0,
+  date: date.actualDate()
 }
 
 function calendarState (state = initialState, action) {
   console.log(action.type);
   switch (action.type) {
     case 'SET_MONTH':
-      return Object.assign({}, state, {index: action.payLoad});
+      return Object.assign({}, state, {monthIndex: action.monthIndex, date: action.date});
     default:
       return state;
   }

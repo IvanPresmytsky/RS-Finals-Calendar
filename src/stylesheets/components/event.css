@@ -1,0 +1,9 @@
+.event-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: yellow;
+  min-width: 200px;
+}
+
+

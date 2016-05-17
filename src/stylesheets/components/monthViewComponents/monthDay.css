@@ -1,4 +1,7 @@
 .month-view__day {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   flex-basis: 50px;
   flex-grow: 1;
 
@@ -6,7 +9,8 @@
   cursor: pointer;
 }
 
-.no-current-month-day {
+.prev-month-day,
+.next-month-day {
   color: grey;
   background: #E9E9E9;
 }
@@ -20,3 +24,15 @@
 
   background: #D3EEE0;
 }
+
+.day__day-number {
+  padding: 0;
+  margin: 0;
+}
+
+.day__event-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
