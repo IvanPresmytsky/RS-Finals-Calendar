@@ -71,9 +71,36 @@ function getActualDate(index) {
   return date.toLocaleString('ru', options2);
 }
 
-function getOriginalId () {
+function ISOTimezone () {
   var date = new Date();
-  return date.getTime();
+  var timezone = (- date.getTimezoneOffset() / 60) + '';
+  if (timezone === '0') return timezone = '';
+  if (timezone.length === 1) return timezone = '+0' + timezone + ':00';
+  if (timezone.length === 2 && timezone[0] !== '-') return timezone = '+' + timezone + ':00';
+  if (timezone[0] === '-' && timezone.length === 2) return timezone = '-0' + timezone[1] + ':00';
+  else return timezone += ':00';
+}
+
+function countEventTimerValue (date, time) {
+   var timezone = ISOTimezone();
+   var currentDate = Date.now();
+   var eventDate = date + "T" + time + timezone;
+   var notificationDate = Date.parse(eventDate);
+   return notificationDate - currentDate;
+}
+
+function createEventTimer (event) {
+  var timeVal = countEventTimerValue(event.date, event.startTime);
+  var showNotification = function () {
+    var notification = "Attention!!! \n" + event.title + '\n' + event.text;
+    alert(notification);
+  };
+  var timer = setTimeout(showNotification.bind(this), timeVal);
+  return timer;
+}
+
+function getOriginalId () {
+  return Date.now();
 }
 
 module.exports = {
@@ -81,6 +108,7 @@ module.exports = {
   splitDaysToWeeks: splitToWeeks,
   actualDate: getActualDate,
   curentDateFormated: getCurrentFormatedDate,
+  eventTimer: createEventTimer,
   originalKey: getOriginalId
 }
 

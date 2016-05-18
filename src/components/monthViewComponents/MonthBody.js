@@ -34,25 +34,25 @@ var MonthBody = React.createClass({
 
   onEventMouseUp: function(e) {
     if (!e.target.classList.contains('event-body')) return;
-
-    e.target.style.display = 'none';
-    var day = document.elementFromPoint(e.pageX, e.pageY);
-    if (day.classList.contains('month-view__day')) {
-      day.appendChild(e.target);
-    }
     
-    e.target.style.display = '';
+    var event = e.target;
+    event.style.display = 'none';
+    var day = document.elementFromPoint(e.pageX, e.pageY);
+
+    if (!day.classList.contains('month-view__day')) return;
+    
+    day.appendChild(event);
+    event.style.display = '';
     console.log(day.id);
     var arr = this.props.events;
-    var draggedEvent = arr.find(function(event) {
-      //var id = event.title + event.date + event.startTime;
-    return event.id === e.target.id;
+    var draggedEvent = arr.find(function (item) {
+      return item.id === event.id;
     });
     var changedProps = day.id;
     console.log(draggedEvent);
     this.props.changeEvent(draggedEvent, changedProps);
 
-    e.target.style.position = 'static';
+    event.style.position = 'static';
 
     return false;
   },
@@ -98,8 +98,7 @@ var MonthBody = React.createClass({
       var id = day.toLocaleString().slice(0,10).replace(/\./g, '-').split('-').reverse().join('-');
       var currentDate = date.curentDateFormated();
       var dayEvents = defineDayEvents(id);
-      //console.log(id);
-      //console.log(dayEvents);
+      
       return (
         <Day key={id} id={id} day={day} currentDate={currentDate} currentMonth={currentMonth} events={dayEvents} addEvent={addEvent} changeMonth={changeMonth}/>
       );

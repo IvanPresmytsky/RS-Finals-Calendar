@@ -2,6 +2,7 @@ require('../stylesheets/components/addEvent.css');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var styleConstants = require('../constants/styleConstans.js');
+var dateUtil = require('../utils/Date.js');
 
 var AddEvent = React.createClass({
   componentDidMount: function () {
@@ -20,14 +21,27 @@ var AddEvent = React.createClass({
     var date = this.refs.eventDate.value || this.props.defaultDate;
     var startTime = this.refs.eventStartTime.value;
     var endTime = this.refs.eventEndTime.value;
+    /*function createEventTimer (event) {
+      var timeVal = dateUtil.eventTimerValue(date, startTime);
+      var showNotification = function () {
+        var notification = "Attention!!! \n" + title + '\n' + text;
+        alert(notification);
+      };
+      var timer = setTimeout(showNotification.bind(this), timeVal);
+      return timer;
+    }*/
+    
     var event = {
       id: title + date + startTime,
       title: title,
       text: text,
       date: date,
       startTime: startTime,
-      endTime: endTime,
+      endTime: endTime
     };
+
+    event.timer = dateUtil.eventTimer(event);
+    
     console.log(event);
 
     this.props.createEvent(event);
