@@ -1,59 +1,75 @@
-require('../../stylesheets/components/monthViewComponents/monthDay.css');
-var React = require('react');
-var Event = require('../Event.js');
-var date = require('../../utils/Date.js');
+import '../../stylesheets/components/monthViewComponents/monthDay.css';
 
-var Day = React.createClass({
-  render: function() {
-    var day = this.props.day;
-    var id = this.props.id;
-    var currentDate = this.props.currentDate.replace(/\./g, '-').split('-').reverse().join('-');
-    var currentMonth = this.props.currentMonth;
-    var events = this.props.events;
-    var dayClass = 'month-view__day';
-    
+import classNames from 'classnames';
+import React, { Component } from 'react';
 
-    function createEventsTemplate (event, index) {
-      var eventKey = date.originalKey();
-      //var title = event.title;
-      //var time = event.startTime;
-      return (
-        <Event key={eventKey + index} event={event} />
-      );
+import Event from '../Event.js';
+
+import date from '../../utils/date.js';
+import { countAddEventPosition } from '../../utils/position.js';
+
+export class Day extends Component {
+  onDaytClick (e) {
+    if (e.target.dataset.name === 'event' || e.target.parentNode.dataset.name === 'event') return;
+    let monthIndex = this.props.currentMonthIndex;
+    if (e.target.classList.contains('prev-month-day')) {
+      this.props.changeMonth(--monthIndex);
+      return;
+    }
+    if (e.target.classList.contains('next-month-day')) {
+      this.props.changeMonth(++monthIndex);
+      return;
     }
 
-    var eventsTemplate = events.map(createEventsTemplate);
+    e.preventDefault();
+    let dayPosition = e.target.getBoundingClientRect();
+    let addEventPosition = countAddEventPosition(dayPosition);
+    let defaultDate = e.target.id || e.target.parentNode.id;
+    console.log(defaultDate);
+    this.props.addEventOpen(addEventPosition, defaultDate);
+  }
 
-    if(day.getDay() === 0 || day.getDay() === 6) {
-      dayClass += ' holiday-day';
-    }
-    if(currentDate === id) {
-      dayClass += ' current-day';
-    }
-    if(day.getMonth() < currentMonth) {
-      dayClass += ' prev-month-day';
-    }
-    if(day.getMonth() > currentMonth) {
-      dayClass += ' next-month-day';
-    }
+  createEventsTemplate (event, index) {
+    let eventKey = date.originalKey();
+    return (
+      <Event key={eventKey + index} event={event} />
+    );
+  }
+
+  render () {
+    let day = this.props.day;
+    let id = this.props.id;
+    let currentDate = this.props.currentDate;
+    let currentMonth = this.props.currentMonth;
+    let eventsTemplate = this.props.events.map(this.createEventsTemplate.bind(this));
+
+    let dayClass = classNames('month-view__day', {
+      ' holiday-day': day.getDay() === 0 || day.getDay() === 6,
+      ' current-day': currentDate === id,
+      ' prev-month-day': day.getMonth() < currentMonth,
+      ' next-month-day': day.getMonth() > currentMonth
+    });
 
     return (
-      <div id={id} className={dayClass}>
-        <span className="day__day-number">{day.getDate()}</span>
+      <div id={id} className={dayClass} onClick={this.onDaytClick.bind(this)}>
+        <span className="day__day-number">
+          {day.getDate()}
+        </span>
         {eventsTemplate}
       </div>
     );
   }
-});
+};
 
 Day.propTypes = {
   day: React.PropTypes.object.isRequired,
   id: React.PropTypes.string.isRequired,
   currentDate: React.PropTypes.string.isRequired,
   currentMonth: React.PropTypes.number.isRequired,
+  currentMonthIndex: React.PropTypes.number.isRequired,
   events: React.PropTypes.array.isRequired,
-  addEvent: React.PropTypes.func.isRequired,
+  addEventOpen: React.PropTypes.func.isRequired,
   changeMonth: React.PropTypes.func.isRequired
 }
 
-module.exports = Day;
+export default Day;

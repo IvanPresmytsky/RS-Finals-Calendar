@@ -1,21 +1,29 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-require('../stylesheets/components/logIn.css');
+import '../stylesheets/components/logIn.css';
 
-var LogIn = React.createClass({
-  componentDidMount: function () {
+import classNames from 'classnames';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { logInClose } from '../actions/logIn.js';
+
+export class LogIn extends Component {
+  componentDidMount () {
     ReactDOM.findDOMNode(this.refs.user).focus();
-  },
+  }
 
-  onBtnCloseClick: function (e) {
+  onBtnCloseClick (e) {
     e.preventDefault();
-    this.props.logIn(false);
-  },
+    this.props.logInClose();
+  }
 
-  render: function (){
-    var visible = this.props.visibility;
-    var popupClass = "login-popup"
-    if (visible) popupClass += " popup-visible";
+  render () {
+    let popupClass = classNames('login-popup', {
+      ' popup-visible': this.props.visibility
+    });
+
     return (
       <div className={popupClass}>
         <form className="login-form">
@@ -43,16 +51,28 @@ var LogIn = React.createClass({
            />
         </form>
         <div className="login-popup__close">
-          <a href="#" onClick={this.onBtnCloseClick}>X</a>
+          <a href="#" onClick={this.onBtnCloseClick.bind(this)}>X</a>
         </div>
       </div>
     );
   }
-});
+};
 
 LogIn.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
-  logIn: React.PropTypes.func.isRequired
+  logInClose: React.PropTypes.func.isRequired
 }
 
-module.exports = LogIn;
+function mapStateToProps (state) {
+  return {
+    visibility: state.logIn.visibility
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    logInClose: bindActionCreators(logInClose, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn);

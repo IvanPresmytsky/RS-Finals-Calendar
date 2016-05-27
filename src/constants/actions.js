@@ -1,0 +1,14 @@
+export const LOG_IN_OPEN = 'LOG_IN_OPEN';
+export const LOG_IN_CLOSE = 'LOG_IN_CLOSE';
+export const REGISTER_OPEN = 'REGISTER_OPEN';
+export const REGISTER_CLOSE = 'REGISTER_CLOSE';
+export const ADD_EVENT_OPEN = 'ADD_EVENT_OPEN';
+export const ADD_EVENT_CLOSE = 'ADD_EVENT_CLOSE';
+export const EVENT_ADDED = 'EVENT_ADDED';
+export const CHANGE_EVENT = 'CHANGE_EVENT';
+export const EVENT_CHANGED = 'EVENT_CHANGED';
+export const EVENT_DELETED = 'EVENT_DELETED';
+export const SET_FILTER_MONTH = 'SET_FILTER_MONTH';
+export const SET_FILTER_SCHEDULE = 'SET_FILTER_SCHEDULE';
+export const SET_MONTH = 'SET_MONTH';
+export const SET_DAY = 'SET_DAY';

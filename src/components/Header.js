@@ -1,39 +1,42 @@
-require('../stylesheets/components/header.css');
-var React = require('react');
+import React, { Component } from 'react';
 
-var Header = React.createClass({
-  onBtnLogInClick: function (e) {
+import '../stylesheets/components/header.css';
+
+export class Header extends Component{
+  onBtnLogInClick (e) {
     e.preventDefault();
-    this.props.logIn(true);
-  },
+    this.props.logInOpen();
+  }
 
-  onBtnRegisterClick: function (e) {
+  onBtnRegisterClick (e) {
     e.preventDefault();
-    this.props.register(true);
-  },
+    this.props.registerOpen();
+  }
 
-  render: function(){
+  render () {
+    console.log(this.props);
     return (
        <header className="main-header">
          <h1 className="main-title">Calendar</h1>
          <nav className="main-nav">
            <ul>
             <li>
-              <a href="#" onClick={this.onBtnLogInClick} className="login-btn">log in</a>
+              <a href="#" className="login-btn" onClick={this.onBtnLogInClick.bind(this)} >log in</a>
             </li>
             <li>
-              <a href="#" onClick={this.onBtnRegisterClick} className="register-btn">register</a>
+              <a href="#" className="register-btn" onClick={this.onBtnRegisterClick.bind(this)} >register</a>
             </li>
            </ul>
          </nav>
        </header>
     );
   }
-});
+};
 
 Header.propTypes = {
-  logIn: React.PropTypes.func.isRequired,
-  register: React.PropTypes.func.isRequired
+  logInOpen: React.PropTypes.func.isRequired,
+  registerOpen: React.PropTypes.func.isRequired
 }
 
-module.exports = Header;
+export default Header;
+

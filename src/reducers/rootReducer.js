@@ -1,15 +1,16 @@
-var Redux = require('redux');
-var monthBody = require('./monthBody.js');
-var addEvent = require('./addEvent.js');
-var logIn = require('./logIn.js');
-var register = require('./register.js');
-var eventAdded = require('./eventAdded.js');
+import { combineReducers } from 'redux';
 
-module.exports = Redux.combineReducers({
-  monthBody, 
+import pagination from'./pagination.js';
+import addEvent from'./addEvent.js';
+import logIn from'./logIn.js';
+import register from'./register.js';
+import calendarFilter from'./calendarFilter.js';
+
+export default combineReducers({
+  pagination, 
   addEvent,
-  eventAdded,
   logIn,
-  register
+  register,
+  calendarFilter
 });
 

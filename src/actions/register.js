@@ -1,8 +1,15 @@
-function register (visibility) {
+import { REGISTER_OPEN, REGISTER_CLOSE } from '../constants/actions.js';
+
+export function registerOpen () {
   return {
-    type: 'REGISTER',
-    payLoad: visibility
+    type: REGISTER_OPEN,
+    payLoad: true
   };
 }
 
-module.exports = register;
+export function registerClose () {
+  return {
+    type: REGISTER_CLOSE,
+    payLoad: false
+  };
+}

@@ -4,6 +4,7 @@
   justify-content: space-between;
 
   padding: 0 10px 0 10px;
+  height: 100%;
   background: #93B8D3;
   flex-grow: 6;
   flex-basis: 40px;

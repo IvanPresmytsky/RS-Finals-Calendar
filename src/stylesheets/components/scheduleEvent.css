@@ -1,0 +1,40 @@
+.schedule-event {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 0;
+  margin: 0;
+
+  border-bottom: 1px solid grey;
+}
+
+.hidden-event {
+  display: none;
+}
+
+.schedule-event__date {
+  flex-grow: 1;
+  margin-right: 2%;
+}
+
+.schedule-event__time {
+  flex-grow: 1;
+  margin-right: 2%;
+}
+
+.schedule-event__title {
+  flex-grow: 2;
+  margin-right: 2%;
+}
+
+.schedule-event__description {
+  flex-grow: 4;
+
+  margin-right: 2%;
+}
+
+.schedule-buttons {
+  flex-grow: 2;
+  margin-right: 2%;
+}

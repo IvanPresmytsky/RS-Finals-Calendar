@@ -1,10 +1,10 @@
-var webpack = require('webpack');
-var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+import webpack from 'webpack';
+import path from 'path';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 
-module.exports = {
+export default {
     entry: [
       "webpack-dev-server/client?http://localhost:8080",
       "webpack/hot/only-dev-server",

@@ -1,19 +1,46 @@
-require('./stylesheets/application.css');
-var App = require('./components/Application.js');
+import './stylesheets/application.css';
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Redux = require('redux');
-var ReactRedux = require('react-redux');
-var configureStore = require('./store/configureStore.js');
-var Provider = ReactRedux.Provider;
+import fecha from 'fecha';
+import React from 'react';
 
-var store = configureStore();
+import { Provider } from 'react-redux';
+import { render } from 'react-dom';
+
+import { configureStore } from './store/configureStore.js';
+
+import App from './components/Application.js';
+
+import date from './utils/date.js';
+
+let store = configureStore();
+
 console.log(store);
-ReactDOM.render (
+
+function defineNearestEvent () {
+  let events = store.getState().addEvent.events;
+  if (events.length === 0) return;
+
+  events = date.actualEvents(events);
+
+  if (events.length === 0) return;
+
+  event = date.sortedEvents(events)[0];
+
+  let notificationTime = event.date + event.startTime;
+  let currentDate = fecha.format(new Date(), 'YYYY-MM-DDHH:mm');
+  
+  if (notificationTime == currentDate) {
+    const eventTemplate = `Attention! \n ${event.title} \n ${event.text} \n`
+    alert(eventTemplate);
+  }
+}
+
+let timer = setInterval(defineNearestEvent, 60000);
+
+render (
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementsByClassName('root')[0]
+  document.getElementById('root')
 );
 

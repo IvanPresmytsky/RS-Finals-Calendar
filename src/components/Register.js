@@ -1,21 +1,28 @@
-require('../stylesheets/components/register.css');
-var React = require('react');
-var ReactDOM = require('react-dom');
+import classNames from 'classnames';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
-var Register = React.createClass({
-  componentDidMount: function () {
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { registerClose } from '../actions/register.js';
+import '../stylesheets/components/register.css';
+
+export class Register extends Component {
+  componentDidMount () {
     ReactDOM.findDOMNode(this.refs.user).focus();
-  },
+  }
 
-  onBtnCloseClick: function (e) {
+  onBtnCloseClick (e) {
     e.preventDefault();
-    this.props.register(false);
-  },
+    this.props.registerClose();
+  }
 
-  render: function () {
-    var visible = this.props.visibility;
-    var popupClass = "register-popup"
-    if (visible) popupClass += " popup-visible";
+  render () {
+    let popupClass = classNames('register-popup', {
+      ' popup-visible': this.props.visibility
+    });
+
     return (
       <div className={popupClass}>
         <form className="register-form">
@@ -51,16 +58,28 @@ var Register = React.createClass({
            />
         </form>
         <div className="register-popup__close">
-         <a href="#" onClick={this.onBtnCloseClick}>X</a>
+          <a href="#" onClick={this.onBtnCloseClick.bind(this)}>X</a>
         </div>
       </div>
     );
   }
-});
+};
 
 Register.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
-  register: React.PropTypes.func.isRequired
+  registerClose: React.PropTypes.func.isRequired
 }
 
-module.exports = Register;
+function mapStateToProps (state) {
+  return {
+    visibility: state.register.visibility
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    registerClose: bindActionCreators(registerClose, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

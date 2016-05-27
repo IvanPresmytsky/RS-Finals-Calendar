@@ -1,25 +1,37 @@
-require('../stylesheets/components/event.css');
-var React = require('react');
+import React, { Component } from 'react';
 
-var Event = React.createClass({
+import { moveAt } from '../utils/position.js';
 
-  render: function() {
-    var event = this.props.event;
-    //var id = event.title + event.date + event.startTime;
-    var id = event.id;
-    var title = event.title;
-    var time = event.time;
+import '../stylesheets/components/event.css';
+
+export class Event extends Component {
+  onEventMouseDown (e) {
+     if (e.target.dataset.name !=='event') return;
+     let event = e.target;
+     console.log(e.pageX);
+     console.log(e.pageY);
+     console.log(e.target.offsetWidth);
+     let eventWidth = event.offsetWidth + 'px';
+     event.classList.add('event--position-absolute');
+     event.style.width = eventWidth;
+     moveAt(e)
+
+     return false;
+  }
+
+  render () {
+    let event = this.props.event;
     return (
-      <div id={id} className="event-body">
-        <span className="event-title">{title}</span>
-        <span className="event-time">{time}</span>
+      <div id={event.id} className="event-body" data-name="event" onMouseDown={this.onEventMouseDown.bind(this)}>
+        <span className="event-title">{event.title}</span>
+        <span className="event-time">{event.startTime}</span>
       </div>
     );
   }
-});
+};
 
 Event.propTypes = {
   event: React.PropTypes.object.isRequired
 }
 
-module.exports = Event;
+export default Event;

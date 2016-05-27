@@ -1,29 +1,30 @@
-require('../../stylesheets/components/monthViewComponents/monthHeader.css');
-var React = require('react');
-var days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+import classNames from 'classnames';
+import React, { Component } from 'react';
 
+import '../../stylesheets/components/monthViewComponents/monthHeader.css';
 
-var MonthHeader = React.createClass({
-  render: function() {
+import { DAYS } from '../../constants/data/DAYS.js'
 
-    function createMonthHeaderTemplate(day, index) {
-      var dayClass = "month-header__day-name";
-      if (index > 4) dayClass += " day-name-holiday";
-      return (
-        <div key={day} className={dayClass}>
-          <span>{day}</span>
-        </div>
-      );
-    }
+export class MonthHeader extends Component {
+  createMonthHeaderTemplate(day, index) {
+    let dayClass = classNames('month-header__day-name', {
+      ' day-name-holiday': index > 4
+    });
+    return (
+      <div key={day} className={dayClass}>
+        <span>{day}</span>
+      </div>
+    );
+  }
 
-    var monthHeaderTemplate = days.map(createMonthHeaderTemplate);
-
+  render () {
+    let monthHeaderTemplate = DAYS.map(this.createMonthHeaderTemplate.bind(this));
     return (
       <div className="month-header">
         {monthHeaderTemplate}
       </div>
     );
   }
-});
+};
 
-module.exports = MonthHeader;
+export default MonthHeader;

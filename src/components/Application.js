@@ -1,76 +1,117 @@
-var React = require('react');
-var ReactRedux = require('react-redux');
-var Redux = require('redux');
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-var ToolBar = require('./ToolBar.js');
-var StatePanel = require('./StatePanel.js');
-var MonthView = require('./MonthView.js');
-var LogIn = require('./LogIn.js');
-var Header = require('./Header.js');
-var Register = require('./Register.js');
-var AddEvent = require('./AddEvent.js');
+import AddEvent from './AddEvent.js';
+import Header from './Header.js';
+import LogIn from './LogIn.js';
+import MonthView from './MonthView.js';
+import NavAndTools from './NavAndTools.js';
+import Register from './Register.js';
+import ScheduleView from './ScheduleView.js';
 
-var setMonth = require('../actions/setMonth.js');
-var addEvent = require('../actions/addEvent.js');
-var logIn = require('../actions/logIn.js');
-var register = require('../actions/register.js'); 
-var eventAdded = require('../actions/eventAdded.js');
+import { eventAdded, changeEvent, deleteEvent, addEventOpen } from '../actions/events.js';
+import { logInOpen } from '../actions/logIn.js';
+import { registerOpen } from '../actions/register.js';
+import { setMonth, setDay } from '../actions/pagination.js';
 
-var position = require('../utils/position.js');
+import configureStore from '../store/configureStore.js';
 
-var App = React.createClass({
-  render: function () {
+import {SET_FILTER_MONTH, SET_FILTER_SCHEDULE} from '../constants/actions.js';
+
+
+export class App extends Component {
+
+  defineCalendarView (filter) {
+    switch (filter) {
+      case SET_FILTER_MONTH:
+        return <MonthView 
+                 currentMonthIndex={this.props.monthIndex}
+                 events={this.props.events}
+                 addEventOpen={this.props.addEventOpen}
+                 eventAdded={this.props.eventAdded}
+                 changeMonth={this.props.setMonth}
+               />;
+      case SET_FILTER_SCHEDULE:
+        return <ScheduleView 
+                 events={this.props.events}
+                 deleteEvent={this.props.deleteEvent}
+                 changeEvent={this.props.changeEvent}
+                 currentDayIndex={this.props.dayIndex}
+                 addEventOpen={this.props.addEventOpen}
+               />;
+      default:
+        return <MonthView 
+                 currentMonthIndex={this.props.monthIndex} 
+                 events={this.props.events}
+                 addEventOpen={this.props.addEventOpen} 
+                 eventAdded={this.props.eventAdded} 
+                 changeMonth={this.props.setMonth} 
+               />;
+      }
+  }
+
+  render () {
     console.log(this.props);
-    var setMonth = this.props.setMonth;
-    var addEvent = this.props.addEvent;
-    var createEvent = this.props.eventAdded;
-    var logIn = this.props.logIn;
-    var register = this.props.register;
-    var currentMonthIndex = this.props.monthIndex;
-    var currentDate = this.props.currentDate;
-    var events = this.props.events;
-    var addEventVisibility = this.props.addEventVisibility;
-    var addEventPosition = this.props.addEventPosition;
-    var addEventDefaultDate = this.props.addEventDefaultDate;
-    var logInVisibility = this.props.logInVisibility;
-    var registerVisibility = this.props.registerVisibility;
+
+    let calendarView = this.defineCalendarView(this.props.calendarFilter);
 
     return (
       <div className="container">
          <div className="wrapper">
-           <Header logIn={logIn} register={register} />
-           <StatePanel changeMonth={setMonth} addEvent={addEvent} currentMonthIndex={currentMonthIndex} currentDate={currentDate}/>
+           <Header 
+             logInOpen={this.props.logInOpen}
+             registerOpen={this.props.registerOpen}
+           />
+           <NavAndTools />
          </div>
-         <MonthView addEvent={addEvent} changeEvent={createEvent} changeMonth={setMonth} currentMonthIndex={currentMonthIndex} events={events}/>
-         <LogIn logIn={logIn} visibility={logInVisibility} />
-         <Register register={register} visibility={registerVisibility} />
-         <AddEvent visibility={addEventVisibility} position={addEventPosition} defaultDate={addEventDefaultDate} addEvent={addEvent} createEvent={createEvent}/>
+         {calendarView}
+         <LogIn />
+         <Register />
+         <AddEvent />
       </div>
     );
   }
-});
+};
+
+App.propTypes = {
+  monthIndex: React.PropTypes.number.isRequired,
+  dayIndex: React.PropTypes.number.isRequired,
+  events: React.PropTypes.array.isRequired,
+  calendarFilter: React.PropTypes.string.isRequired,
+  eventForChange: React.PropTypes.object,
+  setMonth: React.PropTypes.func.isRequired,
+  setDay: React.PropTypes.func.isRequired,
+  logInOpen: React.PropTypes.func.isRequired,
+  registerOpen: React.PropTypes.func.isRequired,
+  addEventOpen: React.PropTypes.func.isRequired,
+  eventAdded: React.PropTypes.func.isRequired,
+  changeEvent: React.PropTypes.func.isRequired,
+  deleteEvent: React.PropTypes.func.isRequired
+}
 
 function mapStateToProps (state) {
   return {
-    monthIndex: state.monthBody.monthIndex,
-    currentDate: state.monthBody.date,
-    addEventVisibility: state.addEvent.visibility,
-    addEventPosition: state.addEvent.position,
-    addEventDefaultDate: state.addEvent.defaultDate,
-    events: state.eventAdded.events,
-    logInVisibility: state.logIn.visibility,
-    registerVisibility: state.register.visibility
+    monthIndex: state.pagination.monthIndex,
+    dayIndex: state.pagination.dayIndex,
+    events: state.addEvent.events,
+    calendarFilter: state.calendarFilter.filter,
+    eventForChange: state.addEvent.eventForChange,
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    setMonth: Redux.bindActionCreators(setMonth, dispatch),
-    addEvent: Redux.bindActionCreators(addEvent, dispatch),
-    logIn: Redux.bindActionCreators(logIn, dispatch),
-    register: Redux.bindActionCreators(register, dispatch),
-    eventAdded: Redux.bindActionCreators(eventAdded, dispatch)
+    setMonth: bindActionCreators(setMonth, dispatch),
+    setDay: bindActionCreators(setDay, dispatch),
+    logInOpen: bindActionCreators(logInOpen, dispatch),
+    registerOpen: bindActionCreators(registerOpen, dispatch),
+    addEventOpen: bindActionCreators(addEventOpen, dispatch),
+    eventAdded: bindActionCreators(eventAdded, dispatch),
+    changeEvent: bindActionCreators(changeEvent, dispatch),
+    deleteEvent: bindActionCreators(deleteEvent, dispatch)
   };
 }
 
-module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+

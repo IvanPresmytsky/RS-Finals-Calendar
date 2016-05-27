@@ -1,134 +1,115 @@
-require('../../stylesheets/components/monthViewComponents/monthBody.css');
-var React = require('react');
-var date = require('../../utils/Date.js');
-var position = require('../../utils/position.js');
-var Day = require('./Day.js');
-var Week = require('./Week.js');
+import '../../stylesheets/components/monthViewComponents/monthBody.css';
 
-var MonthBody = React.createClass({
+import fecha from 'fecha';
+import React, { Component } from 'react';
 
-  onEventMouseDown: function(e) {
-     if (!e.target.classList.contains('event-body')) return;
-     var eventBlock = e.target;
-     console.log(e.pageX);
-     console.log(e.pageY);
-     console.log(e.target.offsetWidth);
-     eventBlock.style.position = 'absolute';
+import Day from './Day.js';
+import Week from './Week.js';
 
-     position.moveAt(e)
+import date from '../../utils/date.js';
+import { moveAt } from '../../utils/position.js';
 
-     return false;
-  },
 
-  onEventMouseMove: function(e) {
-    position.moveAt(e);
-  },
+export class MonthBody extends Component {
+  onEventMouseMove (e) {
+    moveAt(e);
+  }
 
-  onEventDragStart: function(e) {
+  onEventDragStart (e) {
     return false;
-  },
+  }
 
-  onSelectStart: function() {
+  onSelectStart () {
     return false;
-  },
+  }
 
-  onEventMouseUp: function(e) {
+  onEventMouseUp (e) {
     if (!e.target.classList.contains('event-body')) return;
     
-    var event = e.target;
-    event.style.display = 'none';
-    var day = document.elementFromPoint(e.pageX, e.pageY);
+    let event = e.target;
+    event.style.width = "";
+    event.classList.add('event--hidden');
+    let day = document.elementFromPoint(e.pageX, e.pageY);
 
     if (!day.classList.contains('month-view__day')) return;
     
     day.appendChild(event);
-    event.style.display = '';
+    event.classList.remove('event--hidden');
     console.log(day.id);
-    var arr = this.props.events;
-    var draggedEvent = arr.find(function (item) {
+    let arr = this.props.events;
+    let draggedEvent = arr.find(function (item) {
       return item.id === event.id;
     });
-    var changedProps = day.id;
+    let changedProps = day.id;
     console.log(draggedEvent);
-    this.props.changeEvent(draggedEvent, changedProps);
+    this.props.eventAdded(draggedEvent, changedProps);
 
-    event.style.position = 'static';
+    event.classList.remove('event--position-absolute');
 
     return false;
-  },
+  }
 
-  onDaytClick: function (e) {
-    if (!e.target.classList.contains('month-view__day')) return;
+  defineDayEvents (id) {
+    return this.props.events.filter((event) => event.date === id );
+  }
 
-    var monthIndex = this.props.currentMonthIndex;
-    if (e.target.classList.contains('prev-month-day')) {
-      this.props.changeMonth(--monthIndex);
-      return;
-    }
-    if (e.target.classList.contains('next-month-day')) {
-      this.props.changeMonth(++monthIndex);
-      return;
-    }
+  createDayTemplate(day) {
+    let id = fecha.format(day, 'YYYY-MM-DD');
+    let currentDate = date.curentDateFormated();
+    let dayEvents = this.defineDayEvents(id);
+    let dayNumsArr = date.dayNums(this.props.currentMonthIndex);
+    let currentMonth = dayNumsArr[Math.round(dayNumsArr.length/2)].getMonth();
+    dayNumsArr = date.splitDaysToWeeks(dayNumsArr);
+      
+    return (
+      <Day 
+        key={id} 
+        id={id} 
+        day={day} 
+        currentDate={currentDate}
+        currentMonth={currentMonth} 
+        events={dayEvents}
+        currentMonthIndex={this.props.currentMonthIndex}
+        addEventOpen={this.props.addEventOpen} 
+        changeMonth={this.props.changeMonth}
+      />
+    );
+  }
 
-    e.preventDefault();
-    var dayPosition = e.target.getBoundingClientRect();
-    var addEventPosition = position.countAddEventPosition(dayPosition);
-    var defaultDate = e.target.id;
-    //console.log(defaultDate);
-    this.props.addEvent(true, addEventPosition, defaultDate);
-  },
+  createWeekTemplate(week, index) {
+    let daysTemplate = week.map(this.createDayTemplate.bind(this));
+    return (
+      <Week key={index} daysTemplate={daysTemplate} />
+    );
+  }
 
-  render: function() {
-    console.log(this.props.events);
-    var events = this.props.events;
-    var index = this.props.currentMonthIndex;
-    var addEvent = this.props.addEvent;
-    var changeMonth = this.props.changeMonth;
-    var dayNumsArr = date.dayNums(index);
-    var currentMonth = dayNumsArr[Math.round(dayNumsArr.length/2)].getMonth();
+  render () {
+    let dayNumsArr = date.dayNums(this.props.currentMonthIndex);
     dayNumsArr = date.splitDaysToWeeks(dayNumsArr);
 
-    function defineDayEvents (id) {
-      return events.filter(function(event) {
-        return event.date === id;
-      });
-    }
-
-    function createDayTemplate(day) {
-      var id = day.toLocaleString().slice(0,10).replace(/\./g, '-').split('-').reverse().join('-');
-      var currentDate = date.curentDateFormated();
-      var dayEvents = defineDayEvents(id);
-      
-      return (
-        <Day key={id} id={id} day={day} currentDate={currentDate} currentMonth={currentMonth} events={dayEvents} addEvent={addEvent} changeMonth={changeMonth}/>
-      );
-    }
-
-    function createMonthBodyTemplate(week, index) {
-      var daysTemplate = week.map(createDayTemplate);
-      return (
-        <Week key={index} daysTemplate={daysTemplate} />
-      );
-    }
-
-    var MonthBodyTemplate = dayNumsArr.map(createMonthBodyTemplate);
+    let MonthBodyTemplate = dayNumsArr.map(this.createWeekTemplate.bind(this));
 
     return (
-      <div onClick={this.onDaytClick} onMouseDown={this.onEventMouseDown} onMouseMove={this.onEventMouseMove} onMouseUp={this.onEventMouseUp} onDragStart={this.onEventDragStart} onSelectStart={this.onSelectStart} className="month-body">
+      <div className="month-body"
+        onMouseMove={this.onEventMouseMove.bind(this)} 
+        onMouseUp={this.onEventMouseUp.bind(this)} 
+        onDragStart={this.onEventDragStart.bind(this)} 
+        onSelectStart={this.onSelectStart.bind(this)} 
+      >
         {MonthBodyTemplate}
       </div>
     );
   }
-});
+};
 
 MonthBody.propTypes = {
   currentMonthIndex: React.PropTypes.number.isRequired,
   events: React.PropTypes.array.isRequired,
-  addEvent: React.PropTypes.func.isRequired,
-  changeEvent: React.PropTypes.func.isRequired,
+  addEventOpen: React.PropTypes.func.isRequired,
+  eventAdded: React.PropTypes.func.isRequired,
   changeMonth: React.PropTypes.func.isRequired
 }
 
-module.exports = MonthBody;
+export default MonthBody;
 
 

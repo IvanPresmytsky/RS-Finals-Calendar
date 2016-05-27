@@ -1,8 +1,17 @@
-function logIn (visibility) {
+import { LOG_IN_OPEN, LOG_IN_CLOSE} from '../constants/actions.js';
+
+
+export function logInOpen () {
   return {
-    type: 'LOG_IN',
-    payLoad: visibility
+    type: LOG_IN_OPEN,
+    payLoad: true
   };
 }
 
-module.exports = logIn;
+export function logInClose () {
+  return {
+    type: LOG_IN_CLOSE,
+    payLoad: false
+  };
+}
+

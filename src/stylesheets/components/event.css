@@ -3,7 +3,19 @@
   flex-direction: row;
   justify-content: space-between;
   background: yellow;
-  min-width: 200px;
+  min-width: 100px;
+  min-height: 20px;
 }
 
+.event--position-absolute {
+  position: absolute;
+}
+
+.event--position-static {
+  position: absolute;
+}
+
+.event--hidden {
+  display: none;
+}
 

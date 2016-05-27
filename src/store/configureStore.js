@@ -1,11 +1,9 @@
-var Redux = require('redux');
-var rootReducer = require('../reducers/rootReducer.js');
-//var rootReducer = require('../reducers/monthBodyReducer.js');
-//var rootReducer = require('../reducers/addEventReducer.js');
+import { createStore } from 'redux';
 
-function configureStore () {
-  var store = Redux.createStore(rootReducer);
+import rootReducer from'../reducers/rootReducer.js';
+
+export function configureStore () {
+  let store = createStore(rootReducer);
   return store;
 }
 
-module.exports = configureStore;

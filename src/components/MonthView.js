@@ -1,31 +1,33 @@
-require('../stylesheets/components/monthView.css');
-var React = require('react');
-var MonthHeader = require('./monthViewComponents/MonthHeader.js');
-var MonthBody = require('./monthViewComponents/MonthBody.js');
+import '../stylesheets/components/monthView.css';
 
+import React, { Component } from 'react';
 
-var MonthView = React.createClass({
-  render: function() {
-    var currentMonthIndex = this.props.currentMonthIndex;
-    var addEvent = this.props.addEvent;
-    var changeEvent = this.props.changeEvent;
-    var changeMonth = this.props.changeMonth;
-    var events = this.props.events;
+import MonthHeader from './monthViewComponents/MonthHeader.js';
+import MonthBody from './monthViewComponents/MonthBody.js';
+
+export class MonthView extends Component{
+  render () {
     return (
       <div className="month-view">
         <MonthHeader />
-        <MonthBody addEvent={addEvent} changeEvent={changeEvent} changeMonth={changeMonth} currentMonthIndex={currentMonthIndex} events={events} />
+        <MonthBody 
+          addEventOpen={this.props.addEventOpen} 
+          eventAdded={this.props.eventAdded} 
+          changeMonth={this.props.changeMonth} 
+          currentMonthIndex={this.props.currentMonthIndex} 
+          events={this.props.events} 
+        />
       </div>
     );
   }
-});
+};
 
 MonthView.propTypes = {
   currentMonthIndex: React.PropTypes.number.isRequired,
   events: React.PropTypes.array.isRequired,
-  addEvent: React.PropTypes.func.isRequired,
-  changeEvent: React.PropTypes.func.isRequired,
+  addEventOpen: React.PropTypes.func.isRequired,
+  eventAdded: React.PropTypes.func.isRequired,
   changeMonth: React.PropTypes.func.isRequired
 }
 
-module.exports = MonthView;
+export default MonthView;
