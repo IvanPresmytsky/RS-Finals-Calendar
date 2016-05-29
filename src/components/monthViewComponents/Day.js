@@ -6,11 +6,13 @@ import React, { Component } from 'react';
 import Event from '../Event.js';
 
 import date from '../../utils/date.js';
-import { countAddEventPosition } from '../../utils/position.js';
+import { countAddEventPosition, countEventsContainerPopupPosition } from '../../utils/position.js';
+import { EVENT_HEIGHT } from '../../constants/handlersConstants.js';
 
 export class Day extends Component {
   onDaytClick (e) {
     if (e.target.dataset.name === 'event' || e.target.parentNode.dataset.name === 'event') return;
+    if (e.target.dataset.name === 'more') return;
     let monthIndex = this.props.currentMonthIndex;
     if (e.target.classList.contains('prev-month-day')) {
       this.props.changeMonth(--monthIndex);
@@ -29,6 +31,18 @@ export class Day extends Component {
     this.props.addEventOpen(addEventPosition, defaultDate);
   }
 
+  onLinkMoreClick (e) {
+    e.preventDefault();
+    let day = e.target.parentNode.parentNode;
+    let id = day.id;
+    let dayPosition = day.getBoundingClientRect();
+    let eventsHeight = this.props.events.length * EVENT_HEIGHT + 70;
+    let position = countEventsContainerPopupPosition(dayPosition, eventsHeight);
+    
+    this.props.eventsContainerPopupOpen(id, position);
+    console.log(id);
+  }
+
   createEventsTemplate (event, index) {
     let eventKey = date.originalKey();
     return (
@@ -36,12 +50,36 @@ export class Day extends Component {
     );
   }
 
+  createLargeEventsTemplate (events) {
+    let eventKey = date.originalKey();
+    let eventsCount = `${events.length - 1} more...`;
+    return (
+      <div>
+        <Event key={eventKey} event={events[0]} />
+        <a href="#" data-name="more" onClick={this.onLinkMoreClick.bind(this)}>
+          {eventsCount}
+        </a>
+      </div>
+    );
+  }
+
+  countMaxEventsHeight () {
+    let dayElem = document.getElementsByClassName('month-view__day')[0];
+    let dayElemHeight = dayElem ? dayElem.offsetHeight : 1000;
+    return dayElemHeight - (EVENT_HEIGHT * this.props.events.length) - 25;
+  }
+
   render () {
     let day = this.props.day;
     let id = this.props.id;
     let currentDate = this.props.currentDate;
     let currentMonth = this.props.currentMonth;
-    let eventsTemplate = this.props.events.map(this.createEventsTemplate.bind(this));
+    let eventsTemplate = this.props.events.map(this.createEventsTemplate.bind(this));;
+    let eventsHeight = this.countMaxEventsHeight();
+
+    if (eventsHeight && eventsHeight < 0) {
+      eventsTemplate = this.createLargeEventsTemplate(this.props.events);
+    } 
 
     let dayClass = classNames('month-view__day', {
       ' holiday-day': day.getDay() === 0 || day.getDay() === 6,
@@ -69,7 +107,8 @@ Day.propTypes = {
   currentMonthIndex: React.PropTypes.number.isRequired,
   events: React.PropTypes.array.isRequired,
   addEventOpen: React.PropTypes.func.isRequired,
-  changeMonth: React.PropTypes.func.isRequired
+  changeMonth: React.PropTypes.func.isRequired,
+  eventsContainerPopupOpen: React.PropTypes.func.isRequired,
 }
 
 export default Day;

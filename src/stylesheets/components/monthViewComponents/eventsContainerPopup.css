@@ -1,0 +1,27 @@
+.events-container-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+
+  box-sizing: border-box;
+
+  background: grey;
+  border: 1px solid black;
+}
+
+.events-container-popup__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+}
+
+.events-container-popup__close a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.events-container-popup--visible {
+  display: block;
+}

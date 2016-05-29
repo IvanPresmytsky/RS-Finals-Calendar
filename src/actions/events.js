@@ -34,6 +34,7 @@ export function eventAdded (event, newProps) {
   } else {
     eventsArr.push(event);
   }
+  console.log(eventsArr);
   return {
     type: EVENT_ADDED,
     events: eventsArr

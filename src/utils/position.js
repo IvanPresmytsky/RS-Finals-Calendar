@@ -1,10 +1,24 @@
-import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT } from '../constants/handlersConstants.js';
+import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT, EVENT_CONTAINER_POPUP_WIDTH } from '../constants/handlersConstants.js';
 
 export function countAddEventPosition (dayPosition) {
   let windowWidth = document.body.clientWidth;
   let windowHeight = document.body.clientHeight;
   let overWidth = windowWidth - dayPosition.left - ADD_EVENT_WIDTH;
   let overHeight = windowHeight - dayPosition.top - ADD_EVENT_HEIGHT;
+  let actualLeft = (overWidth < 0) ? (dayPosition.left + overWidth) : dayPosition.left;
+  let actualTop = (overHeight < 0) ? (dayPosition.top + overHeight) : dayPosition.top;
+
+  return {
+    top: actualTop,
+    left: actualLeft
+  };
+}
+
+export function countEventsContainerPopupPosition (dayPosition, height) {
+  let windowWidth = document.body.clientWidth;
+  let windowHeight = document.body.clientHeight;
+  let overWidth = windowWidth - dayPosition.left - EVENT_CONTAINER_POPUP_WIDTH;
+  let overHeight = windowHeight - dayPosition.top - height;
   let actualLeft = (overWidth < 0) ? (dayPosition.left + overWidth) : dayPosition.left;
   let actualTop = (overHeight < 0) ? (dayPosition.top + overHeight) : dayPosition.top;
 

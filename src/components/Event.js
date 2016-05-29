@@ -21,6 +21,8 @@ export class Event extends Component {
 
   render () {
     let event = this.props.event;
+    console.log('render event');
+    console.log(event);
     return (
       <div id={event.id} className="event-body" data-name="event" onMouseDown={this.onEventMouseDown.bind(this)}>
         <span className="event-title">{event.title}</span>

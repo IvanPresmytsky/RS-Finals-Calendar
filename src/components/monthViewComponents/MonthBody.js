@@ -72,6 +72,7 @@ export class MonthBody extends Component {
         currentMonthIndex={this.props.currentMonthIndex}
         addEventOpen={this.props.addEventOpen} 
         changeMonth={this.props.changeMonth}
+        eventsContainerPopupOpen={this.props.eventsContainerPopupOpen}
       />
     );
   }
@@ -107,7 +108,8 @@ MonthBody.propTypes = {
   events: React.PropTypes.array.isRequired,
   addEventOpen: React.PropTypes.func.isRequired,
   eventAdded: React.PropTypes.func.isRequired,
-  changeMonth: React.PropTypes.func.isRequired
+  changeMonth: React.PropTypes.func.isRequired,
+  eventsContainerPopupOpen: React.PropTypes.func.isRequired,
 }
 
 export default MonthBody;

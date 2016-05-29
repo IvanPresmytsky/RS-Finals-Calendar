@@ -14,6 +14,7 @@ import { eventAdded, changeEvent, deleteEvent, addEventOpen } from '../actions/e
 import { logInOpen } from '../actions/logIn.js';
 import { registerOpen } from '../actions/register.js';
 import { setMonth, setDay } from '../actions/pagination.js';
+import { eventsContainerPopupOpen, eventsContainerPopupClose } from '../actions/eventsContainerPopup.js';
 
 import configureStore from '../store/configureStore.js';
 
@@ -28,9 +29,14 @@ export class App extends Component {
         return <MonthView 
                  currentMonthIndex={this.props.monthIndex}
                  events={this.props.events}
+                 eventsContainerPopupVisibility={this.props.eventsContainerPopupVisibility}
+                 eventsContainerPopupPosition={this.props.eventsContainerPopupPosition}
+                 dayId={this.props.dayId}
                  addEventOpen={this.props.addEventOpen}
                  eventAdded={this.props.eventAdded}
                  changeMonth={this.props.setMonth}
+                 eventsContainerPopupOpen={this.props.eventsContainerPopupOpen}
+                 eventsContainerPopupClose={this.props.eventsContainerPopupClose}
                />;
       case SET_FILTER_SCHEDULE:
         return <ScheduleView 
@@ -44,9 +50,14 @@ export class App extends Component {
         return <MonthView 
                  currentMonthIndex={this.props.monthIndex} 
                  events={this.props.events}
+                 eventsContainerPopupVisibility={this.props.eventsContainerPopupVisibility}
+                 eventsContainerPopupPosition={this.props.eventsContainerPopupPosition}
+                 dayId={this.props.dayId}
                  addEventOpen={this.props.addEventOpen} 
                  eventAdded={this.props.eventAdded} 
-                 changeMonth={this.props.setMonth} 
+                 changeMonth={this.props.setMonth}
+                 eventsContainerPopupOpen={this.props.eventsContainerPopupOpen}
+                 eventsContainerPopupClose={this.props.eventsContainerPopupClose} 
                />;
       }
   }
@@ -80,6 +91,9 @@ App.propTypes = {
   events: React.PropTypes.array.isRequired,
   calendarFilter: React.PropTypes.string.isRequired,
   eventForChange: React.PropTypes.object,
+  eventsContainerPopupVisibility: React.PropTypes.bool.isRequired,
+  eventsContainerPopupPosition: React.PropTypes.object.isRequired,
+  dayId: React.PropTypes.string,
   setMonth: React.PropTypes.func.isRequired,
   setDay: React.PropTypes.func.isRequired,
   logInOpen: React.PropTypes.func.isRequired,
@@ -87,7 +101,9 @@ App.propTypes = {
   addEventOpen: React.PropTypes.func.isRequired,
   eventAdded: React.PropTypes.func.isRequired,
   changeEvent: React.PropTypes.func.isRequired,
-  deleteEvent: React.PropTypes.func.isRequired
+  deleteEvent: React.PropTypes.func.isRequired,
+  eventsContainerPopupOpen: React.PropTypes.func.isRequired,
+  eventsContainerPopupClose: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
@@ -97,6 +113,10 @@ function mapStateToProps (state) {
     events: state.addEvent.events,
     calendarFilter: state.calendarFilter.filter,
     eventForChange: state.addEvent.eventForChange,
+    eventsContainerPopupVisibility: state.eventsContainerPopup.visibility,
+    eventsContainerPopupPosition: state.eventsContainerPopup.position,
+    dayId: state.eventsContainerPopup.dayId,
+
   };
 }
 
@@ -109,7 +129,9 @@ function mapDispatchToProps (dispatch) {
     addEventOpen: bindActionCreators(addEventOpen, dispatch),
     eventAdded: bindActionCreators(eventAdded, dispatch),
     changeEvent: bindActionCreators(changeEvent, dispatch),
-    deleteEvent: bindActionCreators(deleteEvent, dispatch)
+    deleteEvent: bindActionCreators(deleteEvent, dispatch),
+    eventsContainerPopupOpen: bindActionCreators(eventsContainerPopupOpen, dispatch),
+    eventsContainerPopupClose: bindActionCreators(eventsContainerPopupClose, dispatch)
   };
 }
 

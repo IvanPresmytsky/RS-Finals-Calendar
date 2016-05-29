@@ -42,11 +42,13 @@ export class AddEvent extends Component {
     e.preventDefault();
 
     let event = this.createEvent();
-
+    console.log(this.props.eventForChange);
     if (this.props.eventForChange) {
+      console.log('----------------------------------');
       this.props.eventChanged(this.props.eventForChange, event);
       this.props.changeEvent(null);
     } else {
+      console.log('+++++++++++++++++++++');
       this.props.createEvent(event);
       this.props.changeEvent(null);
     }
