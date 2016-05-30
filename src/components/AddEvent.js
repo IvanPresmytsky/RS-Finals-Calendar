@@ -22,6 +22,7 @@ export class AddEvent extends Component {
     let date = this.refs.eventDate.value || this.props.defaultDate;
     let startTime = this.refs.eventStartTime.value;
     let endTime = this.refs.eventEndTime.value;
+    let color = this.refs.color.value;
 
     return {
       id: title + date + startTime,
@@ -29,7 +30,8 @@ export class AddEvent extends Component {
       text: text,
       date: date,
       startTime: startTime,
-      endTime: endTime
+      endTime: endTime,
+      color: color
     };
   }
 
@@ -40,15 +42,12 @@ export class AddEvent extends Component {
 
   onSubmit (e) {
     e.preventDefault();
-
     let event = this.createEvent();
-    console.log(this.props.eventForChange);
+
     if (this.props.eventForChange) {
-      console.log('----------------------------------');
       this.props.eventChanged(this.props.eventForChange, event);
       this.props.changeEvent(null);
     } else {
-      console.log('+++++++++++++++++++++');
       this.props.createEvent(event);
       this.props.changeEvent(null);
     }
@@ -60,6 +59,7 @@ export class AddEvent extends Component {
   render () {
     let position = this.props.position;
     let defaultDate = this.props.defaultDate;
+    console.log(defaultDate);
     let top = position ? position.top : 0;
     let left = position ? position.left : 0;
     let style = {
@@ -85,6 +85,7 @@ export class AddEvent extends Component {
     let eventStartTime = '00:00';
     let eventEndTime = '00:00';
     let submitText = 'add event';
+    let eventColor = 'yellow';
 
     if (this.props.eventForChange) {
       let event = this.props.eventForChange;
@@ -93,7 +94,9 @@ export class AddEvent extends Component {
       eventDate = event.date;
       eventStartTime = event.startTime;
       eventEndTime = event.endTime;
+      eventColor = event.color;
       submitText = 'change event';
+
     }
 
     return (
@@ -145,6 +148,15 @@ export class AddEvent extends Component {
               className="add-event-form__event-end-time"
               defaultValue={eventEndTime}
               ref="eventEndTime"
+            />
+          </div>
+          <div className="add-event-form__color-block">
+            <span>event color</span>
+            <input
+              type="color"
+              className="add-event-form__color"
+              defaultValue={eventColor}
+              ref="color"
             />
           </div>
           <div className="add-event-form__submit-block">

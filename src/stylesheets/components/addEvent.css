@@ -3,6 +3,7 @@
   display: none;
   box-sizing: border-box;
   background: #F5F3ED;
+  box-shadow: 2px 2px 15px grey;
 }
 
 .add-event-form {
@@ -44,6 +45,14 @@
   margin: 0 auto;
 }
 
+.add-event-form__color-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+}
+
 .add-event-form__time-block {
   display: flex;
   flex-direction: row;
@@ -53,8 +62,10 @@
 }
 
 .add-event-form__time-block input,
-.add-event-form__date-block input {
+.add-event-form__date-block input,
+.add-event-form__time-block input {
   margin: 0;
+  padding: 0;
 }
 
 .add-event-form__submit {

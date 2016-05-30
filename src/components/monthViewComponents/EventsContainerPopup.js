@@ -18,7 +18,11 @@ export class EventsContainerPopup extends Component {
   createEventsTemplate (event, index) {
     let eventKey = date.originalKey();
     return (
-      <Event key={eventKey + index} event={event} />
+      <Event 
+        key={eventKey + index} 
+        event={event} 
+        eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
+      />
     );
   }
 
@@ -56,11 +60,11 @@ export class EventsContainerPopup extends Component {
 };
 
 EventsContainerPopup.propTypes = {
-  events: React.PropTypes.array.isRequired,
   visibility: React.PropTypes.bool.isRequired,
   position: React.PropTypes.object.isRequired,
   dayId: React.PropTypes.string,
-  eventsContainerPopupClose: React.PropTypes.func.isRequired
+  eventsContainerPopupClose: React.PropTypes.func.isRequired,
+  eventOptionsPopupOpen: React.PropTypes.func.isRequired
 }
 
 export default EventsContainerPopup;

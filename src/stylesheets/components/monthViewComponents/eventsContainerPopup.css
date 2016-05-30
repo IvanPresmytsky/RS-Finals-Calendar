@@ -6,8 +6,8 @@
 
   box-sizing: border-box;
 
-  background: grey;
-  border: 1px solid black;
+  background: #F5F3ED;
+  box-shadow: 2px 2px 15px grey;
 }
 
 .events-container-popup__close {

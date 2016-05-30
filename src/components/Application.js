@@ -15,6 +15,7 @@ import { logInOpen } from '../actions/logIn.js';
 import { registerOpen } from '../actions/register.js';
 import { setMonth, setDay } from '../actions/pagination.js';
 import { eventsContainerPopupOpen, eventsContainerPopupClose } from '../actions/eventsContainerPopup.js';
+import { eventOptionsPopupOpen, eventOptionsPopupClose } from '../actions/eventOptionsPopup.js';
 
 import configureStore from '../store/configureStore.js';
 
@@ -32,11 +33,18 @@ export class App extends Component {
                  eventsContainerPopupVisibility={this.props.eventsContainerPopupVisibility}
                  eventsContainerPopupPosition={this.props.eventsContainerPopupPosition}
                  dayId={this.props.dayId}
+                 eventOptionsPopupVisibility={this.props.eventOptionsPopupVisibility}
+                 eventOptionsPopupPosition={this.props.eventOptionsPopupPosition}
+                 optionsPopupEvent={this.props.optionsPopupEvent}
                  addEventOpen={this.props.addEventOpen}
                  eventAdded={this.props.eventAdded}
                  changeMonth={this.props.setMonth}
+                 deleteEvent={this.props.deleteEvent}
+                 changeEvent={this.props.changeEvent}
                  eventsContainerPopupOpen={this.props.eventsContainerPopupOpen}
                  eventsContainerPopupClose={this.props.eventsContainerPopupClose}
+                 eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
+                 eventOptionsPopupClose={this.props.eventOptionsPopupClose}
                />;
       case SET_FILTER_SCHEDULE:
         return <ScheduleView 
@@ -53,11 +61,18 @@ export class App extends Component {
                  eventsContainerPopupVisibility={this.props.eventsContainerPopupVisibility}
                  eventsContainerPopupPosition={this.props.eventsContainerPopupPosition}
                  dayId={this.props.dayId}
+                 eventOptionsPopupVisibility={this.props.eventOptionsPopupVisibility}
+                 eventOptionsPopupPosition={this.props.eventOptionsPopupPosition}
+                 optionsPopupEvent={this.props.optionsPopupEvent}
                  addEventOpen={this.props.addEventOpen} 
                  eventAdded={this.props.eventAdded} 
                  changeMonth={this.props.setMonth}
+                 deleteEvent={this.props.deleteEvent}
+                 changeEvent={this.props.changeEvent}
                  eventsContainerPopupOpen={this.props.eventsContainerPopupOpen}
-                 eventsContainerPopupClose={this.props.eventsContainerPopupClose} 
+                 eventsContainerPopupClose={this.props.eventsContainerPopupClose}
+                 eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
+                 eventOptionsPopupClose={this.props.eventOptionsPopupClose}
                />;
       }
   }
@@ -94,6 +109,9 @@ App.propTypes = {
   eventsContainerPopupVisibility: React.PropTypes.bool.isRequired,
   eventsContainerPopupPosition: React.PropTypes.object.isRequired,
   dayId: React.PropTypes.string,
+  eventOptionsPopupVisibility: React.PropTypes.bool.isRequired,
+  eventOptionsPopupPosition: React.PropTypes.object.isRequired,
+  optionsPopupEvent: React.PropTypes.object,
   setMonth: React.PropTypes.func.isRequired,
   setDay: React.PropTypes.func.isRequired,
   logInOpen: React.PropTypes.func.isRequired,
@@ -103,7 +121,9 @@ App.propTypes = {
   changeEvent: React.PropTypes.func.isRequired,
   deleteEvent: React.PropTypes.func.isRequired,
   eventsContainerPopupOpen: React.PropTypes.func.isRequired,
-  eventsContainerPopupClose: React.PropTypes.func.isRequired
+  eventsContainerPopupClose: React.PropTypes.func.isRequired,
+  eventOptionsPopupOpen: React.PropTypes.func.isRequired,
+  eventOptionsPopupClose: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
@@ -116,7 +136,9 @@ function mapStateToProps (state) {
     eventsContainerPopupVisibility: state.eventsContainerPopup.visibility,
     eventsContainerPopupPosition: state.eventsContainerPopup.position,
     dayId: state.eventsContainerPopup.dayId,
-
+    eventOptionsPopupVisibility: state.eventOptionsPopup.visibility,
+    eventOptionsPopupPosition: state.eventOptionsPopup.position,
+    optionsPopupEvent: state.eventOptionsPopup.optionsPopupEvent
   };
 }
 
@@ -131,7 +153,9 @@ function mapDispatchToProps (dispatch) {
     changeEvent: bindActionCreators(changeEvent, dispatch),
     deleteEvent: bindActionCreators(deleteEvent, dispatch),
     eventsContainerPopupOpen: bindActionCreators(eventsContainerPopupOpen, dispatch),
-    eventsContainerPopupClose: bindActionCreators(eventsContainerPopupClose, dispatch)
+    eventsContainerPopupClose: bindActionCreators(eventsContainerPopupClose, dispatch),
+    eventOptionsPopupOpen: bindActionCreators(eventOptionsPopupOpen,dispatch),
+    eventOptionsPopupClose: bindActionCreators(eventOptionsPopupClose,dispatch),
   };
 }
 

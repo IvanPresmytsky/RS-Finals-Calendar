@@ -46,7 +46,11 @@ export class Day extends Component {
   createEventsTemplate (event, index) {
     let eventKey = date.originalKey();
     return (
-      <Event key={eventKey + index} event={event} />
+      <Event 
+        key={eventKey + index} 
+        event={event} 
+        eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
+      />
     );
   }
 
@@ -55,7 +59,11 @@ export class Day extends Component {
     let eventsCount = `${events.length - 1} more...`;
     return (
       <div>
-        <Event key={eventKey} event={events[0]} />
+        <Event 
+          key={eventKey} 
+          event={events[0]} 
+          eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
+        />
         <a href="#" data-name="more" onClick={this.onLinkMoreClick.bind(this)}>
           {eventsCount}
         </a>
@@ -109,6 +117,7 @@ Day.propTypes = {
   addEventOpen: React.PropTypes.func.isRequired,
   changeMonth: React.PropTypes.func.isRequired,
   eventsContainerPopupOpen: React.PropTypes.func.isRequired,
+  eventOptionsPopupOpen: React.PropTypes.func.isRequired
 }
 
 export default Day;

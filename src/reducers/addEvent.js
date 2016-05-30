@@ -10,19 +10,45 @@ const initialState = {
 
 function addEventState (state = initialState, action) {
   console.log(action.type);
+  let eventsArr = state.events.slice();
   switch (action.type) {
+
     case ADD_EVENT_OPEN:
-      return Object.assign({}, state, {visibility: action.payLoad, position: action.position, defaultDate: action.defaultDate});
+      return Object.assign({}, state, {visibility: action.visibility, position: action.position, defaultDate: action.defaultDate});
+
     case ADD_EVENT_CLOSE:
-      return Object.assign({}, state, {visibility: action.payLoad});
+      return Object.assign({}, state, {visibility: action.visibility});
+
     case EVENT_ADDED:
-      return Object.assign({}, state, {events: action.events});
+      if (eventsArr.length > 0 && eventsArr.indexOf(action.event) !== -1) {
+        console.log('change');
+        action.event.date = action.newDate;
+      } else {
+        console.log('add');
+        eventsArr.push(action.event);
+      }
+      return Object.assign({}, state, {events: eventsArr});
+
     case EVENT_CHANGED:
-      return Object.assign({}, state, {events: action.events});
+      let event = action.event;
+      let newEvent = action.newEvent;
+      event.id = newEvent.id;
+      event.title = newEvent.title;
+      event.text = newEvent.text,
+      event.date = newEvent.date,
+      event.startTime = newEvent.startTime,
+      event.endTime = newEvent.endTime
+      return Object.assign({}, state, {events: eventsArr});
+
     case CHANGE_EVENT:
       return Object.assign({}, state, {eventForChange: action.event});
+
     case EVENT_DELETED:
-      return Object.assign({}, state, {events: action.events});
+       eventsArr = eventsArr.filter((e) => {
+         return e !== action.event;
+       });
+      return Object.assign({}, state, {events: eventsArr});
+
     default:
       return state;
   }

@@ -4,6 +4,7 @@
   right: 100px;
   width: 260px;
   background: #F5F3ED;
+  box-shadow: 2px 2px 15px grey;
   display: none;
 }
 

@@ -15,10 +15,6 @@ export class MonthBody extends Component {
     moveAt(e);
   }
 
-  onEventDragStart (e) {
-    return false;
-  }
-
   onSelectStart () {
     return false;
   }
@@ -45,7 +41,7 @@ export class MonthBody extends Component {
     this.props.eventAdded(draggedEvent, changedProps);
 
     event.classList.remove('event--position-absolute');
-
+    document.onmousemove = null;
     return false;
   }
 
@@ -73,6 +69,7 @@ export class MonthBody extends Component {
         addEventOpen={this.props.addEventOpen} 
         changeMonth={this.props.changeMonth}
         eventsContainerPopupOpen={this.props.eventsContainerPopupOpen}
+        eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
       />
     );
   }
@@ -90,12 +87,12 @@ export class MonthBody extends Component {
 
     let MonthBodyTemplate = dayNumsArr.map(this.createWeekTemplate.bind(this));
 
+        
     return (
       <div className="month-body"
-        onMouseMove={this.onEventMouseMove.bind(this)} 
-        onMouseUp={this.onEventMouseUp.bind(this)} 
-        onDragStart={this.onEventDragStart.bind(this)} 
-        onSelectStart={this.onSelectStart.bind(this)} 
+        //onMouseMove={this.onEventMouseMove.bind(this)} 
+        //onMouseUp={this.onEventMouseUp.bind(this)} 
+        //onSelectStart={this.onSelectStart.bind(this)}
       >
         {MonthBodyTemplate}
       </div>
@@ -110,6 +107,7 @@ MonthBody.propTypes = {
   eventAdded: React.PropTypes.func.isRequired,
   changeMonth: React.PropTypes.func.isRequired,
   eventsContainerPopupOpen: React.PropTypes.func.isRequired,
+  eventOptionsPopupOpen: React.PropTypes.func.isRequired
 }
 
 export default MonthBody;

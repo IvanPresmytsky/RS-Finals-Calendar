@@ -6,6 +6,7 @@ import logIn from'./logIn.js';
 import register from'./register.js';
 import calendarFilter from'./calendarFilter.js';
 import eventsContainerPopup from './eventsContainerPopup.js';
+import eventOptionsPopup from './eventOptionsPopup.js';
 
 export default combineReducers({
   pagination, 
@@ -13,6 +14,7 @@ export default combineReducers({
   logIn,
   register,
   calendarFilter,
-  eventsContainerPopup
+  eventsContainerPopup,
+  eventOptionsPopup
 });
 

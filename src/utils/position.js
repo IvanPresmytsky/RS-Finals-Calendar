@@ -28,10 +28,22 @@ export function countEventsContainerPopupPosition (dayPosition, height) {
   };
 }
 
+export function getCoords(elem) { 
+  let box = elem.getBoundingClientRect();
+  return {
+    top: box.top + pageYOffset,
+    left: box.left + pageXOffset
+  };
+}
+
 export function moveAt (e) {
     let eventBlock = e.target;
-    eventBlock.style.top = e.pageY - (eventBlock.offsetHeight/2) + 'px';
-    eventBlock.style.left = e.pageX - (eventBlock.offsetWidth/2) + 'px';
+    console.log(eventBlock);
+    let coord = getCoords(eventBlock);
+    let shiftX = e.pageX - coord.left;
+    let shiftY = e.pageY - coord.top;
+    eventBlock.style.top = e.pageY - shiftY  + 'px';
+    eventBlock.style.left = e.pageX - shiftX + 'px';
 }
 
 
