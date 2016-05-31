@@ -50,6 +50,7 @@ export class Day extends Component {
         key={eventKey + index} 
         event={event} 
         eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
+        eventAdded={this.props.eventAdded} 
       />
     );
   }
@@ -63,6 +64,7 @@ export class Day extends Component {
           key={eventKey} 
           event={events[0]} 
           eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
+          eventAdded={this.props.eventAdded} 
         />
         <a href="#" data-name="more" onClick={this.onLinkMoreClick.bind(this)}>
           {eventsCount}
@@ -97,7 +99,7 @@ export class Day extends Component {
     });
 
     return (
-      <div id={id} className={dayClass} onClick={this.onDaytClick.bind(this)}>
+      <div id={id} className={dayClass} data-name="monthDay" onClick={this.onDaytClick.bind(this)}>
         <span className="day__day-number">
           {day.getDate()}
         </span>
@@ -115,6 +117,7 @@ Day.propTypes = {
   currentMonthIndex: React.PropTypes.number.isRequired,
   events: React.PropTypes.array.isRequired,
   addEventOpen: React.PropTypes.func.isRequired,
+  eventAdded: React.PropTypes.func.isRequired,
   changeMonth: React.PropTypes.func.isRequired,
   eventsContainerPopupOpen: React.PropTypes.func.isRequired,
   eventOptionsPopupOpen: React.PropTypes.func.isRequired

@@ -11,39 +11,6 @@ import { moveAt } from '../../utils/position.js';
 
 
 export class MonthBody extends Component {
-  onEventMouseMove (e) {
-    moveAt(e);
-  }
-
-  onSelectStart () {
-    return false;
-  }
-
-  onEventMouseUp (e) {
-    if (!e.target.classList.contains('event-body')) return;
-    
-    let event = e.target;
-    event.style.width = "";
-    event.classList.add('event--hidden');
-    let day = document.elementFromPoint(e.pageX, e.pageY);
-
-    if (!day.classList.contains('month-view__day')) return;
-    
-    day.appendChild(event);
-    event.classList.remove('event--hidden');
-    console.log(day.id);
-    let arr = this.props.events;
-    let draggedEvent = arr.find(function (item) {
-      return item.id === event.id;
-    });
-    let changedProps = day.id;
-    console.log(draggedEvent);
-    this.props.eventAdded(draggedEvent, changedProps);
-
-    event.classList.remove('event--position-absolute');
-    document.onmousemove = null;
-    return false;
-  }
 
   defineDayEvents (id) {
     return this.props.events.filter((event) => event.date === id );
@@ -66,7 +33,8 @@ export class MonthBody extends Component {
         currentMonth={currentMonth} 
         events={dayEvents}
         currentMonthIndex={this.props.currentMonthIndex}
-        addEventOpen={this.props.addEventOpen} 
+        addEventOpen={this.props.addEventOpen}
+        eventAdded={this.props.eventAdded} 
         changeMonth={this.props.changeMonth}
         eventsContainerPopupOpen={this.props.eventsContainerPopupOpen}
         eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
@@ -89,11 +57,7 @@ export class MonthBody extends Component {
 
         
     return (
-      <div className="month-body"
-        //onMouseMove={this.onEventMouseMove.bind(this)} 
-        //onMouseUp={this.onEventMouseUp.bind(this)} 
-        //onSelectStart={this.onSelectStart.bind(this)}
-      >
+      <div className="month-body">
         {MonthBodyTemplate}
       </div>
     );

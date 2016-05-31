@@ -36,14 +36,36 @@ export function getCoords(elem) {
   };
 }
 
-export function moveAt (e) {
-    let eventBlock = e.target;
-    console.log(eventBlock);
-    let coord = getCoords(eventBlock);
-    let shiftX = e.pageX - coord.left;
-    let shiftY = e.pageY - coord.top;
-    eventBlock.style.top = e.pageY - shiftY  + 'px';
-    eventBlock.style.left = e.pageX - shiftX + 'px';
+export function moveAt (e, positionAPI) {
+    let event = positionAPI.event;
+    let eventShiftX = positionAPI.shiftX;
+    let eventShiftY = positionAPI.shiftY;
+    let monthBody = positionAPI.monthBody;
+
+    let monthBodyCoords = getCoords(monthBody);
+    let monthBodyWidth = monthBody.offsetWidth;
+    let monthBodyHeight = monthBody.offsetHeight;
+    let eventWidth = event.offsetWidth;
+    let eventHeight = event.offsetHeight;
+    let eventLeft = e.pageX - eventShiftX;
+    let eventTop = e.pageY - eventShiftY;
+
+    if (monthBodyWidth + monthBodyCoords.left <= (e.pageX + eventWidth - eventShiftX)) {
+      eventLeft = monthBodyWidth + monthBodyCoords.left - eventWidth;
+    }
+    if ((e.pageX - eventShiftX) < monthBodyCoords.left) {
+      eventLeft = monthBodyCoords.left;
+    }
+    if (monthBodyHeight + monthBodyCoords.top <= (e.pageY + eventHeight - eventShiftY)) {
+      eventTop = monthBodyHeight + monthBodyCoords.top - eventHeight - 1;
+    }
+    if ((e.pageY - eventShiftY) < monthBodyCoords.top) {
+      eventTop = monthBodyCoords.top;
+    }
+
+    event.style.opacity = '0.5';
+    event.style.top = eventTop + 'px';
+    event.style.left = eventLeft + 'px';
 }
 
 

@@ -5,47 +5,81 @@ import { moveAt, countAddEventPosition, getCoords } from '../utils/position.js';
 import '../stylesheets/components/event.css';
 
 export class Event extends Component {
-/*  onEventMouseDown (e) {
-     if (e.target.dataset.name !=='event') return;
-     let event = e.target;
-     let eventWidth = event.offsetWidth + 'px';
-     event.classList.add('event--position-absolute');
-     event.style.width = eventWidth;
-     moveAt(e)
 
-     return false;
-  }
-*/
-  onEventMouseDown (e) {
-    if (e.target.dataset.name !=='event') return;
-    let event = e.target;
-    let eventWidth = event.offsetWidth + 'px';
-    var coords = getCoords(event);
-    var shiftX = e.pageX - coords.left;
-    var shiftY = e.pageY - coords.top;
-
-    event.classList.add('event--position-absolute');
-    event.style.width = eventWidth;
-    //document.body.appendChild(event);
-    moveAt(e);
-
-    function moveAt(e) {
-      event.style.left = e.pageX - shiftX + 'px';
-      event.style.top = e.pageY - shiftY + 'px';
-    }
-
-    document.onmousemove = function(e) {
-      moveAt(e);
-    };
-
-  }
-
-  onDragStart () {
+  defineTargetDragged (e) {
+    if (e.target.dataset.name ==='event') return e.target;
+    if (e.target.parentNode.dataset.name ==='event') return e.target.parentNode;
     return false;
   }
 
+  defineTargetDroppedDate (e) {
+    let dropped = document.elementFromPoint(e.pageX, e.pageY);
+    if (dropped.dataset.name === 'monthDay') return dropped.id;
+    if (dropped.parentNode.dataset.name === 'monthDay') return dropped.parentNode.id
+    if (dropped.parentNode.parentNode.dataset.name === 'monthDay') return dropped.parentNode.parentNode.id
+    return this.props.event.date;
+  }
+
+  onEventMouseDown (e) {
+    let event = this.defineTargetDragged(e);
+    if (!event) return;
+    //if(e.which != 1) return;
+    let monthBody = document.getElementsByClassName('month-body')[0];
+    let eventWidth = event.offsetWidth + 'px';
+    let coords = getCoords(event);
+    let shiftX = e.pageX - coords.left;
+    let shiftY = e.pageY - coords.top;
+    let currentX = e.pageX;
+    let currentY = e.pageY;
+
+    event.classList.add('event--position-absolute');
+    event.style.width = eventWidth;
+
+    let positionAPI = {
+      event,
+      monthBody,
+      shiftX,
+      shiftY
+    };
+
+    monthBody.onmousemove = function(e) {
+      let moveX = e.pageX - currentX;
+      let moveY = e.pageY - currentY;
+      if ( Math.abs(moveX) < 5 && Math.abs(moveY) < 5 ) return; 
+      moveAt(e, positionAPI);
+    };
+
+    document.onselectstart = function(e) {
+      return false;
+    }
+
+  }
+
+  onDragStart (e) {
+    return false;
+  }
+
+  onEventMouseUp (e) {
+    let event = this.defineTargetDragged(e);
+    let monthBody = document.getElementsByClassName('month-body')[0];
+    if (!event) return;
+
+    event.style.width = "";
+    event.classList.add('event--hidden');
+
+    let newDate = this.defineTargetDroppedDate(e);
+
+    event.classList.remove('event--hidden');
+
+    this.props.eventAdded(this.props.event, newDate);
+
+    event.classList.remove('event--position-absolute');
+    
+    monthBody.onmousemove = null;
+  }
+
   onEventClick (e) {
-    e.preventDefault();
+//    e.preventDefault();
     console.log('target event');
     let eventPosition = e.target.getBoundingClientRect();
     let position = countAddEventPosition(eventPosition);
@@ -64,8 +98,9 @@ export class Event extends Component {
         data-name="event" 
         style={style}
         onClick={this.onEventClick.bind(this)}
-        //onMouseDown={this.onEventMouseDown.bind(this)}
-        //onDragStart={this.onDragStart.bind(this)}
+        onMouseDown={this.onEventMouseDown.bind(this)}
+        onMouseUp={this.onEventMouseUp.bind(this)}
+        onDragStart={this.onDragStart.bind(this)}
       >
         <span className="event-title">{event.title}</span>
         <span className="event-time">{event.startTime}</span>
@@ -76,6 +111,7 @@ export class Event extends Component {
 
 Event.propTypes = {
   event: React.PropTypes.object.isRequired,
+  eventAdded: React.PropTypes.func.isRequired,
   eventOptionsPopupOpen: React.PropTypes.func.isRequired
 }
 

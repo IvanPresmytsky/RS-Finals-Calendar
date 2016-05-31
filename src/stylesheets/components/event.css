@@ -5,6 +5,8 @@
   min-width: 100px;
   height: 20px;
 
+  box-sizing: border-box;
+
   font-size: 12px;
 }
 
