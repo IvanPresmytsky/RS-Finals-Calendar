@@ -4,6 +4,8 @@ import { moveAt, countAddEventPosition, getCoords } from '../utils/position.js';
 
 import '../stylesheets/components/event.css';
 
+var cursorPosition = '';
+
 export class Event extends Component {
 
   defineTargetDragged (e) {
@@ -31,7 +33,7 @@ export class Event extends Component {
     let shiftY = e.pageY - coords.top;
     let currentX = e.pageX;
     let currentY = e.pageY;
-
+    cursorPosition = e.pageX + '/' + e.pageY;
     event.classList.add('event--position-absolute');
     event.style.width = eventWidth;
 
@@ -45,7 +47,7 @@ export class Event extends Component {
     monthBody.onmousemove = function(e) {
       let moveX = e.pageX - currentX;
       let moveY = e.pageY - currentY;
-      if ( Math.abs(moveX) < 5 && Math.abs(moveY) < 5 ) return; 
+      if ( Math.abs(moveX) < 5 && Math.abs(moveY) < 5 ) return;
       moveAt(e, positionAPI);
     };
 
@@ -59,7 +61,14 @@ export class Event extends Component {
     return false;
   }
 
-  onEventMouseUp (e) {
+  onEventClick (e) {
+    let eventPosition = e.target.getBoundingClientRect();
+    let position = countAddEventPosition(eventPosition);
+    let event = this.props.event;
+    this.props.eventOptionsPopupOpen(event, position);
+  }
+
+  eventDrop (e) {
     let event = this.defineTargetDragged(e);
     let monthBody = document.getElementsByClassName('month-body')[0];
     if (!event) return;
@@ -70,22 +79,17 @@ export class Event extends Component {
     let newDate = this.defineTargetDroppedDate(e);
 
     event.classList.remove('event--hidden');
-
     this.props.eventAdded(this.props.event, newDate);
-
     event.classList.remove('event--position-absolute');
-    
     monthBody.onmousemove = null;
   }
 
-  onEventClick (e) {
-//    e.preventDefault();
-    console.log('target event');
-    let eventPosition = e.target.getBoundingClientRect();
-    let position = countAddEventPosition(eventPosition);
-    let event = this.props.event;
-    this.props.eventOptionsPopupOpen(event, position);
+  onEventMouseUp (e) {
+    if (cursorPosition === (e.pageX + '/' + e.pageY)) this.onEventClick(e);
+    else this.eventDrop(e);
   }
+
+  
 
   render () {
     let event = this.props.event;
@@ -97,7 +101,6 @@ export class Event extends Component {
         className="event-body" 
         data-name="event" 
         style={style}
-        onClick={this.onEventClick.bind(this)}
         onMouseDown={this.onEventMouseDown.bind(this)}
         onMouseUp={this.onEventMouseUp.bind(this)}
         onDragStart={this.onDragStart.bind(this)}
