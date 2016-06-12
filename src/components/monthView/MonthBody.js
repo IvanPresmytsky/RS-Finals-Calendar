@@ -1,4 +1,4 @@
-import '../../stylesheets/components/monthViewComponents/monthBody.css';
+import '../../stylesheets/components/monthView/monthBody.css';
 
 import fecha from 'fecha';
 import React, { Component } from 'react';
@@ -20,7 +20,7 @@ export class MonthBody extends Component {
     let id = fecha.format(day, 'YYYY-MM-DD');
     let currentDate = date.curentDateFormated();
     let dayEvents = this.defineDayEvents(id);
-    let dayNumsArr = date.dayNums(this.props.currentMonthIndex);
+    let dayNumsArr = date.dayNums(this.props.monthIndex);
     let currentMonth = dayNumsArr[Math.round(dayNumsArr.length/2)].getMonth();
     dayNumsArr = date.splitDaysToWeeks(dayNumsArr);
       
@@ -32,12 +32,12 @@ export class MonthBody extends Component {
         currentDate={currentDate}
         currentMonth={currentMonth} 
         events={dayEvents}
-        currentMonthIndex={this.props.currentMonthIndex}
-        addEventOpen={this.props.addEventOpen}
+        monthIndex={this.props.monthIndex}
+        openAddEventForm={this.props.openAddEventForm}
         eventAdded={this.props.eventAdded} 
         changeMonth={this.props.changeMonth}
-        eventsContainerPopupOpen={this.props.eventsContainerPopupOpen}
-        eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
+        openDayEventsPopup={this.props.openDayEventsPopup}
+        openEventMenu={this.props.openEventMenu}
       />
     );
   }
@@ -50,7 +50,7 @@ export class MonthBody extends Component {
   }
 
   render () {
-    let dayNumsArr = date.dayNums(this.props.currentMonthIndex);
+    let dayNumsArr = date.dayNums(this.props.monthIndex);
     dayNumsArr = date.splitDaysToWeeks(dayNumsArr);
 
     let MonthBodyTemplate = dayNumsArr.map(this.createWeekTemplate.bind(this));
@@ -65,13 +65,13 @@ export class MonthBody extends Component {
 };
 
 MonthBody.propTypes = {
-  currentMonthIndex: React.PropTypes.number.isRequired,
+  monthIndex: React.PropTypes.number.isRequired,
   events: React.PropTypes.array.isRequired,
-  addEventOpen: React.PropTypes.func.isRequired,
+  openAddEventForm: React.PropTypes.func.isRequired,
   eventAdded: React.PropTypes.func.isRequired,
   changeMonth: React.PropTypes.func.isRequired,
-  eventsContainerPopupOpen: React.PropTypes.func.isRequired,
-  eventOptionsPopupOpen: React.PropTypes.func.isRequired
+  openDayEventsPopup: React.PropTypes.func.isRequired,
+  openEventMenu: React.PropTypes.func.isRequired
 }
 
 export default MonthBody;

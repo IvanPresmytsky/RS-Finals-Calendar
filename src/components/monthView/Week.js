@@ -1,4 +1,4 @@
-import '../../stylesheets/components/monthViewComponents/monthWeek.css';
+import '../../stylesheets/components/monthView/monthWeek.css';
 
 import React, { Component } from 'react';
 

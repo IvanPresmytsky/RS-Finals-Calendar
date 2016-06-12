@@ -1,19 +1,19 @@
-import '../../stylesheets/components/monthViewComponents/monthDay.css';
+import '../../stylesheets/components/monthView/monthDay.css';
 
 import classNames from 'classnames';
 import React, { Component } from 'react';
 
-import Event from '../Event.js';
+import Event from './Event.js';
 
 import date from '../../utils/date.js';
 import { countAddEventPosition, countEventsContainerPopupPosition } from '../../utils/position.js';
 import { EVENT_HEIGHT } from '../../constants/handlersConstants.js';
 
 export class Day extends Component {
-  onDaytClick (e) {
+  onDayClick (e) {
     if (e.target.dataset.name === 'event' || e.target.parentNode.dataset.name === 'event') return;
     if (e.target.dataset.name === 'more') return;
-    let monthIndex = this.props.currentMonthIndex;
+    let monthIndex = this.props.monthIndex;
     if (e.target.classList.contains('prev-month-day')) {
       this.props.changeMonth(--monthIndex);
       return;
@@ -28,7 +28,7 @@ export class Day extends Component {
     let addEventPosition = countAddEventPosition(dayPosition);
     let defaultDate = e.target.id || e.target.parentNode.id;
     console.log(defaultDate);
-    this.props.addEventOpen(addEventPosition, defaultDate);
+    this.props.openAddEventForm(addEventPosition, defaultDate);
   }
 
   onLinkMoreClick (e) {
@@ -39,7 +39,7 @@ export class Day extends Component {
     let eventsHeight = this.props.events.length * EVENT_HEIGHT + 70;
     let position = countEventsContainerPopupPosition(dayPosition, eventsHeight);
     
-    this.props.eventsContainerPopupOpen(id, position);
+    this.props.openDayEventsPopup(id, position);
     console.log(id);
   }
 
@@ -49,7 +49,7 @@ export class Day extends Component {
       <Event 
         key={eventKey + index} 
         event={event} 
-        eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
+        openEventMenu={this.props.openEventMenu}
         eventAdded={this.props.eventAdded} 
       />
     );
@@ -63,7 +63,7 @@ export class Day extends Component {
         <Event 
           key={eventKey} 
           event={events[0]} 
-          eventOptionsPopupOpen={this.props.eventOptionsPopupOpen}
+          openEventMenu={this.props.openEventMenu}
           eventAdded={this.props.eventAdded} 
         />
         <a href="#" data-name="more" onClick={this.onLinkMoreClick.bind(this)}>
@@ -99,7 +99,7 @@ export class Day extends Component {
     });
 
     return (
-      <div id={id} className={dayClass} data-name="monthDay" onClick={this.onDaytClick.bind(this)}>
+      <div id={id} className={dayClass} data-name="monthDay" onClick={this.onDayClick.bind(this)}>
         <span className="day__day-number">
           {day.getDate()}
         </span>
@@ -114,13 +114,13 @@ Day.propTypes = {
   id: React.PropTypes.string.isRequired,
   currentDate: React.PropTypes.string.isRequired,
   currentMonth: React.PropTypes.number.isRequired,
-  currentMonthIndex: React.PropTypes.number.isRequired,
+  monthIndex: React.PropTypes.number.isRequired,
   events: React.PropTypes.array.isRequired,
-  addEventOpen: React.PropTypes.func.isRequired,
+  openAddEventForm: React.PropTypes.func.isRequired,
   eventAdded: React.PropTypes.func.isRequired,
   changeMonth: React.PropTypes.func.isRequired,
-  eventsContainerPopupOpen: React.PropTypes.func.isRequired,
-  eventOptionsPopupOpen: React.PropTypes.func.isRequired
+  openDayEventsPopup: React.PropTypes.func.isRequired,
+  openEventMenu: React.PropTypes.func.isRequired
 }
 
 export default Day;

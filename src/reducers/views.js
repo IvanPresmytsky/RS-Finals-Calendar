@@ -1,0 +1,18 @@
+import { SET_VIEW_MONTH, SET_VIEW_SCHEDULE } from '../constants/actions.js';
+
+const initialState = {
+  view: SET_VIEW_MONTH
+}
+
+function views (state = initialState, action) {
+  switch (action.type) {
+    case SET_VIEW_MONTH:
+      return Object.assign({}, state, {view: action.currentView});
+    case SET_VIEW_SCHEDULE:
+      return Object.assign({}, state, {view: action.currentView});
+    default:
+      return state;
+  }
+}
+
+export default views;

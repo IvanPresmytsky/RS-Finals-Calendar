@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-
-import '../stylesheets/components/scheduleView.css';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import  SceduleEvent from './ScheduleEvent.js';
 
-import { changeEvent, deleteEvent, addEventOpen } from '../actions/events.js';
+import { changeEvent, deleteEvent, addEventOpen } from '../../actions/events.js';
+import { openAddEventForm } from '../../actions/popups.js'
 
-import date from '../utils/date.js';
+import date from '../../utils/date.js';
+
+import '../../stylesheets/components/scheduleView/scheduleView.css';
 
 export class Schedule extends Component {
 
@@ -15,7 +18,7 @@ export class Schedule extends Component {
       <SceduleEvent 
         key={event.date+index} 
         event={event}
-        addEventOpen={this.props.addEventOpen}
+        openAddEventForm={this.props.openAddEventForm}
         deleteEvent={this.props.deleteEvent}
         changeEvent={this.props.changeEvent}
       />
@@ -46,9 +49,24 @@ export class Schedule extends Component {
 Schedule.propTypes = {
   events: React.PropTypes.array.isRequired,
   currentDayIndex: React.PropTypes.number.isRequired,
-  addEventOpen: React.PropTypes.func.isRequired,
+  openAddEventForm: React.PropTypes.func.isRequired,
   changeEvent: React.PropTypes.func.isRequired,
   deleteEvent: React.PropTypes.func.isRequired
 }
 
-export default Schedule;
+function mapStateToProps (state) {
+  return {
+    events: state.events.events,
+    currentDayIndex: state.pagination.dayIndex
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    openAddEventForm: bindActionCreators(openAddEventForm, dispatch),
+    changeEvent: bindActionCreators(changeEvent, dispatch),
+    deleteEvent: bindActionCreators(deleteEvent, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Schedule);

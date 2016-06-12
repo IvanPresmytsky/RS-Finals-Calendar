@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
 
-import '../stylesheets/components/scheduleEvent.css';
+import '../../stylesheets/components/scheduleView/scheduleEvent.css';
 
-import { countAddEventPosition } from '../utils/position.js';
+import { countAddEventPosition } from '../../utils/position.js';
 
 export class ScheduleEvent extends Component{
   onDelBtnClick (e) {
@@ -18,7 +18,7 @@ export class ScheduleEvent extends Component{
     console.log(this.props.changeEvent);
     console.log(this.props.event);
     this.props.changeEvent(this.props.event);
-    this.props.addEventOpen(addEventPosition);
+    this.props.openAddEventForm(addEventPosition);
   }
 
   render () {
@@ -56,7 +56,7 @@ export class ScheduleEvent extends Component{
 
 ScheduleEvent.propTypes = {
   event: React.PropTypes.object.isRequired,
-  addEventOpen: React.PropTypes.func.isRequired,
+  openAddEventForm: React.PropTypes.func.isRequired,
   changeEvent: React.PropTypes.func.isRequired,
   deleteEvent: React.PropTypes.func.isRequired
 }

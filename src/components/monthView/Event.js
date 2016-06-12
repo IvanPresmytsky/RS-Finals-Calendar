@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import { moveAt, countAddEventPosition, getCoords } from '../utils/position.js';
+import { moveAt, countAddEventPosition, getCoords } from '../../utils/position.js';
 
-import '../stylesheets/components/event.css';
+import '../../stylesheets/components/monthView/event.css';
 
 var cursorPosition = '';
 
@@ -15,6 +15,7 @@ export class Event extends Component {
   }
 
   defineTargetDroppedDate (e) {
+    console.log(e);
     let dropped = document.elementFromPoint(e.pageX, e.pageY);
     if (dropped.dataset.name === 'monthDay') return dropped.id;
     if (dropped.parentNode.dataset.name === 'monthDay') return dropped.parentNode.id
@@ -65,19 +66,22 @@ export class Event extends Component {
     let eventPosition = e.target.getBoundingClientRect();
     let position = countAddEventPosition(eventPosition);
     let event = this.props.event;
-    this.props.eventOptionsPopupOpen(event, position);
+    this.props.openEventMenu(event, position);
   }
 
   eventDrop (e) {
     let event = this.defineTargetDragged(e);
     let monthBody = document.getElementsByClassName('month-body')[0];
-    if (!event) return;
+    if (!event) {
+      this.props.eventAdded(this.props.event, "2016-05-01");
+      return;
+    }
 
     event.style.width = "";
     event.classList.add('event--hidden');
 
     let newDate = this.defineTargetDroppedDate(e);
-
+    console.log(newDate);
     event.classList.remove('event--hidden');
     this.props.eventAdded(this.props.event, newDate);
     event.classList.remove('event--position-absolute');
@@ -115,7 +119,7 @@ export class Event extends Component {
 Event.propTypes = {
   event: React.PropTypes.object.isRequired,
   eventAdded: React.PropTypes.func.isRequired,
-  eventOptionsPopupOpen: React.PropTypes.func.isRequired
+  openEventMenu: React.PropTypes.func.isRequired
 }
 
 export default Event;

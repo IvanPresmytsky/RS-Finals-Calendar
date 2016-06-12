@@ -1,5 +1,3 @@
-import '../stylesheets/components/logIn.css';
-
 import classNames from 'classnames';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -7,7 +5,9 @@ import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { logInClose } from '../actions/logIn.js';
+import { closeLoginForm } from '../actions/popups.js';
+
+import '../stylesheets/components/logIn.css';
 
 export class LogIn extends Component {
   componentDidMount () {
@@ -16,7 +16,7 @@ export class LogIn extends Component {
 
   onBtnCloseClick (e) {
     e.preventDefault();
-    this.props.logInClose();
+    this.props.closeLoginForm();
   }
 
   render () {
@@ -60,18 +60,18 @@ export class LogIn extends Component {
 
 LogIn.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
-  logInClose: React.PropTypes.func.isRequired
+  closeLoginForm: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
   return {
-    visibility: state.logIn.visibility
+    visibility: state.popups.loginFormVisibility
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    logInClose: bindActionCreators(logInClose, dispatch)
+    closeLoginForm: bindActionCreators(closeLoginForm, dispatch)
   };
 }
 

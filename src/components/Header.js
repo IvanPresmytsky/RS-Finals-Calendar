@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { openLoginForm, openRegisterForm } from '../actions/popups.js';
 
 import '../stylesheets/components/header.css';
 
 export class Header extends Component{
   onBtnLogInClick (e) {
     e.preventDefault();
-    this.props.logInOpen();
+    this.props.openLoginForm();
   }
 
   onBtnRegisterClick (e) {
     e.preventDefault();
-    this.props.registerOpen();
+    this.props.openRegisterForm();
   }
 
   render () {
@@ -34,9 +38,16 @@ export class Header extends Component{
 };
 
 Header.propTypes = {
-  logInOpen: React.PropTypes.func.isRequired,
-  registerOpen: React.PropTypes.func.isRequired
+  openLoginForm: React.PropTypes.func.isRequired,
+  openRegisterForm: React.PropTypes.func.isRequired
 }
 
-export default Header;
+function mapDispatchToProps (dispatch) {
+  return {
+    openLoginForm: bindActionCreators(openLoginForm, dispatch),
+    openRegisterForm: bindActionCreators(openRegisterForm, dispatch)
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Header);
 

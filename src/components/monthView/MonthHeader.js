@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
 
-import '../../stylesheets/components/monthViewComponents/monthHeader.css';
+import '../../stylesheets/components/monthView/monthHeader.css';
 
 import { DAYS } from '../../constants/data/DAYS.js'
 

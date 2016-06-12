@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { registerClose } from '../actions/register.js';
+import { closeRegisterForm } from '../actions/popups.js';
 import '../stylesheets/components/register.css';
 
 export class Register extends Component {
@@ -15,7 +15,7 @@ export class Register extends Component {
 
   onBtnCloseClick (e) {
     e.preventDefault();
-    this.props.registerClose();
+    this.props.closeRegisterForm();
   }
 
   render () {
@@ -67,18 +67,18 @@ export class Register extends Component {
 
 Register.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
-  registerClose: React.PropTypes.func.isRequired
+  closeRegisterForm: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
   return {
-    visibility: state.register.visibility
+    visibility: state.popups.registerFormVisibility
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    registerClose: bindActionCreators(registerClose, dispatch)
+    closeRegisterForm: bindActionCreators(closeRegisterForm, dispatch)
   };
 }
 

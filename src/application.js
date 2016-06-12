@@ -17,7 +17,7 @@ let store = configureStore();
 console.log(store);
 
 function defineNearestEvent () {
-  let events = store.getState().addEvent.events;
+  let events = store.getState().events.events;
   if (events.length === 0) return;
 
   events = date.actualEvents(events);

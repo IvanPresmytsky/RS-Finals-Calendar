@@ -1,4 +1,4 @@
-.event-options-popup {
+.event-menu {
   position: absolute;
   top: 0;
   left: 0;
@@ -16,30 +16,30 @@
   box-shadow: 2px 2px 15px grey;
 }
 
-.event-options-popup--visible {
+.event-menu--visible {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.event-options-popup__description {
+.event-menu__description {
   font-size: 12px;
 }
 
-.event-options-popup-buttons {
+.event-menu-buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
-.event-options-popup__close {
+.event-menu__close {
   position: absolute;
   top: 0;
   right: 0;
   background: red;
 }
 
-.event-options-popup__close a {
+.event-menu__close a {
   text-decoration: none;
   color: #fff;
 }

@@ -4,12 +4,13 @@ import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import '../stylesheets/components/addEvent.css';
-
-import { eventAdded, changeEvent, eventChanged, addEventClose } from '../actions/events.js';
+import { eventAdded, changeEvent, eventChanged } from '../actions/events.js';
+import { closeAddEventForm } from '../actions/popups.js';
 
 import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT } from '../constants/handlersConstants.js';
 import { SET_FILTER_MONTH, SET_FILTER_SCHEDULE } from '../constants/actions.js';
+
+import '../stylesheets/components/addEvent.css';
 
 export class AddEvent extends Component {
   componentDidMount () {
@@ -37,7 +38,7 @@ export class AddEvent extends Component {
 
   onBtnCloseClick (e) {
     e.preventDefault();
-    this.props.addEventClose();
+    this.props.closeAddEventForm();
   }
 
   onSubmit (e) {
@@ -52,7 +53,7 @@ export class AddEvent extends Component {
       this.props.changeEvent(null);
     }
 
-    this.props.addEventClose();
+    this.props.closeAddEventForm();
     this.refs.eventDate.value = null;
   }
 
@@ -181,7 +182,7 @@ AddEvent.propTypes = {
   defaultDate: React.PropTypes.string,
   position: React.PropTypes.object,
   eventForChange: React.PropTypes.object,
-  addEventClose: React.PropTypes.func.isRequired,
+  closeAddEventForm: React.PropTypes.func.isRequired,
   createEvent: React.PropTypes.func.isRequired,
   changeEvent: React.PropTypes.func.isRequired,
   eventChanged: React.PropTypes.func.isRequired
@@ -189,10 +190,10 @@ AddEvent.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    visibility: state.addEvent.visibility,
-    defaultDate: state.addEvent.defaultDate,
-    position: state.addEvent.position,
-    eventForChange: state.addEvent.eventForChange,
+    visibility: state.popups.addEventFormVisibility,
+    defaultDate: state.popups.addEventFormDefaultDate,
+    position: state.popups.addEventFormPosition,
+    eventForChange: state.events.eventForChange,
   }
 }
 
@@ -201,7 +202,7 @@ function mapDispatchToProps (dispatch) {
     createEvent: bindActionCreators(eventAdded, dispatch),
     changeEvent: bindActionCreators(changeEvent, dispatch),
     eventChanged: bindActionCreators(eventChanged, dispatch),
-    addEventClose: bindActionCreators(addEventClose, dispatch)
+    closeAddEventForm: bindActionCreators(closeAddEventForm, dispatch)
   };
 }
 

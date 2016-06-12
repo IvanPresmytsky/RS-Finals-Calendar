@@ -1,4 +1,4 @@
-.events-container-popup {
+.day-events-popup {
   position: absolute;
   top: 0;
   left: 0;
@@ -10,18 +10,18 @@
   box-shadow: 2px 2px 15px grey;
 }
 
-.events-container-popup__close {
+.day-events-popup__close {
   position: absolute;
   top: 0;
   right: 0;
   background: red;
 }
 
-.events-container-popup__close a {
+.day-events-popup__close a {
   text-decoration: none;
   color: #fff;
 }
 
-.events-container-popup--visible {
+.day-events-popup--visible {
   display: block;
 }

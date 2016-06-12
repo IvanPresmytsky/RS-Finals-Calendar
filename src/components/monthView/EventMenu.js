@@ -1,26 +1,26 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
 
-import '../../stylesheets/components/monthViewComponents/eventOptionsPopup.css';
+import '../../stylesheets/components/monthView/eventMenu.css';
 
-export class EventOptionsPopup extends Component {
+export class EventMenu extends Component {
   onCloseClick (e) {
     e.preventDefault();
-    this.props.eventOptionsPopupClose();
+    this.props.closeEventMenu();
   }
 
   onChangeBtnClick (e) {
     e.preventDefault();
     this.props.changeEvent(this.props.event);
-    this.props.eventOptionsPopupClose();
+    this.props.closeEventMenu();
     let position = e.target.parentNode.parentNode.getBoundingClientRect();
-    this.props.addEventOpen(position);
+    this.props.openAddEventForm(position);
   }
 
   onDeleteBtnClick (e) {
     e.preventDefault();
     this.props.deleteEvent(this.props.event);
-    this.props.eventOptionsPopupClose();
+    this.props.closeEventMenu();
   }
 
   render () {
@@ -29,8 +29,8 @@ export class EventOptionsPopup extends Component {
     let text = event ? event.text : '';
     let date= event ? event.date : '';
     let time = event ? `${event.startTime} - ${event.endTime}` : '';
-    let popupClass = classNames('event-options-popup', {
-      'event-options-popup--visible': this.props.visibility
+    let popupClass = classNames('event-menu', {
+      'event-menu--visible': this.props.visibility
     })
     let style = {
       top: this.props.position.top,
@@ -38,27 +38,27 @@ export class EventOptionsPopup extends Component {
     }
     return (
       <div className={popupClass} style={style}>
-        <p className="event-options-popup__title">{title}</p>
-        <p className="event-options-popup__description">{text}</p>
-        <p className="event-options-popup__date">{date}</p>
-        <p className="event-options-popup__time">{time}</p>
-        <div className="event-options-popup-buttons">
+        <p className="event-menu__title">{title}</p>
+        <p className="event-menu__description">{text}</p>
+        <p className="event-menu__date">{date}</p>
+        <p className="event-menu__time">{time}</p>
+        <div className="event-menu-buttons">
           <button 
             type="button" 
-            className="event-options-popup__change-btn"
+            className="event-menu__change-btn"
             onClick={this.onChangeBtnClick.bind(this)}
           >
             change event 
           </button>
           <button 
             type="button" 
-            className="event-options-popup__delete-btn"
+            className="event-menu__delete-btn"
             onClick={this.onDeleteBtnClick.bind(this)}
           > 
             delete event 
           </button>
         </div>
-        <div className="event-options-popup__close">
+        <div className="event-menu__close">
           <a href="#" onClick={this.onCloseClick.bind(this)}>X</a>
         </div>
       </div>
@@ -66,14 +66,14 @@ export class EventOptionsPopup extends Component {
   }
 }
 
-EventOptionsPopup.propTypes = {
+EventMenu.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
   position: React.PropTypes.object.isRequired,
   event: React.PropTypes.object,
-  eventOptionsPopupClose: React.PropTypes.func.isRequired,
-  addEventOpen: React.PropTypes.func.isRequired,
+  closeEventMenu: React.PropTypes.func.isRequired,
+  openAddEventForm: React.PropTypes.func.isRequired,
   changeEvent: React.PropTypes.func.isRequired,
   deleteEvent: React.PropTypes.func.isRequired
 }
 
-export default EventOptionsPopup;
+export default EventMenu;
