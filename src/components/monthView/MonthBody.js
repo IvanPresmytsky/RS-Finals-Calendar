@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import Day from './Day.js';
 import Week from './Week.js';
 
-import date from '../../utils/date.js';
+import { getTargetMonthDays, splitDaysToWeeks } from '../../utils/date.js';
 import { moveAt } from '../../utils/position.js';
 
 
@@ -18,24 +18,21 @@ export class MonthBody extends Component {
 
   createDayTemplate(day) {
     let id = fecha.format(day, 'YYYY-MM-DD');
-    let currentDate = date.curentDateFormated();
     let dayEvents = this.defineDayEvents(id);
-    let dayNumsArr = date.dayNums(this.props.monthIndex);
-    let currentMonth = dayNumsArr[Math.round(dayNumsArr.length/2)].getMonth();
-    dayNumsArr = date.splitDaysToWeeks(dayNumsArr);
+
+    let dayNumsArr = getTargetMonthDays(this.props.targetDate);
+    dayNumsArr = splitDaysToWeeks(dayNumsArr);
       
     return (
       <Day 
         key={id} 
         id={id} 
         day={day} 
-        currentDate={currentDate}
-        currentMonth={currentMonth} 
         events={dayEvents}
-        monthIndex={this.props.monthIndex}
+        targetDate={this.props.targetDate}
         openAddEventForm={this.props.openAddEventForm}
         eventAdded={this.props.eventAdded} 
-        changeMonth={this.props.changeMonth}
+        changeTargetDate={this.props.changeTargetDate}
         openDayEventsPopup={this.props.openDayEventsPopup}
         openEventMenu={this.props.openEventMenu}
       />
@@ -50,12 +47,11 @@ export class MonthBody extends Component {
   }
 
   render () {
-    let dayNumsArr = date.dayNums(this.props.monthIndex);
-    dayNumsArr = date.splitDaysToWeeks(dayNumsArr);
+    let dayNumsArr = getTargetMonthDays(this.props.targetDate);
+    dayNumsArr = splitDaysToWeeks(dayNumsArr);
 
     let MonthBodyTemplate = dayNumsArr.map(this.createWeekTemplate.bind(this));
 
-        
     return (
       <div className="month-body">
         {MonthBodyTemplate}
@@ -65,13 +61,13 @@ export class MonthBody extends Component {
 };
 
 MonthBody.propTypes = {
-  monthIndex: React.PropTypes.number.isRequired,
+  targetDate: React.PropTypes.object.isRequired,
   events: React.PropTypes.array.isRequired,
   openAddEventForm: React.PropTypes.func.isRequired,
   eventAdded: React.PropTypes.func.isRequired,
-  changeMonth: React.PropTypes.func.isRequired,
   openDayEventsPopup: React.PropTypes.func.isRequired,
-  openEventMenu: React.PropTypes.func.isRequired
+  openEventMenu: React.PropTypes.func.isRequired,
+  changeTargetDate: React.PropTypes.func.isRequired
 }
 
 export default MonthBody;

@@ -1,24 +1,35 @@
 import fecha from 'fecha';
 
-import {SET_MONTH, SET_DAY} from '../constants/actions.js';
+import { TODAY, NEXT_MONTH, PREVIOUS_MONTH, NEXT_DAY, PREVIOUS_DAY} from '../constants/pagination.js';
 
-function totalDaysNums(monthIncreaser) {
-  let date = new Date();
+export function getTargetDate(date, constant) {
   let year = date.getFullYear();
   let month = date.getMonth();
-  const totalDaysCount = 42;
-
-  if(monthIncreaser) {
-    date = new Date(year, month + monthIncreaser);
+  let day = date.getDate();
+  switch (constant) {
+    case NEXT_MONTH:
+      return new Date(year, month + 1);
+    case PREVIOUS_MONTH:
+      return new Date(year, month - 1);
+    case NEXT_DAY:
+      return new Date(year, month, day + 1);
+    case PREVIOUS_DAY:
+      return new Date(year, month, day - 1);
+    case TODAY:
+      return new Date();
+    default:
+      return new Date();
   }
-  
-  let createDayNumsArray = createDayNumsArrayFunction(date);
-  let dayNums = Array.from({length: totalDaysCount}, createDayNumsArray);
+}
 
-  return dayNums;
-};
+export function getTargetMonthDays(date){
+  const totalDaysCount = 42;
+  let createTargetMonthDaysArray = createTargetMonthDaysArrayFunction(date);
+  let targetMonthDaysArray = Array.from({length: totalDaysCount}, createTargetMonthDaysArray);
+  return targetMonthDaysArray;
+}
 
-function createDayNumsArrayFunction(date) {
+function createTargetMonthDaysArrayFunction(date) {
   let year = date.getFullYear();
   let month = date.getMonth();
   let prevMonthDaysCount = new Date(year, month, 0).getDate();
@@ -33,14 +44,18 @@ function createDayNumsArrayFunction(date) {
   };
 }
 
-function splitToWeeks(arr) {
+export function splitDaysToWeeks(arr) {
   const weekCount = 6;
   return Array.from({length: weekCount}, (item, i) => {
     return arr.splice(0, 7);
   });
 }
 
-function sortByTime (events) {
+export function getCurrentFormatedDate () {
+  return fecha.format(new Date(), 'YYYY-MM-DD');
+}
+
+export function sortEventsByTime (events) {
   return events.sort( (a, b) => {
     if (a.date.localeCompare(b.date) === 0) {
       return a.startTime.localeCompare(b.startTime);
@@ -49,57 +64,15 @@ function sortByTime (events) {
   });
 }
 
-function defineActualEvents(eventArr, increaser) {
-  let incr = increaser || 0;
-  let date = new Date();
-  let year = date.getFullYear();
-  let month = date.getMonth();
-  let day = date.getDate();
-  let currentDate = fecha.format(new Date(year, month, day + incr), 'YYYY-MM-DDHH:mm');
+export function getActualEvents(eventArr, date) {
+  let currentDate = fecha.format(date, 'YYYY-MM-DDHH:mm');
   return eventArr.filter((e) => {
       return (e.date + e.startTime) >= currentDate;
     });
 }
 
-function getCurrentFormatedDate () {
-  return fecha.format(new Date(), 'YYYY-MM-DD');
-}
-
-function getActualDate(filter, index) {
-
-  let currentDate = new Date();
-  if (arguments.length === 0) return fecha.format(currentDate, 'dddd MMMM Do, YYYY');
-  if (filter === SET_DAY) {
-    let year = currentDate.getFullYear();
-    let month = currentDate.getMonth();
-    let day = currentDate.getDate() + index;
-    return fecha.format(new Date(year, month, day), 'dddd MMMM Do, YYYY');
-  }
-  let daysNumArr = totalDaysNums(index);
-  let middleIndex = Math.round(daysNumArr.length/2);
-  let month = daysNumArr[middleIndex].getMonth();
-  let year = daysNumArr[middleIndex].getFullYear();
-
-  let date = new Date(year, month);
-  let isMonthEqual = currentDate.getMonth() === date.getMonth();
-  let isYearEqual = currentDate.getFullYear() === date.getFullYear();
-
-  if (isYearEqual && isMonthEqual) return fecha.format(currentDate, 'dddd MMMM Do, YYYY');
-
-  return fecha.format(date, 'MMMM, YYYY');
-}
-
-function getOriginalId () {
+export function getOriginalId () {
   return Date.now();
 }
 
-export default {
-  dayNums: totalDaysNums,
-  splitDaysToWeeks: splitToWeeks,
-  sortedEvents: sortByTime,
-  actualEvents: defineActualEvents,
-  actualDate: getActualDate,
-  curentDateFormated: getCurrentFormatedDate,
-  originalKey: getOriginalId
-};
 

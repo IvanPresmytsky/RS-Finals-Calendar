@@ -1,20 +1,11 @@
 import date from '../utils/date.js';
 
-import {SET_MONTH, SET_DAY} from '../constants/actions.js';
+import { SET_MONTH, SET_DAY, CHANGE_TARGET_DATE } from '../constants/actions.js';
 
-export function setMonth (index) {
+export function changeTargetDate (option) {
   return {
-    type: SET_MONTH,
-    monthIndex: index,
-    date: date.actualDate(SET_MONTH, index)
-  };
-}
-
-export function setDay (index) {
-  return {
-    type: SET_DAY,
-    dayIndex: index,
-    date: date.actualDate(SET_DAY, index)
-  };
+    type: CHANGE_TARGET_DATE,
+    option 
+  }
 }
 

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import AddEvent from './AddEvent.js';
+import AddEventForm from './AddEventForm.js';
 import Header from './Header.js';
-import LogIn from './LogIn.js';
+import LoginForm from './LoginForm.js';
 import MonthView from './monthView/MonthView.js';
 import NavAndTools from './NavAndTools.js';
-import Register from './Register.js';
+import RegisterForm from './RegisterForm.js';
 import ScheduleView from './scheduleView/ScheduleView.js';
 
 import configureStore from '../store/configureStore.js';
@@ -40,9 +40,9 @@ export class App extends Component {
            <NavAndTools />
          </div>
          {calendarView}
-         <LogIn />
-         <Register />
-         <AddEvent />
+         <LoginForm />
+         <RegisterForm />
+         <AddEventForm />
       </div>
     );
   }

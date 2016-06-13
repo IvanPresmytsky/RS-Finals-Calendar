@@ -10,9 +10,9 @@ import { closeAddEventForm } from '../actions/popups.js';
 import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT } from '../constants/handlersConstants.js';
 import { SET_FILTER_MONTH, SET_FILTER_SCHEDULE } from '../constants/actions.js';
 
-import '../stylesheets/components/addEvent.css';
+import '../stylesheets/components/addEventForm.css';
 
-export class AddEvent extends Component {
+export class AddEventForm extends Component {
   componentDidMount () {
     ReactDOM.findDOMNode(this.refs.eventName).focus();
   }
@@ -177,7 +177,7 @@ export class AddEvent extends Component {
   }
 };
 
-AddEvent.propTypes = {
+AddEventForm.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
   defaultDate: React.PropTypes.string,
   position: React.PropTypes.object,
@@ -206,4 +206,4 @@ function mapDispatchToProps (dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddEvent);
+export default connect(mapStateToProps, mapDispatchToProps)(AddEventForm);

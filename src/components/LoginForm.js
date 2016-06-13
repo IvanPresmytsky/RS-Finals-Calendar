@@ -5,31 +5,32 @@ import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { closeRegisterForm } from '../actions/popups.js';
-import '../stylesheets/components/register.css';
+import { closeLoginForm } from '../actions/popups.js';
 
-export class Register extends Component {
+import '../stylesheets/components/loginForm.css';
+
+export class LoginForm extends Component {
   componentDidMount () {
     ReactDOM.findDOMNode(this.refs.user).focus();
   }
 
   onBtnCloseClick (e) {
     e.preventDefault();
-    this.props.closeRegisterForm();
+    this.props.closeLoginForm();
   }
 
   render () {
-    let popupClass = classNames('register-popup', {
+    let popupClass = classNames('login-popup', {
       ' popup-visible': this.props.visibility
     });
 
     return (
       <div className={popupClass}>
-        <form className="register-form">
+        <form className="login-form">
            <p>User</p>
            <input 
              type="text" 
-             className="register-form__user" 
+             className="login-form__user" 
              placeholder="enter user name"
              defaultValue=""
              ref="user"
@@ -37,27 +38,19 @@ export class Register extends Component {
            <p>Password</p>
            <input 
              type="password" 
-             className="register-form__password" 
+             className="login-form__password" 
              placeholder="enter password"
              defaultValue=""
              ref="password"
            />
-           <p>Confirm password</p>
            <input 
-             type="password"
-             className="register-form__confirm-password" 
-             placeholder="confirm password"
-             defaultValue=""
-             ref="password"
-           />
-           <input
              type="submit" 
-             className="register-form__submit" 
-             value="register"
+             className="login-form__submit" 
+             value="log in"
              ref="submit"
            />
         </form>
-        <div className="register-popup__close">
+        <div className="login-popup__close">
           <a href="#" onClick={this.onBtnCloseClick.bind(this)}>X</a>
         </div>
       </div>
@@ -65,21 +58,21 @@ export class Register extends Component {
   }
 };
 
-Register.propTypes = {
+LoginForm.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
-  closeRegisterForm: React.PropTypes.func.isRequired
+  closeLoginForm: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
   return {
-    visibility: state.popups.registerFormVisibility
+    visibility: state.popups.loginFormVisibility
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    closeRegisterForm: bindActionCreators(closeRegisterForm, dispatch)
+    closeLoginForm: bindActionCreators(closeLoginForm, dispatch)
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

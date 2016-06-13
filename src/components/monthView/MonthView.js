@@ -13,7 +13,7 @@ import { openAddEventForm,
          openDayEventsPopup,
          closeDayEventsPopup } from '../../actions/popups.js';
 import { eventAdded, changeEvent, deleteEvent } from '../../actions/events.js';
-import { setMonth } from '../../actions/pagination.js';
+import { changeTargetDate } from '../../actions/pagination.js';
 
 import '../../stylesheets/components/monthView/monthView.css';
 
@@ -23,13 +23,13 @@ export class MonthView extends Component {
       <div className="month-view">
         <MonthHeader />
         <MonthBody 
-          monthIndex={this.props.monthIndex} 
+          targetDate={this.props.targetDate}
           events={this.props.events} 
           openAddEventForm={this.props.openAddEventForm} 
           eventAdded={this.props.eventAdded} 
-          changeMonth={this.props.changeMonth} 
           openDayEventsPopup={this.props.openDayEventsPopup}
           openEventMenu={this.props.openEventMenu}
+          changeTargetDate={this.props.changeTargetDate}
         />
         <DayEventsPopup 
           events={this.props.events}
@@ -54,7 +54,7 @@ export class MonthView extends Component {
 };
 
 MonthView.propTypes = {
-  monthIndex: React.PropTypes.number.isRequired,
+  targetDate: React.PropTypes.object.isRequired,
   events: React.PropTypes.array.isRequired,
   dayEventsPopupVisibility: React.PropTypes.bool.isRequired,
   dayEventsPopupPosition: React.PropTypes.object.isRequired,
@@ -68,14 +68,14 @@ MonthView.propTypes = {
   openEventMenu: React.PropTypes.func.isRequired,
   closeEventMenu: React.PropTypes.func.isRequired,
   eventAdded: React.PropTypes.func.isRequired,
-  changeMonth: React.PropTypes.func.isRequired,
   changeEvent: React.PropTypes.func.isRequired,
   deleteEvent: React.PropTypes.func.isRequired,
+  changeTargetDate: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
   return {
-    monthIndex: state.pagination.monthIndex,
+    targetDate: state.pagination.targetDate,
     events: state.events.events,
     dayEventsPopupVisibility: state.popups.dayEventsPopupVisibility,
     dayEventsPopupPosition: state.popups.dayEventsPopupPosition,
@@ -96,7 +96,7 @@ function mapDispatchToProps (dispatch) {
     eventAdded: bindActionCreators(eventAdded, dispatch),
     changeEvent: bindActionCreators(changeEvent, dispatch),
     deleteEvent: bindActionCreators(deleteEvent, dispatch),
-    changeMonth: bindActionCreators(setMonth, dispatch)
+    changeTargetDate: bindActionCreators(changeTargetDate, dispatch)
   };
 }
 

@@ -5,5 +5,5 @@ export const DELETE_EVENT = 'DELETE_EVENT';
 
 export const SET_VIEW_MONTH = 'SET_VIEW_MONTH';
 export const SET_VIEW_SCHEDULE = 'SET_VIEW_SCHEDULE';
-export const SET_MONTH = 'SET_MONTH';
-export const SET_DAY = 'SET_DAY';
+export const CHANGE_TARGET_DATE = 'CHANGE_TARGET_DATE';
+

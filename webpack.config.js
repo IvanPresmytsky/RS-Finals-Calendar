@@ -1,8 +1,3 @@
-//import webpack from 'webpack';
-//import path from 'path';
-//import ExtractTextPlugin from 'extract-text-webpack-plugin';
-//import HtmlWebpackPlugin from 'html-webpack-plugin';
-
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -41,6 +36,8 @@ module.exports = {
     devServer: {
       hot: true,
       contentBase: "./"
-    }
+    },
+
+    devtool: 'source-map'
 };
  

@@ -7,7 +7,7 @@ import  SceduleEvent from './ScheduleEvent.js';
 import { changeEvent, deleteEvent, addEventOpen } from '../../actions/events.js';
 import { openAddEventForm } from '../../actions/popups.js'
 
-import date from '../../utils/date.js';
+import { getActualEvents, sortEventsByTime } from '../../utils/date.js';
 
 import '../../stylesheets/components/scheduleView/scheduleView.css';
 
@@ -27,10 +27,10 @@ export class Schedule extends Component {
 
   render () {
 
-    let sortedEvents = date.sortedEvents(this.props.events);
-
-    sortedEvents = date.actualEvents(sortedEvents, this.props.currentDayIndex);
-
+    //let sortedEvents = date.sortedEvents(this.props.events);
+    let sortedEvents = sortEventsByTime(this.props.events);
+    //sortedEvents = date.actualEvents(sortedEvents, this.props.currentDayIndex);
+    sortedEvents = getActualEvents(sortedEvents, this.props.targetDate);
     let eventlistTemplate = sortedEvents.map(this.createEventlistTemplate.bind(this));
 
     return (
@@ -48,7 +48,7 @@ export class Schedule extends Component {
 
 Schedule.propTypes = {
   events: React.PropTypes.array.isRequired,
-  currentDayIndex: React.PropTypes.number.isRequired,
+  targetDate: React.PropTypes.object.isRequired,
   openAddEventForm: React.PropTypes.func.isRequired,
   changeEvent: React.PropTypes.func.isRequired,
   deleteEvent: React.PropTypes.func.isRequired
@@ -57,7 +57,7 @@ Schedule.propTypes = {
 function mapStateToProps (state) {
   return {
     events: state.events.events,
-    currentDayIndex: state.pagination.dayIndex
+    targetDate: state.pagination.targetDate
   };
 }
 
