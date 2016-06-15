@@ -15,9 +15,7 @@ export class ScheduleEvent extends Component{
     e.preventDefault();
     let dayPosition = e.target.getBoundingClientRect();
     let addEventPosition = countAddEventPosition(dayPosition);
-    console.log(this.props.changeEvent);
-    console.log(this.props.event);
-    this.props.changeEvent(this.props.event);
+    this.props.targetEventForChange(this.props.event);
     this.props.openAddEventForm(addEventPosition);
   }
 
@@ -57,7 +55,7 @@ export class ScheduleEvent extends Component{
 ScheduleEvent.propTypes = {
   event: React.PropTypes.object.isRequired,
   openAddEventForm: React.PropTypes.func.isRequired,
-  changeEvent: React.PropTypes.func.isRequired,
+  targetEventForChange: React.PropTypes.func.isRequired,
   deleteEvent: React.PropTypes.func.isRequired
 }
 

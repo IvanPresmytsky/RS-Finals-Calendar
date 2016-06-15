@@ -33,7 +33,7 @@ export class MonthBody extends Component {
         events={dayEvents}
         targetDate={this.props.targetDate}
         openAddEventForm={this.props.openAddEventForm}
-        eventAdded={this.props.eventAdded} 
+        addEvent={this.props.addEvent} 
         changeTargetDate={this.props.changeTargetDate}
         openDayEventsPopup={this.props.openDayEventsPopup}
         openEventMenu={this.props.openEventMenu}
@@ -66,7 +66,7 @@ MonthBody.propTypes = {
   targetDate: React.PropTypes.object.isRequired,
   events: React.PropTypes.array.isRequired,
   openAddEventForm: React.PropTypes.func.isRequired,
-  eventAdded: React.PropTypes.func.isRequired,
+  addEvent: React.PropTypes.func.isRequired,
   openDayEventsPopup: React.PropTypes.func.isRequired,
   openEventMenu: React.PropTypes.func.isRequired,
   changeTargetDate: React.PropTypes.func.isRequired

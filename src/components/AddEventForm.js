@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { eventAdded, changeEvent, eventChanged } from '../actions/events.js';
+import { addEvent, changeEvent, targetEventForChange } from '../actions/events.js';
 import { closeAddEventForm } from '../actions/popups.js';
 
 import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT } from '../constants/handlersConstants.js';
@@ -46,11 +46,11 @@ export class AddEventForm extends Component {
     let event = this.createEvent();
 
     if (this.props.eventForChange) {
-      this.props.eventChanged(this.props.eventForChange, event);
-      this.props.changeEvent(null);
+      this.props.changeEvent(this.props.eventForChange, event);
+      this.props.targetEventForChange(null);
     } else {
       this.props.createEvent(event);
-      this.props.changeEvent(null);
+      this.props.targetEventForChange(null);
     }
 
     this.props.closeAddEventForm();
@@ -60,7 +60,6 @@ export class AddEventForm extends Component {
   render () {
     let position = this.props.position;
     let defaultDate = this.props.defaultDate;
-    console.log(defaultDate);
     let top = position ? position.top : 0;
     let left = position ? position.left : 0;
     let style = {
@@ -185,7 +184,7 @@ AddEventForm.propTypes = {
   closeAddEventForm: React.PropTypes.func.isRequired,
   createEvent: React.PropTypes.func.isRequired,
   changeEvent: React.PropTypes.func.isRequired,
-  eventChanged: React.PropTypes.func.isRequired
+  targetEventForChange: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
@@ -199,9 +198,9 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    createEvent: bindActionCreators(eventAdded, dispatch),
+    createEvent: bindActionCreators(addEvent, dispatch),
     changeEvent: bindActionCreators(changeEvent, dispatch),
-    eventChanged: bindActionCreators(eventChanged, dispatch),
+    targetEventForChange: bindActionCreators(targetEventForChange, dispatch),
     closeAddEventForm: bindActionCreators(closeAddEventForm, dispatch)
   };
 }

@@ -12,7 +12,7 @@ import { openAddEventForm,
          closeEventMenu,
          openDayEventsPopup,
          closeDayEventsPopup } from '../../actions/popups.js';
-import { eventAdded, changeEvent, deleteEvent } from '../../actions/events.js';
+import { addEvent, targetEventForChange, deleteEvent } from '../../actions/events.js';
 import { changeTargetDate } from '../../actions/pagination.js';
 
 import '../../stylesheets/components/monthView/monthView.css';
@@ -26,7 +26,7 @@ export class MonthView extends Component {
           targetDate={this.props.targetDate}
           events={this.props.events} 
           openAddEventForm={this.props.openAddEventForm} 
-          eventAdded={this.props.eventAdded} 
+          addEvent={this.props.addEvent} 
           openDayEventsPopup={this.props.openDayEventsPopup}
           openEventMenu={this.props.openEventMenu}
           changeTargetDate={this.props.changeTargetDate}
@@ -45,7 +45,7 @@ export class MonthView extends Component {
           position={this.props.eventMenuPosition}
           event={this.props.eventMenuTargetEvent}
           deleteEvent={this.props.deleteEvent}
-          changeEvent={this.props.changeEvent}
+          targetEventForChange={this.props.targetEventForChange}
           openAddEventForm={this.props.openAddEventForm}
         />
       </div>
@@ -67,8 +67,8 @@ MonthView.propTypes = {
   closeDayEventsPopup: React.PropTypes.func.isRequired,
   openEventMenu: React.PropTypes.func.isRequired,
   closeEventMenu: React.PropTypes.func.isRequired,
-  eventAdded: React.PropTypes.func.isRequired,
-  changeEvent: React.PropTypes.func.isRequired,
+  addEvent: React.PropTypes.func.isRequired,
+  targetEventForChange: React.PropTypes.func.isRequired,
   deleteEvent: React.PropTypes.func.isRequired,
   changeTargetDate: React.PropTypes.func.isRequired
 }
@@ -93,8 +93,8 @@ function mapDispatchToProps (dispatch) {
     closeDayEventsPopup: bindActionCreators(closeDayEventsPopup, dispatch),
     openEventMenu: bindActionCreators(openEventMenu, dispatch),
     closeEventMenu: bindActionCreators(closeEventMenu, dispatch),
-    eventAdded: bindActionCreators(eventAdded, dispatch),
-    changeEvent: bindActionCreators(changeEvent, dispatch),
+    addEvent: bindActionCreators(addEvent, dispatch),
+    targetEventForChange: bindActionCreators(targetEventForChange, dispatch),
     deleteEvent: bindActionCreators(deleteEvent, dispatch),
     changeTargetDate: bindActionCreators(changeTargetDate, dispatch)
   };

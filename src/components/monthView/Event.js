@@ -4,9 +4,12 @@ import { moveAt, countAddEventPosition, getCoords } from '../../utils/position.j
 
 import '../../stylesheets/components/monthView/event.css';
 
-var cursorPosition = '';
-
 export class Event extends Component {
+
+  constructor (cursorPosition = '') {
+    super();
+    this.cursorPosition = cursorPosition;
+  }
 
   defineTargetDragged (e) {
     if (e.target.dataset.name ==='event') return e.target;
@@ -34,7 +37,7 @@ export class Event extends Component {
     let shiftY = e.pageY - coords.top;
     let currentX = e.pageX;
     let currentY = e.pageY;
-    cursorPosition = e.pageX + '/' + e.pageY;
+    this.cursorPosition = e.pageX + '/' + e.pageY;
     event.classList.add('event--position-absolute');
     event.style.width = eventWidth;
 
@@ -73,7 +76,7 @@ export class Event extends Component {
     let event = this.defineTargetDragged(e);
     let monthBody = document.getElementsByClassName('month-body')[0];
     if (!event) {
-      this.props.eventAdded(this.props.event, "2016-05-01");
+      this.props.addEvent(this.props.event, "2016-05-01");
       return;
     }
 
@@ -83,13 +86,13 @@ export class Event extends Component {
     let newDate = this.defineTargetDroppedDate(e);
     console.log(newDate);
     event.classList.remove('event--hidden');
-    this.props.eventAdded(this.props.event, newDate);
+    this.props.addEvent(this.props.event, newDate);
     event.classList.remove('event--position-absolute');
     monthBody.onmousemove = null;
   }
 
   onEventMouseUp (e) {
-    if (cursorPosition === (e.pageX + '/' + e.pageY)) this.onEventClick(e);
+    if (this.cursorPosition === (e.pageX + '/' + e.pageY)) this.onEventClick(e);
     else this.eventDrop(e);
   }
 
@@ -118,7 +121,7 @@ export class Event extends Component {
 
 Event.propTypes = {
   event: React.PropTypes.object.isRequired,
-  eventAdded: React.PropTypes.func.isRequired,
+  addEvent: React.PropTypes.func.isRequired,
   openEventMenu: React.PropTypes.func.isRequired
 }
 

@@ -1,4 +1,4 @@
-import { ADD_EVENT, TARGET_EVENT_FOR_CHANGE, CHANGE_EVENT, EVENT_DELETED } from '../constants/actions.js';
+import { ADD_EVENT, TARGET_EVENT_FOR_CHANGE, CHANGE_EVENT, DELETE_EVENT } from '../constants/actions.js';
 
 const initialState = {
   visibility: false,
@@ -21,7 +21,7 @@ function events (state = initialState, action) {
       return { ...state, events: eventsArr};
     case TARGET_EVENT_FOR_CHANGE:
       return { ...state, eventForChange: action.event};
-    case EVENT_DELETED:
+    case DELETE_EVENT:
       eventsArr = deleteEvent(state, action);
       return {...state, events: eventsArr};
     default:
@@ -40,6 +40,7 @@ function addEvent (state, action) {
 }
 
 function deleteEvent (state, action) {
+  console.log(action.event)
   return state.events.slice().filter((e) => {
      return e !== action.event;
    });

@@ -48,7 +48,7 @@ export class Day extends Component {
         key={eventKey + index} 
         event={event} 
         openEventMenu={this.props.openEventMenu}
-        eventAdded={this.props.eventAdded} 
+        addEvent={this.props.addEvent} 
       />
     );
   }
@@ -62,7 +62,7 @@ export class Day extends Component {
           key={eventKey} 
           event={events[0]} 
           openEventMenu={this.props.openEventMenu}
-          eventAdded={this.props.eventAdded} 
+          addEvent={this.props.addEvent} 
         />
         <a href="#" data-name="more" onClick={this.onLinkMoreClick.bind(this)}>
           {eventsCount}
@@ -113,7 +113,7 @@ Day.propTypes = {
   targetDate: React.PropTypes.object.isRequired,
   events: React.PropTypes.array.isRequired,
   openAddEventForm: React.PropTypes.func.isRequired,
-  eventAdded: React.PropTypes.func.isRequired,
+  addEvent: React.PropTypes.func.isRequired,
   openDayEventsPopup: React.PropTypes.func.isRequired,
   openEventMenu: React.PropTypes.func.isRequired
 }

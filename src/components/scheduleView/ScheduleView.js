@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import  SceduleEvent from './ScheduleEvent.js';
 
-import { changeEvent, deleteEvent, addEventOpen } from '../../actions/events.js';
+import { targetEventForChange, deleteEvent } from '../../actions/events.js';
 import { openAddEventForm } from '../../actions/popups.js'
 
 import { getActualEvents, sortEventsByTime } from '../../utils/date.js';
@@ -20,7 +20,7 @@ export class Schedule extends Component {
         event={event}
         openAddEventForm={this.props.openAddEventForm}
         deleteEvent={this.props.deleteEvent}
-        changeEvent={this.props.changeEvent}
+        targetEventForChange={this.props.targetEventForChange}
       />
     );
   }
@@ -50,7 +50,7 @@ Schedule.propTypes = {
   events: React.PropTypes.array.isRequired,
   targetDate: React.PropTypes.object.isRequired,
   openAddEventForm: React.PropTypes.func.isRequired,
-  changeEvent: React.PropTypes.func.isRequired,
+  targetEventForChange: React.PropTypes.func.isRequired,
   deleteEvent: React.PropTypes.func.isRequired
 }
 
@@ -64,7 +64,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     openAddEventForm: bindActionCreators(openAddEventForm, dispatch),
-    changeEvent: bindActionCreators(changeEvent, dispatch),
+    targetEventForChange: bindActionCreators(targetEventForChange, dispatch),
     deleteEvent: bindActionCreators(deleteEvent, dispatch)
   };
 }
