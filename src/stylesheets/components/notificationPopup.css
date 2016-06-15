@@ -1,0 +1,28 @@
+.notification-popup {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 200px;
+
+  text-align: center;
+
+  background: #F5F3ED;
+  box-shadow: 2px 2px 15px grey;
+  display: none;
+}
+
+.notification-popup__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+}
+
+.notification-popup__close a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.popup-visible {
+  display: block;
+}

@@ -7,7 +7,9 @@ import { LOGIN_FORM_OPEN,
          EVENT_MENU_OPEN,
          EVENT_MENU_CLOSE,
          DAY_EVENTS_POPUP_OPEN,
-         DAY_EVENTS_POPUP_CLOSE } from '../actions/popups';
+         DAY_EVENTS_POPUP_CLOSE,
+         NOTIFICATION_POPUP_OPEN,
+         NOTIFICATION_POPUP_CLOSE } from '../actions/popups';
 
 const initialState = {
   loginFormVisibility: false,
@@ -20,32 +22,38 @@ const initialState = {
   eventMenuTargetEvent: null,
   dayEventsPopupVisibility: false,
   dayEventsPopupPosition: {top: 0, left: 0},
-  dayEventsPopupTargetDayId: null
+  dayEventsPopupTargetDayId: null,
+  notificationPopupVisibility: false,
+  notificationPopupEvent: null
 }
 
 function popups (state = initialState, action) {
   console.log(action.type);
   switch (action.type) {
     case LOGIN_FORM_OPEN:
-      return Object.assign({}, state, {loginFormVisibility: true});
+      return { ...state, loginFormVisibility: true};
     case LOGIN_FORM_CLOSE:
-      return Object.assign({}, state, {loginFormVisibility: false});
+      return { ...state, loginFormVisibility: false};
     case REGISTER_FORM_OPEN:
-      return Object.assign({}, state, {registerFormVisibility: true});
+      return { ...state, registerFormVisibility: true};
     case REGISTER_FORM_CLOSE:
-      return Object.assign({}, state, {registerFormVisibility: false});
+      return { ...state, registerFormVisibility: false};
     case ADD_EVENT_FORM_OPEN:
-      return Object.assign({}, state, {addEventFormVisibility: true, addEventFormPosition: action.position, addEventFormDefaultDate: action.defaultDate});
+      return { ...state, addEventFormVisibility: true, addEventFormPosition: action.position, addEventFormDefaultDate: action.defaultDate};
     case ADD_EVENT_FORM_CLOSE:
-      return Object.assign({}, state, {addEventFormVisibility: false});
+      return { ...state, addEventFormVisibility: false};
     case EVENT_MENU_OPEN:
-      return Object.assign({}, state, {eventMenuVisibility: true, eventMenuTargetEvent: action.event, eventMenuPosition: action.position});
+      return { ...state, eventMenuVisibility: true, eventMenuTargetEvent: action.event, eventMenuPosition: action.position}
     case EVENT_MENU_CLOSE:
-      return Object.assign({}, state, {eventMenuVisibility: false});
+      return { ...state, eventMenuVisibility: false};
     case DAY_EVENTS_POPUP_OPEN:
-      return Object.assign({}, state, {dayEventsPopupVisibility: true, dayId: action.dayId, position: action.position});
+      return { ...state, dayEventsPopupVisibility: true, dayId: action.dayId, position: action.position};
     case DAY_EVENTS_POPUP_CLOSE:
-      return Object.assign({}, state, {dayEventsPopupVisibility: false});
+      return { ...state, dayEventsPopupVisibility: false};
+    case NOTIFICATION_POPUP_OPEN:
+      return { ...state, notificationPopupVisibility: true, notificationPopupEvent: action.event};
+    case NOTIFICATION_POPUP_CLOSE:
+      return { ...state, notificationPopupVisibility: false};
     default:
       return state;
   }

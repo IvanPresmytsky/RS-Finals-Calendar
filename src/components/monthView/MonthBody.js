@@ -2,26 +2,28 @@ import '../../stylesheets/components/monthView/monthBody.css';
 
 import fecha from 'fecha';
 import React, { Component } from 'react';
+import { chunk } from 'lodash';
 
 import Day from './Day.js';
 import Week from './Week.js';
 
-import { getTargetMonthDays, splitDaysToWeeks } from '../../utils/date.js';
+import { getTargetMonthDays } from '../../utils/date.js';
 import { moveAt } from '../../utils/position.js';
 
+import { DAYS } from '../../constants/data/DAYS.js'
 
 export class MonthBody extends Component {
 
-  defineDayEvents (id) {
+  getDayEvents (id) {
     return this.props.events.filter((event) => event.date === id );
   }
 
   createDayTemplate(day) {
     let id = fecha.format(day, 'YYYY-MM-DD');
-    let dayEvents = this.defineDayEvents(id);
+    let dayEvents = this.getDayEvents(id);
 
     let dayNumsArr = getTargetMonthDays(this.props.targetDate);
-    dayNumsArr = splitDaysToWeeks(dayNumsArr);
+    dayNumsArr = chunk(dayNumsArr, DAYS.length);
       
     return (
       <Day 
@@ -48,7 +50,7 @@ export class MonthBody extends Component {
 
   render () {
     let dayNumsArr = getTargetMonthDays(this.props.targetDate);
-    dayNumsArr = splitDaysToWeeks(dayNumsArr);
+    dayNumsArr = chunk(dayNumsArr, DAYS.length);
 
     let MonthBodyTemplate = dayNumsArr.map(this.createWeekTemplate.bind(this));
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import fecha from 'fecha';
 
 import AddEventForm from './AddEventForm.js';
 import Header from './Header.js';
@@ -8,14 +9,22 @@ import LoginForm from './LoginForm.js';
 import MonthView from './monthView/MonthView.js';
 import NavAndTools from './NavAndTools.js';
 import RegisterForm from './RegisterForm.js';
+import NotificationPopup from './NotificationPopup';
 import ScheduleView from './scheduleView/ScheduleView.js';
 
 import configureStore from '../store/configureStore.js';
+
+import { sortEventsByTime, getActualEvents } from '../utils/date.js';
+import { openNotificationPopup } from '../actions/popups.js';
 
 import {SET_VIEW_MONTH, SET_VIEW_SCHEDULE} from '../constants/actions.js';
 
 
 export class App extends Component {
+
+  componentDidMount () {
+    let timer = setInterval(this.getTheNearestEvent.bind(this), 60000);
+  }
 
   getCurrentView (view) {
     switch (view) {
@@ -28,9 +37,24 @@ export class App extends Component {
       }
   }
 
-  render () {
-    console.log(this.props);
+  getTheNearestEvent () {
+    let events = this.props.events;
+    if (events.length === 0) return;
 
+    events = getActualEvents(events, new Date());
+
+    if (events.length === 0) return;
+
+    let event = sortEventsByTime(events)[0];
+
+    let notificationTime = event.date + event.startTime;
+    let currentDate = fecha.format(new Date(), 'YYYY-MM-DDHH:mm');
+  
+    if (notificationTime === currentDate) this.props.openNotificationPopup(event);
+
+  }
+
+  render () {
     let calendarView = this.getCurrentView(this.props.view);
 
     return (
@@ -43,6 +67,7 @@ export class App extends Component {
          <LoginForm />
          <RegisterForm />
          <AddEventForm />
+         <NotificationPopup />
       </div>
     );
   }
@@ -50,14 +75,25 @@ export class App extends Component {
 
 App.propTypes = {
   view: React.PropTypes.string.isRequired,
+  events: React.PropTypes.array.isRequired,
+  //actualEvent: React.PropTypes.object,
+  openNotificationPopup: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
   return {
     view: state.views.view,
+    events: state.events.events,
+    //actualEvent: state.events.notificationPopupEvent
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    openNotificationPopup: bindActionCreators(openNotificationPopup, dispatch)
   };
 }
 
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 

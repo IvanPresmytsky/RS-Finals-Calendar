@@ -8,7 +8,8 @@ export const EVENT_MENU_OPEN = 'EVENT_MENU_OPEN';
 export const EVENT_MENU_CLOSE = 'EVENT_MENU_CLOSE';
 export const DAY_EVENTS_POPUP_OPEN = 'DAY_EVENTS_POPUP_OPEN';
 export const DAY_EVENTS_POPUP_CLOSE = 'DAY_EVENTS_POPUP_CLOSE';
-
+export const NOTIFICATION_POPUP_OPEN = 'NOTIFICATION_POPUP_OPEN';
+export const NOTIFICATION_POPUP_CLOSE = 'NOTIFICATION_POPUP_CLOSE';
 
 export function openLoginForm () {
   return {
@@ -73,5 +74,18 @@ export function openDayEventsPopup (id, position) {
 export function closeDayEventsPopup () {
   return {
     type: DAY_EVENTS_POPUP_CLOSE
+  };
+}
+
+export function openNotificationPopup (event) {
+  return {
+    type: NOTIFICATION_POPUP_OPEN,
+    event
+  };
+}
+
+export function closeNotificationPopup () {
+  return {
+    type: NOTIFICATION_POPUP_CLOSE,
   };
 }

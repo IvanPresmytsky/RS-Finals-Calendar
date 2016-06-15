@@ -10,19 +10,20 @@ const initialState = {
 
 function events (state = initialState, action) {
   let eventsArr;
+  console.log(state);
   switch (action.type) {
     case ADD_EVENT:
       eventsArr = addEvent (state, action);
-      return Object.assign({}, state, {events: eventsArr});
+      return { ...state, events: eventsArr};
     case CHANGE_EVENT:
       eventsArr = state.events.slice();
       changeEvent(action);
-      return Object.assign({}, state, {events: eventsArr});
+      return { ...state, events: eventsArr};
     case TARGET_EVENT_FOR_CHANGE:
-      return Object.assign({}, state, {eventForChange: action.event});
+      return { ...state, eventForChange: action.event};
     case EVENT_DELETED:
       eventsArr = deleteEvent(state, action);
-      return Object.assign({}, state, {events: eventsArr});
+      return {...state, events: eventsArr};
     default:
       return state;
   }

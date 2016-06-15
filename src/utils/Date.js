@@ -44,13 +44,6 @@ function createTargetMonthDaysArrayFunction(date) {
   };
 }
 
-export function splitDaysToWeeks(arr) {
-  const weekCount = 6;
-  return Array.from({length: weekCount}, (item, i) => {
-    return arr.splice(0, 7);
-  });
-}
-
 export function getCurrentFormatedDate () {
   return fecha.format(new Date(), 'YYYY-MM-DD');
 }
