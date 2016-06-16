@@ -14,7 +14,7 @@ export function countAddEventPosition (dayPosition) {
   };
 }
 
-export function countEventsContainerPopupPosition (dayPosition, height) {
+export function countDayEventsPopupPosition (dayPosition, height) {
   let windowWidth = document.body.clientWidth;
   let windowHeight = document.body.clientHeight;
   let overWidth = windowWidth - dayPosition.left - EVENT_CONTAINER_POPUP_WIDTH;

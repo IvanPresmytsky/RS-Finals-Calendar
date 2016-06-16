@@ -11,15 +11,16 @@ export class Event extends Component {
     this.cursorPosition = cursorPosition;
   }
 
-  defineTargetDragged (e) {
+  findTargetDragged (e) {
     if (e.target.dataset.name ==='event') return e.target;
     if (e.target.parentNode.dataset.name ==='event') return e.target.parentNode;
     return false;
   }
 
-  defineTargetDroppedDate (e) {
+  findTargetDroppedDate (e) {
     console.log(e);
     let dropped = document.elementFromPoint(e.pageX, e.pageY);
+    console.log(dropped);
     if (dropped.dataset.name === 'monthDay') return dropped.id;
     if (dropped.parentNode.dataset.name === 'monthDay') return dropped.parentNode.id
     if (dropped.parentNode.parentNode.dataset.name === 'monthDay') return dropped.parentNode.parentNode.id
@@ -27,7 +28,8 @@ export class Event extends Component {
   }
 
   onEventMouseDown (e) {
-    let event = this.defineTargetDragged(e);
+    let event = this.findTargetDragged(e);
+    console.log(event);
     if (!event) return;
     //if(e.which != 1) return;
     let monthBody = document.getElementsByClassName('month-body')[0];
@@ -35,10 +37,12 @@ export class Event extends Component {
     let coords = getCoords(event);
     let shiftX = e.pageX - coords.left;
     let shiftY = e.pageY - coords.top;
+    
     let currentX = e.pageX;
     let currentY = e.pageY;
+
     this.cursorPosition = e.pageX + '/' + e.pageY;
-    event.classList.add('event--position-absolute');
+    event.classList.add('event--position-fixed');
     event.style.width = eventWidth;
 
     let positionAPI = {
@@ -51,6 +55,7 @@ export class Event extends Component {
     monthBody.onmousemove = function(e) {
       let moveX = e.pageX - currentX;
       let moveY = e.pageY - currentY;
+
       if ( Math.abs(moveX) < 5 && Math.abs(moveY) < 5 ) return;
       moveAt(e, positionAPI);
     };
@@ -73,7 +78,7 @@ export class Event extends Component {
   }
 
   eventDrop (e) {
-    let event = this.defineTargetDragged(e);
+    let event = this.findTargetDragged(e);
     let monthBody = document.getElementsByClassName('month-body')[0];
     if (!event) {
       this.props.addEvent(this.props.event, "2016-05-01");
@@ -83,7 +88,7 @@ export class Event extends Component {
     event.style.width = "";
     event.classList.add('event--hidden');
 
-    let newDate = this.defineTargetDroppedDate(e);
+    let newDate = this.findTargetDroppedDate(e);
     console.log(newDate);
     event.classList.remove('event--hidden');
     this.props.addEvent(this.props.event, newDate);
@@ -96,7 +101,6 @@ export class Event extends Component {
     else this.eventDrop(e);
   }
 
-  
 
   render () {
     let event = this.props.event;

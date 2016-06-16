@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import Event from './Event.js';
 
 import { getCurrentFormatedDate, getOriginalId } from '../../utils/date.js';
-import { countAddEventPosition, countEventsContainerPopupPosition } from '../../utils/position.js';
+import { countAddEventPosition, countDayEventsPopupPosition } from '../../utils/position.js';
 import { EVENT_HEIGHT } from '../../constants/handlersConstants.js';
 import { NEXT_MONTH, PREVIOUS_MONTH} from '../../constants/pagination.js';
 
@@ -36,8 +36,8 @@ export class Day extends Component {
     let id = day.id;
     let dayPosition = day.getBoundingClientRect();
     let eventsHeight = this.props.events.length * EVENT_HEIGHT + 70;
-    let position = countEventsContainerPopupPosition(dayPosition, eventsHeight);
-    
+    let position = countDayEventsPopupPosition(dayPosition, eventsHeight);
+
     this.props.openDayEventsPopup(id, position);
   }
 
@@ -54,7 +54,7 @@ export class Day extends Component {
   }
 
   createLargeEventsTemplate (events) {
-    let eventKey = date.originalKey();
+    let eventKey = getOriginalId();
     let eventsCount = `${events.length - 1} more...`;
     return (
       <div>

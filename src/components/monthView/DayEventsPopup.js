@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 
 import Event from './Event.js';
 
-import date from '../../utils/date.js';
+import { getOriginalId } from '../../utils/date.js';
 
 import { DAY_EVENTS_POPUP_WIDTH } from '../../constants/handlersConstants.js';
+import { EVENT_HEIGHT } from '../../constants/handlersConstants.js';
 
 import '../../stylesheets/components/monthView/dayEventsPopup.css';
 
@@ -16,12 +17,13 @@ export class DayEventsPopup extends Component {
   }
 
   createEventsTemplate (event, index) {
-    let eventKey = date.originalKey();
+    let eventKey = getOriginalId();
     return (
       <Event 
         key={eventKey + index} 
         event={event} 
         openEventMenu={this.props.openEventMenu}
+        addEvent={this.props.addEvent} 
       />
     );
   }
@@ -30,25 +32,33 @@ export class DayEventsPopup extends Component {
     return this.props.events.filter((event) => event.date === id );
   }
 
+  countMaxEventsHeight (events) {
+    let dayElem = document.getElementsByClassName('month-view__day')[0];
+    let dayElemHeight = dayElem ? dayElem.offsetHeight : 1000;
+    return dayElemHeight - (EVENT_HEIGHT * events.length) - 25;
+
+  }
+
   render () {
     let events = this.getDayEvents(this.props.dayId);
+    let eventsHeight = this.countMaxEventsHeight(events);
     let eventsTemplate = events.map(this.createEventsTemplate.bind(this));
-    console.log(this.props.visibility);
-    let eventsContainerClass = classNames('day-events-popup', {
+    let dayEventsPopupClass = classNames('day-events-popup', {
       'day-events-popup--visible': this.props.visibility
     });
+
     let style = {
       top: this.props.position.top,
       left: this.props.position.left,
       width: DAY_EVENTS_POPUP_WIDTH + 'px'
     }
 
-    console.log(style.width);
-    console.log(style.top);
-    console.log(style.left);
-    console.log(this.props);
+    if (events && eventsHeight >= 0 ) {
+      style.display = 'none';
+    }
+
     return (
-      <div className={eventsContainerClass} style={style}>
+      <div className={dayEventsPopupClass} data-name="dayEventsPopup" style={style}>
         <p className="day-events-popup__date">{this.props.dayId}</p>
         {eventsTemplate}
         <div className="day-events-popup__close">
@@ -60,11 +70,13 @@ export class DayEventsPopup extends Component {
 };
 
 DayEventsPopup.propTypes = {
+  events: React.PropTypes.array.isRequired,
   visibility: React.PropTypes.bool.isRequired,
   position: React.PropTypes.object.isRequired,
   dayId: React.PropTypes.string,
   closeDayEventsPopup: React.PropTypes.func.isRequired,
-  openEventMenu: React.PropTypes.func.isRequired
+  openEventMenu: React.PropTypes.func.isRequired,
+  addEvent: React.PropTypes.func.isRequired
 }
 
 export default DayEventsPopup;

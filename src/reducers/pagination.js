@@ -7,7 +7,6 @@ const initialState = {
 }
 
 function pagination (state = initialState, action) {
-  console.log(action.type);
   switch (action.type) {
     case CHANGE_TARGET_DATE:
       let targetDate = getTargetDate(state.targetDate, action.option);

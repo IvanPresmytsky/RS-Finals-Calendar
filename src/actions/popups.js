@@ -64,6 +64,8 @@ export function closeEventMenu () {
 }
 
 export function openDayEventsPopup (id, position) {
+  console.log(id);
+  console.log(position);
   return {
     type: DAY_EVENTS_POPUP_OPEN,
     dayId: id,

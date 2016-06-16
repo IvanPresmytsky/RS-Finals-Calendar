@@ -10,12 +10,8 @@
   font-size: 12px;
 }
 
-.event--position-absolute {
-  position: absolute;
-}
-
-.event--position-static {
-  position: absolute;
+.event--position-fixed {
+  position: fixed;
 }
 
 .event--hidden {

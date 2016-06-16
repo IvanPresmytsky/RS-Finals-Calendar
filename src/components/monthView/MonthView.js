@@ -33,11 +33,12 @@ export class MonthView extends Component {
         />
         <DayEventsPopup 
           events={this.props.events}
-          closeDayEventsPopup={this.props.closeDayEventsPopup}
-          openEventMenu={this.props.openEventMenu}
           visibility={this.props.dayEventsPopupVisibility}
           position={this.props.dayEventsPopupPosition}
           dayId={this.props.dayEventsPopupTargetDayId}
+          closeDayEventsPopup={this.props.closeDayEventsPopup}
+          openEventMenu={this.props.openEventMenu}
+          addEvent={this.props.addEvent} 
         />
         <EventMenu 
           closeEventMenu={this.props.closeEventMenu}

@@ -47,7 +47,7 @@ function popups (state = initialState, action) {
     case EVENT_MENU_CLOSE:
       return { ...state, eventMenuVisibility: false};
     case DAY_EVENTS_POPUP_OPEN:
-      return { ...state, dayEventsPopupVisibility: true, dayId: action.dayId, position: action.position};
+      return { ...state, dayEventsPopupVisibility: true, dayEventsPopupTargetDayId: action.dayId, dayEventsPopupPosition: action.position};
     case DAY_EVENTS_POPUP_CLOSE:
       return { ...state, dayEventsPopupVisibility: false};
     case NOTIFICATION_POPUP_OPEN:
