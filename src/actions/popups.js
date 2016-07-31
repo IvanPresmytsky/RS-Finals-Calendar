@@ -1,5 +1,9 @@
 export const LOGIN_FORM_OPEN = 'LOGIN_FORM_OPEN';
 export const LOGIN_FORM_CLOSE = 'LOGIN_FORM_CLOSE';
+export const USER_MENU_OPEN = 'USER_MENU_OPEN';
+export const USER_MENU_CLOSE = 'USER_MENU_CLOSE';
+export const EDIT_USER_FORM_OPEN = 'EDIT_USER_FORM_OPEN';
+export const EDIT_USER_FORM_CLOSE = 'EDIT_USER_FORM_CLOSE';
 export const REGISTER_FORM_OPEN = 'REGISTER_FORM_OPEN';
 export const REGISTER_FORM_CLOSE = 'REGISTER_FORM_CLOSE';
 export const ADD_EVENT_FORM_OPEN = 'ADD_EVENT_FORM_OPEN';
@@ -20,6 +24,30 @@ export function openLoginForm () {
 export function closeLoginForm () {
   return {
     type: LOGIN_FORM_CLOSE
+  };
+}
+
+export function openUserMenu () {
+  return {
+    type: USER_MENU_OPEN
+  };
+}
+
+export function closeUserMenu () {
+  return {
+    type: USER_MENU_CLOSE
+  };
+}
+
+export function openEditUserForm () {
+  return {
+    type: EDIT_USER_FORM_OPEN
+  };
+}
+
+export function closeEditUserForm () {
+  return {
+    type: EDIT_USER_FORM_CLOSE
   };
 }
 

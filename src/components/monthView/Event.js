@@ -12,26 +12,25 @@ export class Event extends Component {
   }
 
   findTargetDragged (e) {
-    if (e.target.dataset.name ==='event') return e.target;
-    if (e.target.parentNode.dataset.name ==='event') return e.target.parentNode;
-    return false;
+    let target = e.target;
+    while (e.target.dataset.name !=='event') {
+      target = target.parentNode;
+    }
+    return target;
   }
 
   findTargetDroppedDate (e) {
-    console.log(e);
     let dropped = document.elementFromPoint(e.pageX, e.pageY);
-    console.log(dropped);
-    if (dropped.dataset.name === 'monthDay') return dropped.id;
-    if (dropped.parentNode.dataset.name === 'monthDay') return dropped.parentNode.id
-    if (dropped.parentNode.parentNode.dataset.name === 'monthDay') return dropped.parentNode.parentNode.id
-    return this.props.event.date;
+    while (dropped.dataset.name !== 'monthDay') {
+      dropped = dropped.parentNode;
+    }
+    return dropped ? dropped.id : this.props.event.date;
   }
 
   onEventMouseDown (e) {
     let event = this.findTargetDragged(e);
     console.log(event);
     if (!event) return;
-    //if(e.which != 1) return;
     let monthBody = document.getElementsByClassName('month-body')[0];
     let eventWidth = event.offsetWidth + 'px';
     let coords = getCoords(event);
@@ -89,9 +88,12 @@ export class Event extends Component {
     event.classList.add('event--hidden');
 
     let newDate = this.findTargetDroppedDate(e);
+    let newEvent = { ...this.props.event, date: newDate};
+    console.log(this.props.event);
+    console.log(newEvent);
     console.log(newDate);
     event.classList.remove('event--hidden');
-    this.props.addEvent(this.props.event, newDate);
+    this.props.saveEvent(this.props.event, newEvent, this.props.userId);
     event.classList.remove('event--position-absolute');
     monthBody.onmousemove = null;
   }
@@ -126,7 +128,9 @@ export class Event extends Component {
 Event.propTypes = {
   event: React.PropTypes.object.isRequired,
   addEvent: React.PropTypes.func.isRequired,
-  openEventMenu: React.PropTypes.func.isRequired
+  saveEvent: React.PropTypes.func.isRequired,
+  openEventMenu: React.PropTypes.func.isRequired,
+  userId: React.PropTypes.string
 }
 
 export default Event;

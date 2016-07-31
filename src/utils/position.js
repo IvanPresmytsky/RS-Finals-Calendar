@@ -1,4 +1,4 @@
-import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT, EVENT_CONTAINER_POPUP_WIDTH } from '../constants/handlersConstants.js';
+import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT, EVENT_CONTAINER_POPUP_WIDTH } from '../constants/sizes.js';
 
 export function countAddEventPosition (dayPosition) {
   let windowWidth = document.body.clientWidth;

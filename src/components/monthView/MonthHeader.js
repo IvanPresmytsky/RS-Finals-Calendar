@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
 
+import { weekDays } from '../../constants/weekDays.js'
+
 import '../../stylesheets/components/monthView/monthHeader.css';
 
-import { DAYS } from '../../constants/data/DAYS.js'
-
 export class MonthHeader extends Component {
-  createMonthHeaderTemplate(day, index) {
+  renderMonthHeader(day, index) {
     let dayClass = classNames('month-header__day-name', {
       ' day-name-holiday': index > 4
     });
@@ -18,10 +18,10 @@ export class MonthHeader extends Component {
   }
 
   render () {
-    let monthHeaderTemplate = DAYS.map(this.createMonthHeaderTemplate.bind(this));
+    let monthHeader = weekDays.map(this.renderMonthHeader.bind(this));
     return (
       <div className="month-header">
-        {monthHeaderTemplate}
+        {monthHeader}
       </div>
     );
   }

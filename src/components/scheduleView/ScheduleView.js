@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import  SceduleEvent from './ScheduleEvent.js';
 
-import { targetEventForChange, deleteEvent } from '../../actions/events.js';
+import { editEvent, deleteEvent } from '../../actions/events.js';
 import { openAddEventForm } from '../../actions/popups.js'
 
 import { getActualEvents, sortEventsByTime } from '../../utils/date.js';
@@ -20,7 +20,8 @@ export class Schedule extends Component {
         event={event}
         openAddEventForm={this.props.openAddEventForm}
         deleteEvent={this.props.deleteEvent}
-        targetEventForChange={this.props.targetEventForChange}
+        editEvent={this.props.editEvent}
+        userId={this.props.userId}
       />
     );
   }
@@ -50,21 +51,23 @@ Schedule.propTypes = {
   events: React.PropTypes.array.isRequired,
   targetDate: React.PropTypes.object.isRequired,
   openAddEventForm: React.PropTypes.func.isRequired,
-  targetEventForChange: React.PropTypes.func.isRequired,
-  deleteEvent: React.PropTypes.func.isRequired
+  editEvent: React.PropTypes.func.isRequired,
+  deleteEvent: React.PropTypes.func.isRequired,
+  userId: React.PropTypes.string
 }
 
 function mapStateToProps (state) {
   return {
     events: state.events.events,
-    targetDate: state.pagination.targetDate
+    targetDate: state.pagination.targetDate,
+    userId: state.authorization.id
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     openAddEventForm: bindActionCreators(openAddEventForm, dispatch),
-    targetEventForChange: bindActionCreators(targetEventForChange, dispatch),
+    editEvent: bindActionCreators(editEvent, dispatch),
     deleteEvent: bindActionCreators(deleteEvent, dispatch)
   };
 }

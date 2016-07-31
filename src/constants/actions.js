@@ -1,9 +1,12 @@
 export const ADD_EVENT = 'ADD_EVENT';
-export const CHANGE_EVENT = 'CHANGE_EVENT';
-export const TARGET_EVENT_FOR_CHANGE = 'TARGET_EVENT_FOR_CHANGE';
+export const SAVE_EVENT = 'SAVE_EVENT';
+export const EDIT_EVENT = 'EDIT_EVENT';
 export const DELETE_EVENT = 'DELETE_EVENT';
+export const INITIALIZE_EVENTS = 'INITIALIZE_EVENTS';
 
 export const SET_VIEW_MONTH = 'SET_VIEW_MONTH';
 export const SET_VIEW_SCHEDULE = 'SET_VIEW_SCHEDULE';
 export const CHANGE_TARGET_DATE = 'CHANGE_TARGET_DATE';
+
+
 

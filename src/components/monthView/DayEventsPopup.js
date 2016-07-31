@@ -5,8 +5,7 @@ import Event from './Event.js';
 
 import { getOriginalId } from '../../utils/date.js';
 
-import { DAY_EVENTS_POPUP_WIDTH } from '../../constants/handlersConstants.js';
-import { EVENT_HEIGHT } from '../../constants/handlersConstants.js';
+import { EVENT_HEIGHT, DAY_EVENTS_POPUP_WIDTH } from '../../constants/sizes.js';
 
 import '../../stylesheets/components/monthView/dayEventsPopup.css';
 
@@ -22,8 +21,10 @@ export class DayEventsPopup extends Component {
       <Event 
         key={eventKey + index} 
         event={event} 
+        userId={this.props.userId}
         openEventMenu={this.props.openEventMenu}
         addEvent={this.props.addEvent} 
+        saveEvent={this.props.saveEvent}
       />
     );
   }
@@ -76,7 +77,9 @@ DayEventsPopup.propTypes = {
   dayId: React.PropTypes.string,
   closeDayEventsPopup: React.PropTypes.func.isRequired,
   openEventMenu: React.PropTypes.func.isRequired,
-  addEvent: React.PropTypes.func.isRequired
+  addEvent: React.PropTypes.func.isRequired,
+  saveEvent: React.PropTypes.func.isRequired,
+  userId: React.PropTypes.string
 }
 
 export default DayEventsPopup;

@@ -1,5 +1,9 @@
 import { LOGIN_FORM_OPEN,
          LOGIN_FORM_CLOSE,
+         USER_MENU_OPEN,
+         USER_MENU_CLOSE,
+         EDIT_USER_FORM_OPEN,
+         EDIT_USER_FORM_CLOSE,
          REGISTER_FORM_OPEN,
          REGISTER_FORM_CLOSE,
          ADD_EVENT_FORM_OPEN,
@@ -13,6 +17,8 @@ import { LOGIN_FORM_OPEN,
 
 const initialState = {
   loginFormVisibility: false,
+  userMenuVisibility: false,
+  editUserFormVisibility: false,
   registerFormVisibility: false,
   addEventFormVisibility: false,
   addEventFormPosition: {top: 0, left: 0},
@@ -31,29 +37,91 @@ function popups (state = initialState, action) {
   console.log(action.type);
   switch (action.type) {
     case LOGIN_FORM_OPEN:
-      return { ...state, loginFormVisibility: true};
+      return { 
+               ...state, 
+               loginFormVisibility: true
+             };
     case LOGIN_FORM_CLOSE:
-      return { ...state, loginFormVisibility: false};
+      return { 
+               ...state, 
+               loginFormVisibility: false
+             };
+    case USER_MENU_OPEN:
+      return { 
+               ...state, 
+               userMenuVisibility: true
+             };
+    case USER_MENU_CLOSE:
+      return { 
+               ...state, 
+               userMenuVisibility: false
+             };
+    case EDIT_USER_FORM_OPEN:
+      return { 
+               ...state, 
+               editUserFormVisibility: true
+             };
+    case EDIT_USER_FORM_CLOSE:
+      return { 
+               ...state, 
+               editUserFormVisibility: false
+             };
     case REGISTER_FORM_OPEN:
-      return { ...state, registerFormVisibility: true};
+      return { 
+               ...state,
+               registerFormVisibility: true
+             };
     case REGISTER_FORM_CLOSE:
-      return { ...state, registerFormVisibility: false};
+      return { 
+               ...state,
+               registerFormVisibility: false
+             };
     case ADD_EVENT_FORM_OPEN:
-      return { ...state, addEventFormVisibility: true, addEventFormPosition: action.position, addEventFormDefaultDate: action.defaultDate};
+      return { 
+               ...state,
+               addEventFormVisibility: true, 
+               addEventFormPosition: action.position, 
+               addEventFormDefaultDate: action.defaultDate
+             };
     case ADD_EVENT_FORM_CLOSE:
-      return { ...state, addEventFormVisibility: false};
+      return { 
+               ...state,
+               addEventFormVisibility: false
+             };
     case EVENT_MENU_OPEN:
-      return { ...state, eventMenuVisibility: true, eventMenuTargetEvent: action.event, eventMenuPosition: action.position}
+      return { 
+               ...state,
+               eventMenuVisibility: true, 
+               eventMenuTargetEvent: action.event, 
+               eventMenuPosition: action.position
+             };
     case EVENT_MENU_CLOSE:
-      return { ...state, eventMenuVisibility: false};
+      return { 
+               ...state,
+               eventMenuVisibility: false
+             };
     case DAY_EVENTS_POPUP_OPEN:
-      return { ...state, dayEventsPopupVisibility: true, dayEventsPopupTargetDayId: action.dayId, dayEventsPopupPosition: action.position};
+      return { 
+               ...state,
+               dayEventsPopupVisibility: true, 
+               dayEventsPopupTargetDayId: action.dayId, 
+               dayEventsPopupPosition: action.position
+             };
     case DAY_EVENTS_POPUP_CLOSE:
-      return { ...state, dayEventsPopupVisibility: false};
+      return { 
+               ...state,
+               dayEventsPopupVisibility: false};
     case NOTIFICATION_POPUP_OPEN:
-      return { ...state, notificationPopupVisibility: true, notificationPopupEvent: action.event};
+      return { 
+               ...state,
+               notificationPopupVisibility: true, 
+               notificationPopupEvent: action.event
+             };
     case NOTIFICATION_POPUP_CLOSE:
-      return { ...state, notificationPopupVisibility: false};
+      return { 
+               ...state,
+               notificationPopupVisibility: false
+             };
     default:
       return state;
   }

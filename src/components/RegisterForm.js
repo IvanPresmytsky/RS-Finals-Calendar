@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { closeRegisterForm } from '../actions/popups.js';
+import { signIn } from '../actions/authorization.js'
 import '../stylesheets/components/registerForm.css';
 
 export class RegisterForm extends Component {
@@ -18,6 +19,33 @@ export class RegisterForm extends Component {
     this.props.closeRegisterForm();
   }
 
+  initializeUser (data) {
+    this.props.signIn(data.user.username);
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    fetch('http://localhost:3000/api/signup', {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify({
+        username: this.refs.user.value,
+        password: this.refs.password.value,
+        confirmedPassword: this.refs.confirmedPassword.value
+      })
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then(this.initializeUser.bind(this))
+    .catch((error) => {
+       console.log(error);
+    });
+    this.props.closeRegisterForm();
+  }
+
   render () {
     let popupClass = classNames('register-popup', {
       ' popup-visible': this.props.visibility
@@ -25,7 +53,7 @@ export class RegisterForm extends Component {
 
     return (
       <div className={popupClass}>
-        <form className="register-form">
+        <form className="register-form" onSubmit={this.onSubmit.bind(this)}>
            <p>User</p>
            <input 
              type="text" 
@@ -48,7 +76,7 @@ export class RegisterForm extends Component {
              className="register-form__confirm-password" 
              placeholder="confirm password"
              defaultValue=""
-             ref="password"
+             ref="confirmedPassword"
            />
            <input
              type="submit" 
@@ -67,7 +95,8 @@ export class RegisterForm extends Component {
 
 RegisterForm.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
-  closeRegisterForm: React.PropTypes.func.isRequired
+  closeRegisterForm: React.PropTypes.func.isRequired,
+  signIn: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
@@ -78,7 +107,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    closeRegisterForm: bindActionCreators(closeRegisterForm, dispatch)
+    closeRegisterForm: bindActionCreators(closeRegisterForm, dispatch),
+    signIn: bindActionCreators(signIn, dispatch)
   };
 }
 

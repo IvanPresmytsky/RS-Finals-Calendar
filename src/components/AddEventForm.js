@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { addEvent, changeEvent, targetEventForChange } from '../actions/events.js';
+import { addEvent, saveEvent, editEvent } from '../actions/events.js';
 import { closeAddEventForm } from '../actions/popups.js';
 
-import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT } from '../constants/handlersConstants.js';
+import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT } from '../constants/sizes.js';
 import { SET_FILTER_MONTH, SET_FILTER_SCHEDULE } from '../constants/actions.js';
 
 import '../stylesheets/components/addEventForm.css';
@@ -23,16 +23,13 @@ export class AddEventForm extends Component {
     let date = this.refs.eventDate.value || this.props.defaultDate;
     let startTime = this.refs.eventStartTime.value;
     let endTime = this.refs.eventEndTime.value;
-    let color = this.refs.color.value;
 
     return {
-      id: title + date + startTime,
       title: title,
       text: text,
       date: date,
       startTime: startTime,
       endTime: endTime,
-      color: color
     };
   }
 
@@ -41,20 +38,22 @@ export class AddEventForm extends Component {
     this.props.closeAddEventForm();
   }
 
+  saveEvent (event, userId) {
+    if (this.props.editedEvent) {
+      this.props.saveEvent(this.props.editedEvent, event, userId);
+      this.props.editEvent(null);
+    } else {
+      this.props.addEvent(event, userId);
+      this.props.editEvent(null);
+    }
+  }
+
   onSubmit (e) {
     e.preventDefault();
     let event = this.createEvent();
-
-    if (this.props.eventForChange) {
-      this.props.changeEvent(this.props.eventForChange, event);
-      this.props.targetEventForChange(null);
-    } else {
-      this.props.createEvent(event);
-      this.props.targetEventForChange(null);
-    }
-
+    this.saveEvent(event, this.props.userId);
     this.props.closeAddEventForm();
-    this.refs.eventDate.value = null;
+    this.refs.eventDate.value = null
   }
 
   render () {
@@ -87,8 +86,8 @@ export class AddEventForm extends Component {
     let submitText = 'add event';
     let eventColor = 'yellow';
 
-    if (this.props.eventForChange) {
-      let event = this.props.eventForChange;
+    if (this.props.editedEvent) {
+      let event = this.props.editedEvent;
       eventTitle = event.title;
       eventDescription = event.text;
       eventDate = event.date;
@@ -96,7 +95,6 @@ export class AddEventForm extends Component {
       eventEndTime = event.endTime;
       eventColor = event.color;
       submitText = 'change event';
-
     }
 
     return (
@@ -150,15 +148,6 @@ export class AddEventForm extends Component {
               ref="eventEndTime"
             />
           </div>
-          <div className="add-event-form__color-block">
-            <span>event color</span>
-            <input
-              type="color"
-              className="add-event-form__color"
-              defaultValue={eventColor}
-              ref="color"
-            />
-          </div>
           <div className="add-event-form__submit-block">
             <input
               type="submit"
@@ -178,29 +167,31 @@ export class AddEventForm extends Component {
 
 AddEventForm.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
+  userId: React.PropTypes.string,
   defaultDate: React.PropTypes.string,
   position: React.PropTypes.object,
-  eventForChange: React.PropTypes.object,
+  editedEvent: React.PropTypes.object,
   closeAddEventForm: React.PropTypes.func.isRequired,
-  createEvent: React.PropTypes.func.isRequired,
-  changeEvent: React.PropTypes.func.isRequired,
-  targetEventForChange: React.PropTypes.func.isRequired
+  addEvent: React.PropTypes.func.isRequired,
+  saveEvent: React.PropTypes.func.isRequired,
+  editEvent: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
   return {
     visibility: state.popups.addEventFormVisibility,
+    userId: state.authorization.id,
     defaultDate: state.popups.addEventFormDefaultDate,
     position: state.popups.addEventFormPosition,
-    eventForChange: state.events.eventForChange,
+    editedEvent: state.events.editedEvent,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    createEvent: bindActionCreators(addEvent, dispatch),
-    changeEvent: bindActionCreators(changeEvent, dispatch),
-    targetEventForChange: bindActionCreators(targetEventForChange, dispatch),
+    addEvent: bindActionCreators(addEvent, dispatch),
+    saveEvent: bindActionCreators(saveEvent, dispatch),
+    editEvent: bindActionCreators(editEvent, dispatch),
     closeAddEventForm: bindActionCreators(closeAddEventForm, dispatch)
   };
 }

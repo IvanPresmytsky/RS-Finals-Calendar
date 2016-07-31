@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import fecha from 'fecha';
 
 import AddEventForm from './AddEventForm.js';
+import EditUserForm from './EditUserForm.js';
 import Header from './Header.js';
 import LoginForm from './LoginForm.js';
 import MonthView from './monthView/MonthView.js';
@@ -18,7 +19,6 @@ import { sortEventsByTime, getActualEvents } from '../utils/date.js';
 import { openNotificationPopup } from '../actions/popups.js';
 
 import {SET_VIEW_MONTH, SET_VIEW_SCHEDULE} from '../constants/actions.js';
-
 
 export class App extends Component {
 
@@ -39,6 +39,7 @@ export class App extends Component {
 
   getTheNearestEvent () {
     let events = this.props.events;
+    console.log(this.props);
     if (events.length === 0) return;
 
     events = getActualEvents(events, new Date());
@@ -65,6 +66,7 @@ export class App extends Component {
          </div>
          {calendarView}
          <LoginForm />
+         <EditUserForm />
          <RegisterForm />
          <AddEventForm />
          <NotificationPopup />
@@ -76,7 +78,6 @@ export class App extends Component {
 App.propTypes = {
   view: React.PropTypes.string.isRequired,
   events: React.PropTypes.array.isRequired,
-  //actualEvent: React.PropTypes.object,
   openNotificationPopup: React.PropTypes.func.isRequired
 }
 
@@ -84,7 +85,6 @@ function mapStateToProps (state) {
   return {
     view: state.views.view,
     events: state.events.events,
-    //actualEvent: state.events.notificationPopupEvent
   };
 }
 

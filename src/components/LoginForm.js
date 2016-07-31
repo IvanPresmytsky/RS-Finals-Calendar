@@ -6,16 +6,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { closeLoginForm } from '../actions/popups.js';
+import { initializeEvents } from '../actions/events.js';
+import { signIn } from '../actions/authorization.js';
 
 import '../stylesheets/components/loginForm.css';
 
 export class LoginForm extends Component {
+
   componentDidMount () {
     ReactDOM.findDOMNode(this.refs.user).focus();
   }
 
   onBtnCloseClick (e) {
     e.preventDefault();
+    this.props.closeLoginForm();
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    this.props.signIn(this.refs.user.value, this.refs.password.value);
     this.props.closeLoginForm();
   }
 
@@ -26,7 +35,7 @@ export class LoginForm extends Component {
 
     return (
       <div className={popupClass}>
-        <form className="login-form">
+        <form className="login-form" onSubmit={this.onSubmit.bind(this)}>
            <p>User</p>
            <input 
              type="text" 
@@ -60,7 +69,8 @@ export class LoginForm extends Component {
 
 LoginForm.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
-  closeLoginForm: React.PropTypes.func.isRequired
+  closeLoginForm: React.PropTypes.func.isRequired,
+  signIn: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
@@ -71,7 +81,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    closeLoginForm: bindActionCreators(closeLoginForm, dispatch)
+    closeLoginForm: bindActionCreators(closeLoginForm, dispatch),
+    signIn: bindActionCreators(signIn, dispatch)
   };
 }
 

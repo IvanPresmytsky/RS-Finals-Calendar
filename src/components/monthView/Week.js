@@ -1,21 +1,20 @@
-import '../../stylesheets/components/monthView/monthWeek.css';
-
 import React, { Component } from 'react';
 
+import '../../stylesheets/components/monthView/monthWeek.css';
 
 export class Week extends Component {
   render () {
-    let daysTemplate = this.props.daysTemplate;
+    let days = this.props.days;
     return (
       <div className="month-view__week">
-        {daysTemplate}
+        {days}
       </div>
     );
   }
 };
 
 Week.propTypes = {
-  daysTemplate: React.PropTypes.array.isRequired
+  days: React.PropTypes.array.isRequired
 }
 
 export default Week;

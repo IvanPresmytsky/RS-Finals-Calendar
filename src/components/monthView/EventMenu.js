@@ -11,7 +11,7 @@ export class EventMenu extends Component {
 
   onChangeBtnClick (e) {
     e.preventDefault();
-    this.props.targetEventForChange(this.props.event);
+    this.props.editEvent(this.props.event);
     this.props.closeEventMenu();
     let position = e.target.parentNode.parentNode.getBoundingClientRect();
     this.props.openAddEventForm(position);
@@ -19,7 +19,7 @@ export class EventMenu extends Component {
 
   onDeleteBtnClick (e) {
     e.preventDefault();
-    this.props.deleteEvent(this.props.event);
+    this.props.deleteEvent(this.props.event, this.props.userId);
     this.props.closeEventMenu();
   }
 
@@ -67,12 +67,13 @@ export class EventMenu extends Component {
 }
 
 EventMenu.propTypes = {
+  userId: React.PropTypes.string,
   visibility: React.PropTypes.bool.isRequired,
   position: React.PropTypes.object.isRequired,
   event: React.PropTypes.object,
   closeEventMenu: React.PropTypes.func.isRequired,
   openAddEventForm: React.PropTypes.func.isRequired,
-  targetEventForChange: React.PropTypes.func.isRequired,
+  editEvent: React.PropTypes.func.isRequired,
   deleteEvent: React.PropTypes.func.isRequired
 }
 

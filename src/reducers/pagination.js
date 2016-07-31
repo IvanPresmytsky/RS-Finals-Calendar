@@ -10,7 +10,10 @@ function pagination (state = initialState, action) {
   switch (action.type) {
     case CHANGE_TARGET_DATE:
       let targetDate = getTargetDate(state.targetDate, action.option);
-      return { ...state, targetDate: targetDate};
+      return { 
+               ...state, 
+               targetDate: targetDate
+             };
     default:
       return state;
   }

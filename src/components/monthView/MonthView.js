@@ -12,7 +12,7 @@ import { openAddEventForm,
          closeEventMenu,
          openDayEventsPopup,
          closeDayEventsPopup } from '../../actions/popups.js';
-import { addEvent, targetEventForChange, deleteEvent } from '../../actions/events.js';
+import { addEvent, editEvent, saveEvent, deleteEvent } from '../../actions/events.js';
 import { changeTargetDate } from '../../actions/pagination.js';
 
 import '../../stylesheets/components/monthView/monthView.css';
@@ -25,29 +25,34 @@ export class MonthView extends Component {
         <MonthBody 
           targetDate={this.props.targetDate}
           events={this.props.events} 
+          userId={this.props.userId}
           openAddEventForm={this.props.openAddEventForm} 
           addEvent={this.props.addEvent} 
+          saveEvent={this.props.saveEvent}
           openDayEventsPopup={this.props.openDayEventsPopup}
           openEventMenu={this.props.openEventMenu}
           changeTargetDate={this.props.changeTargetDate}
         />
         <DayEventsPopup 
           events={this.props.events}
+          userId={this.props.userId}
           visibility={this.props.dayEventsPopupVisibility}
           position={this.props.dayEventsPopupPosition}
           dayId={this.props.dayEventsPopupTargetDayId}
           closeDayEventsPopup={this.props.closeDayEventsPopup}
           openEventMenu={this.props.openEventMenu}
-          addEvent={this.props.addEvent} 
+          addEvent={this.props.addEvent}
+          saveEvent={this.props.saveEvent}
         />
         <EventMenu 
-          closeEventMenu={this.props.closeEventMenu}
+          userId={this.props.userId}
           visibility={this.props.eventMenuVisibility}
           position={this.props.eventMenuPosition}
           event={this.props.eventMenuTargetEvent}
           deleteEvent={this.props.deleteEvent}
-          targetEventForChange={this.props.targetEventForChange}
+          editEvent={this.props.editEvent}
           openAddEventForm={this.props.openAddEventForm}
+          closeEventMenu={this.props.closeEventMenu}
         />
       </div>
     );
@@ -55,6 +60,7 @@ export class MonthView extends Component {
 };
 
 MonthView.propTypes = {
+  userId: React.PropTypes.string,
   targetDate: React.PropTypes.object.isRequired,
   events: React.PropTypes.array.isRequired,
   dayEventsPopupVisibility: React.PropTypes.bool.isRequired,
@@ -69,13 +75,15 @@ MonthView.propTypes = {
   openEventMenu: React.PropTypes.func.isRequired,
   closeEventMenu: React.PropTypes.func.isRequired,
   addEvent: React.PropTypes.func.isRequired,
-  targetEventForChange: React.PropTypes.func.isRequired,
+  saveEvent: React.PropTypes.func.isRequired,
+  editEvent: React.PropTypes.func.isRequired,
   deleteEvent: React.PropTypes.func.isRequired,
   changeTargetDate: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
   return {
+    userId: state.authorization.id,
     targetDate: state.pagination.targetDate,
     events: state.events.events,
     dayEventsPopupVisibility: state.popups.dayEventsPopupVisibility,
@@ -95,9 +103,10 @@ function mapDispatchToProps (dispatch) {
     openEventMenu: bindActionCreators(openEventMenu, dispatch),
     closeEventMenu: bindActionCreators(closeEventMenu, dispatch),
     addEvent: bindActionCreators(addEvent, dispatch),
-    targetEventForChange: bindActionCreators(targetEventForChange, dispatch),
+    saveEvent: bindActionCreators(saveEvent, dispatch),
+    editEvent: bindActionCreators(editEvent, dispatch),
     deleteEvent: bindActionCreators(deleteEvent, dispatch),
-    changeTargetDate: bindActionCreators(changeTargetDate, dispatch)
+    changeTargetDate: bindActionCreators(changeTargetDate, dispatch),
   };
 }
 

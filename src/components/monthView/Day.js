@@ -1,5 +1,3 @@
-import '../../stylesheets/components/monthView/monthDay.css';
-
 import classNames from 'classnames';
 import React, { Component } from 'react';
 
@@ -7,8 +5,10 @@ import Event from './Event.js';
 
 import { getCurrentFormatedDate, getOriginalId } from '../../utils/date.js';
 import { countAddEventPosition, countDayEventsPopupPosition } from '../../utils/position.js';
-import { EVENT_HEIGHT } from '../../constants/handlersConstants.js';
+import { EVENT_HEIGHT } from '../../constants/sizes.js';
 import { NEXT_MONTH, PREVIOUS_MONTH} from '../../constants/pagination.js';
+
+import '../../stylesheets/components/monthView/monthDay.css';
 
 export class Day extends Component {
   onDayClick (e) {
@@ -47,8 +47,10 @@ export class Day extends Component {
       <Event 
         key={eventKey + index} 
         event={event} 
+        userId={this.props.userId}
         openEventMenu={this.props.openEventMenu}
-        addEvent={this.props.addEvent} 
+        addEvent={this.props.addEvent}
+        saveEvent={this.props.saveEvent}  
       />
     );
   }
@@ -61,8 +63,10 @@ export class Day extends Component {
         <Event 
           key={eventKey} 
           event={events[0]} 
+          userId={this.props.userId}
           openEventMenu={this.props.openEventMenu}
-          addEvent={this.props.addEvent} 
+          addEvent={this.props.addEvent}
+          saveEvent={this.props.saveEvent} 
         />
         <a href="#" data-name="more" onClick={this.onLinkMoreClick.bind(this)}>
           {eventsCount}
@@ -114,8 +118,10 @@ Day.propTypes = {
   events: React.PropTypes.array.isRequired,
   openAddEventForm: React.PropTypes.func.isRequired,
   addEvent: React.PropTypes.func.isRequired,
+  saveEvent: React.PropTypes.func.isRequired,
   openDayEventsPopup: React.PropTypes.func.isRequired,
-  openEventMenu: React.PropTypes.func.isRequired
+  openEventMenu: React.PropTypes.func.isRequired,
+  userId: React.PropTypes.string
 }
 
 export default Day;
