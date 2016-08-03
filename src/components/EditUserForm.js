@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { closeEditUserForm } from '../actions/popups.js';
+import { editUser } from '../actions/authorization.js';
 
 import '../stylesheets/components/editUserForm.css';
 
@@ -16,6 +17,14 @@ export class EditUserForm extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+    let editUserData = {
+      password: this.refs.password.value,
+      newPassword: this.refs.password.value,
+      confirmedPassword: this.refs.confirmedPassword.value,
+      newUsername: this.refs.newUsername.value
+    };
+    this.props.editUser(editUserData, this.props.userId);
+    this.props.closeEditUserForm();
   }
 
   render () {
@@ -75,18 +84,22 @@ export class EditUserForm extends Component {
 
 EditUserForm.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
-  closeEditUserForm: React.PropTypes.func.isRequired
+  closeEditUserForm: React.PropTypes.func.isRequired,
+  editUser: React.PropTypes.func.isRequired,
+  userId: React.PropTypes.string
 }
 
 function mapStateToProps (state) {
   return {
-    visibility: state.popups.editUserFormVisibility
+    visibility: state.popups.editUserFormVisibility,
+    userId: state.authorization.id
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    closeEditUserForm: bindActionCreators(closeEditUserForm, dispatch)
+    closeEditUserForm: bindActionCreators(closeEditUserForm, dispatch),
+    editUser: bindActionCreators(editUser, dispatch)
   };
 }
 

@@ -15,7 +15,7 @@ export function addEvent (event, userId, newDate) {
       headers: {
         'Content-type': 'application/json; charset=utf-8'
       },
-        body: JSON.stringify(event)
+        body: JSON.stringify({ event: event, token: sessionStorage.token })
     })
     .then((response) => {
        return response.json();
