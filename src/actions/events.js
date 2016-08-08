@@ -43,7 +43,7 @@ export function saveEvent (event, newEvent, userId) {
       headers: {
         'Content-type': 'application/json; charset=utf-8'
       },
-      body: JSON.stringify(newEvent)
+      body: JSON.stringify({event: newEvent, token: sessionStorage.token})
     })
     .then((response) => {
       if (response.status === 201) {
@@ -71,7 +71,8 @@ export function deleteEvent (event, userId) {
       method: 'delete',
       headers: {
         'Content-type': 'application/json; charset=utf-8'
-      }
+      },
+      body: JSON.stringify({ token: sessionStorage.token })
     })
     .then((response) => {
       if (response.status === 200) {

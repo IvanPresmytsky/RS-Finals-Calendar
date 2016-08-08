@@ -29,7 +29,6 @@ export function signIn (username, password) {
       })
     })
     .then((response) => {
-      console.log(response);
       return response.json();
     })
     .then((data) => {
@@ -60,6 +59,51 @@ export function signUp (signUpData) {
       sessionStorage.setItem('token', data.token);
       console.log(sessionStorage);
       dispatch(initializeUser(data.user.username, data.user._id));
+      dispatch(initializeEvents(data.user.events));
+    })
+    .catch((error) => {
+       console.log(error);
+    });
+  }
+}
+
+export function signOut () {
+  return (dispatch, getState) => {
+    return fetch('http://localhost:3000/api/signout', {
+      method: 'post'
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        sessionStorage.setItem('token', null);
+        dispatch(initializeUser(null, null));
+        dispatch(initializeEvents([]));
+      } else {
+        console.log("response status is not equal to 200! It is: " + response.status);
+      }
+    })
+  }
+}
+
+export function deleteUser (password, userId) {
+  return (dispatch, getState) => {
+    return fetch('http://localhost:3000/api/users/' + userId, {
+      method: 'delete',
+      headers: {
+        'Content-type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify({ 
+        password: password,
+        token: sessionStorage.token
+      })
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        sessionStorage.setItem('token', null);
+        dispatch(initializeUser(null, null));
+        dispatch(initializeEvents([]));
+      } else {
+        console.log("response status is not equal to 200! It is: " + response.status);
+      }
     })
     .catch((error) => {
        console.log(error);

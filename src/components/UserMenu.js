@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { closeUserMenu, openEditUserForm } from '../actions/popups.js';
+import { closeUserMenu, openEditUserForm, openDeleteUserPopup } from '../actions/popups.js';
+import { signOut } from '../actions/authorization.js';
 
 import '../stylesheets/components/userMenu.css';
 
@@ -17,6 +18,18 @@ export class UserMenu extends Component {
   onEditUserClick (e) {
     e.preventDefault();
     this.props.openEditUserForm();
+    this.props.closeUserMenu();
+  }
+
+  onSignOutClick (e) {
+    e.preventDefault();
+    this.props.signOut();
+    this.props.closeUserMenu();
+  }
+
+  onDeleteUserClick (e) {
+    e.preventDefault();
+    this.props.openDeleteUserPopup();
     this.props.closeUserMenu();
   }
 
@@ -37,12 +50,14 @@ export class UserMenu extends Component {
         <a 
           href="#" 
           className="user-menu__item"
+          onClick={this.onDeleteUserClick.bind(this)}
         >
           delete user
         </a>
         <a 
           href="#" 
           className="user-menu__item"
+          onClick={this.onSignOutClick.bind(this)}
         >
           sign out
         </a>
@@ -62,6 +77,8 @@ UserMenu.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
   closeUserMenu: React.PropTypes.func.isRequired,
   openEditUserForm: React.PropTypes.func.isRequired,
+  openDeleteUserPopup: React.PropTypes.func.isRequired,
+  signOut: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
@@ -73,7 +90,9 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     closeUserMenu: bindActionCreators(closeUserMenu, dispatch),
-    openEditUserForm: bindActionCreators(openEditUserForm, dispatch)
+    openEditUserForm: bindActionCreators(openEditUserForm, dispatch),
+    openDeleteUserPopup: bindActionCreators(openDeleteUserPopup, dispatch),
+    signOut: bindActionCreators(signOut, dispatch)
   };
 }
 

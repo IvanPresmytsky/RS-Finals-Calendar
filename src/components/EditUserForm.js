@@ -21,7 +21,8 @@ export class EditUserForm extends Component {
       password: this.refs.password.value,
       newPassword: this.refs.password.value,
       confirmedPassword: this.refs.confirmedPassword.value,
-      newUsername: this.refs.newUsername.value
+      newUsername: this.refs.newUsername.value,
+      token: sessionStorage.token
     };
     this.props.editUser(editUserData, this.props.userId);
     this.props.closeEditUserForm();

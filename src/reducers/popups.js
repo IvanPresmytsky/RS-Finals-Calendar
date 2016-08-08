@@ -4,6 +4,8 @@ import { LOGIN_FORM_OPEN,
          USER_MENU_CLOSE,
          EDIT_USER_FORM_OPEN,
          EDIT_USER_FORM_CLOSE,
+         DELETE_USER_POPUP_OPEN,
+         DELETE_USER_POPUP_CLOSE,
          REGISTER_FORM_OPEN,
          REGISTER_FORM_CLOSE,
          ADD_EVENT_FORM_OPEN,
@@ -19,6 +21,7 @@ const initialState = {
   loginFormVisibility: false,
   userMenuVisibility: false,
   editUserFormVisibility: false,
+  deleteUserPopupVisibility: false,
   registerFormVisibility: false,
   addEventFormVisibility: false,
   addEventFormPosition: {top: 0, left: 0},
@@ -65,6 +68,16 @@ function popups (state = initialState, action) {
       return { 
                ...state, 
                editUserFormVisibility: false
+             };
+    case DELETE_USER_POPUP_OPEN:
+      return { 
+               ...state, 
+               deleteUserPopupVisibility: true
+             };
+    case DELETE_USER_POPUP_CLOSE:
+      return { 
+               ...state, 
+               deleteUserPopupVisibility: false
              };
     case REGISTER_FORM_OPEN:
       return { 

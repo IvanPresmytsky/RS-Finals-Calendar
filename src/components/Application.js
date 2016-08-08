@@ -5,6 +5,7 @@ import fecha from 'fecha';
 
 import AddEventForm from './AddEventForm.js';
 import EditUserForm from './EditUserForm.js';
+import DeleteUserPopup from './DeleteUserPopup.js';
 import Header from './Header.js';
 import LoginForm from './LoginForm.js';
 import MonthView from './monthView/MonthView.js';
@@ -67,6 +68,7 @@ export class App extends Component {
          {calendarView}
          <LoginForm />
          <EditUserForm />
+         <DeleteUserPopup />
          <RegisterForm />
          <AddEventForm />
          <NotificationPopup />

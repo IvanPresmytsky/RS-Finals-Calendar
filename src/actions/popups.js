@@ -4,6 +4,8 @@ export const USER_MENU_OPEN = 'USER_MENU_OPEN';
 export const USER_MENU_CLOSE = 'USER_MENU_CLOSE';
 export const EDIT_USER_FORM_OPEN = 'EDIT_USER_FORM_OPEN';
 export const EDIT_USER_FORM_CLOSE = 'EDIT_USER_FORM_CLOSE';
+export const DELETE_USER_POPUP_OPEN = 'DELETE_USER_POPUP_OPEN';
+export const DELETE_USER_POPUP_CLOSE = 'DELETE_USER_POPUP_CLOSE';
 export const REGISTER_FORM_OPEN = 'REGISTER_FORM_OPEN';
 export const REGISTER_FORM_CLOSE = 'REGISTER_FORM_CLOSE';
 export const ADD_EVENT_FORM_OPEN = 'ADD_EVENT_FORM_OPEN';
@@ -51,6 +53,18 @@ export function closeEditUserForm () {
   };
 }
 
+export function openDeleteUserPopup () {
+  return {
+    type: DELETE_USER_POPUP_OPEN
+  };
+}
+
+export function closeDeleteUserPopup () {
+  return {
+    type: DELETE_USER_POPUP_CLOSE
+  };
+}
+
 export function openRegisterForm () {
   return {
     type: REGISTER_FORM_OPEN
@@ -92,8 +106,6 @@ export function closeEventMenu () {
 }
 
 export function openDayEventsPopup (id, position) {
-  console.log(id);
-  console.log(position);
   return {
     type: DAY_EVENTS_POPUP_OPEN,
     dayId: id,
