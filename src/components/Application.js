@@ -11,7 +11,8 @@ import LoginForm from './LoginForm.js';
 import MonthView from './monthView/MonthView.js';
 import NavAndTools from './NavAndTools.js';
 import RegisterForm from './RegisterForm.js';
-import NotificationPopup from './NotificationPopup';
+import NotificationPopup from './NotificationPopup.js';
+import MessagePopup from './MessagePopup.js';
 import ScheduleView from './scheduleView/ScheduleView.js';
 
 import configureStore from '../store/configureStore.js';
@@ -72,6 +73,7 @@ export class App extends Component {
          <RegisterForm />
          <AddEventForm />
          <NotificationPopup />
+         <MessagePopup />
       </div>
     );
   }

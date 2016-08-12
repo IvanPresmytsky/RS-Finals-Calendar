@@ -1,5 +1,6 @@
 import { SIGN_IN } from '../constants/authorization.js';
 import { INITIALIZE_EVENTS } from '../constants/actions.js';
+import { openMessagePopup } from './popups.js'
 
 export function initializeEvents (events) {
   return {
@@ -29,37 +30,48 @@ export function signIn (username, password) {
       })
     })
     .then((response) => {
-      return response.json();
+      if (response.status === 404) {
+        dispatch(openMessagePopup('Invalid username'));
+      } else if (response.status === 401) {
+        dispatch(openMessagePopup('Invalid password'));
+      } else {
+        return response.json();
+      }
     })
     .then((data) => {
+      if(!data) return;
       sessionStorage.setItem('token', data.token);
-      console.log(sessionStorage);
       dispatch(initializeUser(data.user.username, data.user._id));
       dispatch(initializeEvents(data.user.events));
     })
     .catch((error) => {
+       dispatch(openMessagePopup(error.toString()));
        console.log(error);
     });
   }
 }
 
-export function signUp (signUpData) {
+export function signUp (username, password) {
   return (dispatch, getState) => {
     return fetch('http://localhost:3000/api/signup', {
       method: 'post',
       headers: {
         'Content-type': 'application/json; charset=utf-8'
       },
-      body: JSON.stringify(signUpData)
+      body: JSON.stringify({
+        username: username,
+        password: password
+      })
     })
     .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      sessionStorage.setItem('token', data.token);
-      console.log(sessionStorage);
-      dispatch(initializeUser(data.user.username, data.user._id));
-      dispatch(initializeEvents(data.user.events));
+      if (response.status === 201) {
+        dispatch(signOut());
+        dispatch(signIn(username, password));
+      } else if (response.status === 300) {
+        dispatch(openMessagePopup('This user is already exist!'));
+      } else {
+        console.log("response status is not equal to 201! It is: " + response.status);
+      }
     })
     .catch((error) => {
        console.log(error);
@@ -101,6 +113,8 @@ export function deleteUser (password, userId) {
         sessionStorage.setItem('token', null);
         dispatch(initializeUser(null, null));
         dispatch(initializeEvents([]));
+      } else if (response.status === 401) {
+        dispatch(openMessagePopup('Invalid password!'));
       } else {
         console.log("response status is not equal to 200! It is: " + response.status);
       }
@@ -121,11 +135,13 @@ export function editUser (editUserData, userId) {
       body: JSON.stringify(editUserData)
     })
     .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      dispatch(initializeUser(data.user.username, data.user._id));
-      dispatch(initializeEvents(data.user.events));
+      if (response.status === 200) {
+        dispatch(signIn(editUserData.newUsername, editUserData.newPassword));
+      } else if (response.status === 300) {
+        dispatch(openMessagePopup('This user is already exist!'));
+      } else {
+        console.log("response status is not equal to 200! It is: " + response.status);
+      }
     })
     .catch((error) => {
        console.log(error);

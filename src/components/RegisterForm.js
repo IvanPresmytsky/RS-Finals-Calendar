@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { closeRegisterForm } from '../actions/popups.js';
-import { signIn, signUp } from '../actions/authorization.js'
+import { closeRegisterForm, openMessagePopup } from '../actions/popups.js';
+import { signIn, signUp, signOut } from '../actions/authorization.js'
 import '../stylesheets/components/registerForm.css';
 
 export class RegisterForm extends Component {
@@ -21,13 +21,16 @@ export class RegisterForm extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    let signUpData = {
-      username: this.refs.user.value,
-      password: this.refs.password.value,
-      confirmedPassword: this.refs.confirmedPassword.value
+    let password = this.refs.password.value;
+    let username = this.refs.user.value;
+    let confirmedPassword = this.refs.confirmedPassword.value;
+
+    if (password === confirmedPassword) {
+      this.props.signUp(username, password);
+      this.props.closeRegisterForm();
+    } else {
+      this.props.openMessagePopup('Password and confirmPassword fields should be equal');
     }
-    this.props.signUp(signUpData);
-    this.props.closeRegisterForm();
   }
 
   render () {
@@ -79,22 +82,28 @@ export class RegisterForm extends Component {
 
 RegisterForm.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
+  userId: React.PropTypes.string,
   closeRegisterForm: React.PropTypes.func.isRequired,
+  openMessagePopup: React.PropTypes.func.isRequired,
   signIn: React.PropTypes.func.isRequired,
-  signUp: React.PropTypes.func.isRequired
+  signUp: React.PropTypes.func.isRequired,
+  signOut: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
   return {
-    visibility: state.popups.registerFormVisibility
+    visibility: state.popups.registerFormVisibility,
+    userId: state.authorization.id
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     closeRegisterForm: bindActionCreators(closeRegisterForm, dispatch),
+    openMessagePopup: bindActionCreators(openMessagePopup, dispatch),
     signIn: bindActionCreators(signIn, dispatch),
-    signUp: bindActionCreators(signUp, dispatch)
+    signUp: bindActionCreators(signUp, dispatch),
+    signOut: bindActionCreators(signOut, dispatch)
   };
 }
 

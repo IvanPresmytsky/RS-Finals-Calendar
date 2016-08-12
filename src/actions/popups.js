@@ -16,6 +16,8 @@ export const DAY_EVENTS_POPUP_OPEN = 'DAY_EVENTS_POPUP_OPEN';
 export const DAY_EVENTS_POPUP_CLOSE = 'DAY_EVENTS_POPUP_CLOSE';
 export const NOTIFICATION_POPUP_OPEN = 'NOTIFICATION_POPUP_OPEN';
 export const NOTIFICATION_POPUP_CLOSE = 'NOTIFICATION_POPUP_CLOSE';
+export const MESSAGE_POPUP_OPEN = 'MESSAGE_POPUP_OPEN';
+export const MESSAGE_POPUP_CLOSE = 'MESSAGE_POPUP_CLOSE';
 
 export function openLoginForm () {
   return {
@@ -129,5 +131,18 @@ export function openNotificationPopup (event) {
 export function closeNotificationPopup () {
   return {
     type: NOTIFICATION_POPUP_CLOSE,
+  };
+}
+
+export function openMessagePopup (message) {
+  return {
+    type: MESSAGE_POPUP_OPEN,
+    message
+  };
+}
+
+export function closeMessagePopup () {
+  return {
+    type: MESSAGE_POPUP_CLOSE,
   };
 }

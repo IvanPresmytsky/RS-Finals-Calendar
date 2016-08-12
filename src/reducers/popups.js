@@ -15,7 +15,9 @@ import { LOGIN_FORM_OPEN,
          DAY_EVENTS_POPUP_OPEN,
          DAY_EVENTS_POPUP_CLOSE,
          NOTIFICATION_POPUP_OPEN,
-         NOTIFICATION_POPUP_CLOSE } from '../actions/popups';
+         NOTIFICATION_POPUP_CLOSE,
+         MESSAGE_POPUP_OPEN,
+         MESSAGE_POPUP_CLOSE } from '../actions/popups';
 
 const initialState = {
   loginFormVisibility: false,
@@ -33,8 +35,10 @@ const initialState = {
   dayEventsPopupPosition: {top: 0, left: 0},
   dayEventsPopupTargetDayId: null,
   notificationPopupVisibility: false,
-  notificationPopupEvent: null
-}
+  notificationPopupEvent: null,
+  messagePopupVisibility: false,
+  messagePopupMessage: null
+};
 
 function popups (state = initialState, action) {
   console.log(action.type);
@@ -134,6 +138,17 @@ function popups (state = initialState, action) {
       return { 
                ...state,
                notificationPopupVisibility: false
+             };
+    case MESSAGE_POPUP_OPEN:
+      return { 
+               ...state,
+               messagePopupVisibility: true, 
+               messagePopupMessage: action.message
+             };
+    case MESSAGE_POPUP_CLOSE:
+      return { 
+               ...state,
+               messagePopupVisibility: false
              };
     default:
       return state;

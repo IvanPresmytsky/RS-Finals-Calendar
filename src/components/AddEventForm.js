@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { addEvent, saveEvent, editEvent } from '../actions/events.js';
-import { closeAddEventForm } from '../actions/popups.js';
+import { closeAddEventForm, openMessagePopup } from '../actions/popups.js';
 
 import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT } from '../constants/sizes.js';
 import { SET_FILTER_MONTH, SET_FILTER_SCHEDULE } from '../constants/actions.js';
@@ -50,10 +50,14 @@ export class AddEventForm extends Component {
 
   onSubmit (e) {
     e.preventDefault();
-    let event = this.createEvent();
-    this.saveEvent(event, this.props.userId);
-    this.props.closeAddEventForm();
-    this.refs.eventDate.value = null
+    if (this.props.userId) {
+      let event = this.createEvent();
+      this.saveEvent(event, this.props.userId);
+      this.props.closeAddEventForm();
+      this.refs.eventDate.value = null
+    } else {
+      this.props.openMessagePopup('please sign in to start');
+    }
   }
 
   render () {
@@ -172,6 +176,7 @@ AddEventForm.propTypes = {
   position: React.PropTypes.object,
   editedEvent: React.PropTypes.object,
   closeAddEventForm: React.PropTypes.func.isRequired,
+  openMessagePopup: React.PropTypes.func.isRequired,
   addEvent: React.PropTypes.func.isRequired,
   saveEvent: React.PropTypes.func.isRequired,
   editEvent: React.PropTypes.func.isRequired
@@ -192,7 +197,8 @@ function mapDispatchToProps (dispatch) {
     addEvent: bindActionCreators(addEvent, dispatch),
     saveEvent: bindActionCreators(saveEvent, dispatch),
     editEvent: bindActionCreators(editEvent, dispatch),
-    closeAddEventForm: bindActionCreators(closeAddEventForm, dispatch)
+    closeAddEventForm: bindActionCreators(closeAddEventForm, dispatch),
+    openMessagePopup: bindActionCreators(openMessagePopup, dispatch)
   };
 }
 

@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { closeEditUserForm } from '../actions/popups.js';
+import { closeEditUserForm, openMessagePopup } from '../actions/popups.js';
 import { editUser } from '../actions/authorization.js';
 
 import '../stylesheets/components/editUserForm.css';
@@ -19,13 +19,18 @@ export class EditUserForm extends Component {
     e.preventDefault();
     let editUserData = {
       password: this.refs.password.value,
-      newPassword: this.refs.password.value,
-      confirmedPassword: this.refs.confirmedPassword.value,
+      newPassword: this.refs.newPassword.value,
+      confirmedNewPassword: this.refs.confirmedNewPassword.value,
       newUsername: this.refs.newUsername.value,
       token: sessionStorage.token
     };
-    this.props.editUser(editUserData, this.props.userId);
-    this.props.closeEditUserForm();
+    if (editUserData.newPassword === editUserData.confirmedNewPassword) {
+      this.props.editUser(editUserData, this.props.userId);
+      this.props.closeEditUserForm();
+    } else {
+      this.props.openMessagePopup('newPassword and confirmedNewPassword fields should be equal!');
+    }
+    
   }
 
   render () {
@@ -52,13 +57,13 @@ export class EditUserForm extends Component {
              defaultValue=""
              ref="newPassword"
            />
-           <p>Confirm password</p>
+           <p>Confirm new password</p>
            <input 
              type="password" 
              className="edit-user-form__confirm-password" 
              placeholder="confirm new password"
              defaultValue=""
-             ref="confirmedPassword"
+             ref="confirmedNewPassword"
            />
            <p>New user name</p>
            <input 
@@ -86,6 +91,7 @@ export class EditUserForm extends Component {
 EditUserForm.propTypes = {
   visibility: React.PropTypes.bool.isRequired,
   closeEditUserForm: React.PropTypes.func.isRequired,
+  openMessagePopup: React.PropTypes.func.isRequired,
   editUser: React.PropTypes.func.isRequired,
   userId: React.PropTypes.string
 }
@@ -100,6 +106,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     closeEditUserForm: bindActionCreators(closeEditUserForm, dispatch),
+    openMessagePopup: bindActionCreators(openMessagePopup, dispatch),
     editUser: bindActionCreators(editUser, dispatch)
   };
 }
