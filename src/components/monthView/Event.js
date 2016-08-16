@@ -13,7 +13,7 @@ export class Event extends Component {
 
   findTargetDragged (e) {
     let target = e.target;
-    while (e.target.dataset.name !=='event') {
+    while (target.dataset.name !=='event') {
       target = target.parentNode;
     }
     return target;
@@ -27,9 +27,21 @@ export class Event extends Component {
     return dropped ? dropped.id : this.props.event.date;
   }
 
+  onMouseMove (e) {
+    let moveX = e.pageX - this.currentX;
+    let moveY = e.pageY - this.currentY;
+
+    if ( Math.abs(moveX) < 5 && Math.abs(moveY) < 5 ) return;
+    moveAt(e, this.positionAPI);
+  }
+
+  onSelectStart (e) {
+    return;
+  }
+
+
   onEventMouseDown (e) {
     let event = this.findTargetDragged(e);
-    console.log(event);
     if (!event) return;
     let monthBody = document.getElementsByClassName('month-body')[0];
     let eventWidth = event.offsetWidth + 'px';
@@ -37,32 +49,30 @@ export class Event extends Component {
     let shiftX = e.pageX - coords.left;
     let shiftY = e.pageY - coords.top;
     
-    let currentX = e.pageX;
-    let currentY = e.pageY;
+    this.currentX = e.pageX;
+    this.currentY = e.pageY;
 
     this.cursorPosition = e.pageX + '/' + e.pageY;
     event.classList.add('event--position-fixed');
-    event.style.width = eventWidth;
 
-    let positionAPI = {
+    event.style.width = eventWidth;
+    event.style.top = coords.top + 'px';
+    event.style.left = coords.left + 'px';
+
+    this.positionAPI = {
       event,
       monthBody,
       shiftX,
       shiftY
     };
 
-    monthBody.onmousemove = function(e) {
-      let moveX = e.pageX - currentX;
-      let moveY = e.pageY - currentY;
-
-      if ( Math.abs(moveX) < 5 && Math.abs(moveY) < 5 ) return;
-      moveAt(e, positionAPI);
-    };
+    monthBody.addEventListener('mousemove', this.onMouseMove.bind(this));
 
     document.onselectstart = function(e) {
       return false;
-    }
+    };
 
+   // document.addEventListener('selectstart', this.onSelectStart.bind(this));
   }
 
   onDragStart (e) {
@@ -89,13 +99,11 @@ export class Event extends Component {
 
     let newDate = this.findTargetDroppedDate(e);
     let newEvent = { ...this.props.event, date: newDate};
-    console.log(this.props.event);
-    console.log(newEvent);
-    console.log(newDate);
+
     event.classList.remove('event--hidden');
     this.props.saveEvent(this.props.event, newEvent, this.props.userId);
     event.classList.remove('event--position-absolute');
-    monthBody.onmousemove = null;
+    monthBody.removeEventListener('mousemove', this.onMouseMove.bind(this));
   }
 
   onEventMouseUp (e) {

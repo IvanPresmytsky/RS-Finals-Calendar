@@ -41,7 +41,7 @@ export class Day extends Component {
     this.props.openDayEventsPopup(id, position);
   }
 
-  createEventsTemplate (event, index) {
+  renderEventsList (event, index) {
     let eventKey = getOriginalId();
     return (
       <Event 
@@ -55,7 +55,7 @@ export class Day extends Component {
     );
   }
 
-  createLargeEventsTemplate (events) {
+  renderHiddenEventsList (events) {
     let eventKey = getOriginalId();
     let eventsCount = `${events.length - 1} more...`;
     return (
@@ -82,16 +82,18 @@ export class Day extends Component {
   }
 
   render () {
+    let eventsList;
     let day = this.props.day;
     let id = this.props.id;
     let currentDate = getCurrentFormatedDate();
     let currentMonth = this.props.targetDate.getMonth();
-    let eventsTemplate = this.props.events.map(this.createEventsTemplate.bind(this));;
     let eventsHeight = this.countMaxEventsHeight();
 
     if (eventsHeight && eventsHeight < 0) {
-      eventsTemplate = this.createLargeEventsTemplate(this.props.events);
-    } 
+      eventsList = this.renderHiddenEventsList(this.props.events);
+    } else {
+      eventsList = this.props.events.map(this.renderEventsList.bind(this));
+    }
 
     let dayClass = classNames('month-view__day', {
       ' holiday-day': day.getDay() === 0 || day.getDay() === 6,
@@ -105,7 +107,7 @@ export class Day extends Component {
         <span className="day__day-number">
           {day.getDate()}
         </span>
-        {eventsTemplate}
+        {eventsList}
       </div>
     );
   }

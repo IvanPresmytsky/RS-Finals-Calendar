@@ -1,4 +1,4 @@
-import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT, EVENT_CONTAINER_POPUP_WIDTH } from '../constants/sizes.js';
+import { ADD_EVENT_WIDTH, ADD_EVENT_HEIGHT, DAY_EVENTS_POPUP_WIDTH } from '../constants/sizes.js';
 
 export function countAddEventPosition (dayPosition) {
   let windowWidth = document.body.clientWidth;
@@ -17,7 +17,7 @@ export function countAddEventPosition (dayPosition) {
 export function countDayEventsPopupPosition (dayPosition, height) {
   let windowWidth = document.body.clientWidth;
   let windowHeight = document.body.clientHeight;
-  let overWidth = windowWidth - dayPosition.left - EVENT_CONTAINER_POPUP_WIDTH;
+  let overWidth = windowWidth - dayPosition.left - DAY_EVENTS_POPUP_WIDTH;
   let overHeight = windowHeight - dayPosition.top - height;
   let actualLeft = (overWidth < 0) ? (dayPosition.left + overWidth) : dayPosition.left;
   let actualTop = (overHeight < 0) ? (dayPosition.top + overHeight) : dayPosition.top;

@@ -15,7 +15,7 @@ export class DayEventsPopup extends Component {
     this.props.closeDayEventsPopup();
   }
 
-  createEventsTemplate (event, index) {
+  renderEventsList (event, index) {
     let eventKey = getOriginalId();
     return (
       <Event 
@@ -43,7 +43,7 @@ export class DayEventsPopup extends Component {
   render () {
     let events = this.getDayEvents(this.props.dayId);
     let eventsHeight = this.countMaxEventsHeight(events);
-    let eventsTemplate = events.map(this.createEventsTemplate.bind(this));
+    let eventsList = events.map(this.renderEventsList.bind(this));
     let dayEventsPopupClass = classNames('day-events-popup', {
       'day-events-popup--visible': this.props.visibility
     });
@@ -61,7 +61,7 @@ export class DayEventsPopup extends Component {
     return (
       <div className={dayEventsPopupClass} data-name="dayEventsPopup" style={style}>
         <p className="day-events-popup__date">{this.props.dayId}</p>
-        {eventsTemplate}
+        {eventsList}
         <div className="day-events-popup__close">
           <a href="#" onClick={this.onCloseClick.bind(this)}>X</a>
         </div>

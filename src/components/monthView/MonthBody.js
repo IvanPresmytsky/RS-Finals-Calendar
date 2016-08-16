@@ -1,12 +1,9 @@
-import fecha from 'fecha';
 import React, { Component } from 'react';
 import { chunk } from 'lodash';
 
-import Day from './Day.js';
 import Week from './Week.js';
 
 import { getTargetMonthDays } from '../../utils/date.js';
-import { moveAt } from '../../utils/position.js';
 
 import { weekDays } from '../../constants/weekDays.js';
 
@@ -14,27 +11,12 @@ import '../../stylesheets/components/monthView/monthBody.css';
 
 export class MonthBody extends Component {
 
-  getDayEvents (id) {
-    return this.props.events.filter((event) => {
-      let date = event.date.slice(0, 10);
-      return date === id; 
-    });
-  }
-
-  renderDay(day) {
-    let id = fecha.format(day, 'YYYY-MM-DD');
-
-    let dayEvents = this.getDayEvents(id);
-    console.log();
-    let dayNumsArr = getTargetMonthDays(this.props.targetDate);
-    dayNumsArr = chunk(dayNumsArr, weekDays.length);
-      
+  renderWeek(week, index) {
     return (
-      <Day 
-        key={id} 
-        id={id} 
-        day={day} 
-        events={dayEvents}
+      <Week 
+        key={index} 
+        days={week}
+        events={this.props.events}
         targetDate={this.props.targetDate}
         userId={this.props.userId}
         openAddEventForm={this.props.openAddEventForm}
@@ -44,13 +26,6 @@ export class MonthBody extends Component {
         openDayEventsPopup={this.props.openDayEventsPopup}
         openEventMenu={this.props.openEventMenu}
       />
-    );
-  }
-
-  renderWeek(week, index) {
-    let days = week.map(this.renderDay.bind(this));
-    return (
-      <Week key={index} days={days} />
     );
   }
 

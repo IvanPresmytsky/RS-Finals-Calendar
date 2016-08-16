@@ -13,7 +13,7 @@ import '../../stylesheets/components/scheduleView/scheduleView.css';
 
 export class Schedule extends Component {
 
-  createEventlistTemplate (event, index) {
+  renderEventList (event, index) {
     return (
       <SceduleEvent 
         key={event.date+index} 
@@ -27,17 +27,14 @@ export class Schedule extends Component {
   }
 
   render () {
-
-    //let sortedEvents = date.sortedEvents(this.props.events);
     let sortedEvents = sortEventsByTime(this.props.events);
-    //sortedEvents = date.actualEvents(sortedEvents, this.props.currentDayIndex);
     sortedEvents = getActualEvents(sortedEvents, this.props.targetDate);
-    let eventlistTemplate = sortedEvents.map(this.createEventlistTemplate.bind(this));
+    let eventList = sortedEvents.map(this.renderEventList.bind(this));
 
     return (
       <div className = "schedule">
         <ul className = "schedule__event-list">
-          {eventlistTemplate}
+          {eventList}
         </ul>
         <div className = "scedule__pagination">
           <a href="#" className = "pagination__next-btn"> next </a>
