@@ -1,6 +1,6 @@
 import { ADD_EVENT, EDIT_EVENT, SAVE_EVENT, DELETE_EVENT, INITIALIZE_EVENTS } from '../constants/actions.js';
 
-const initialState = {
+export const initialState = {
   events: [],
   editedEvent: null
 }
@@ -40,7 +40,7 @@ function events (state = initialState, action) {
   }
 }
 
-function addEvent (state, action) {
+export function addEvent (state, action) {
   let eventsArr = state.events.slice();
   console.log(action.event);
   if (eventsArr.length > 0 && eventsArr.indexOf(action.event) !== -1) {
@@ -51,7 +51,7 @@ function addEvent (state, action) {
   return eventsArr;
 }
 
-function changeEvent (action) {
+export function changeEvent (action) {
   let event = action.event;
   let newEvent = action.newEvent;
 
@@ -62,7 +62,7 @@ function changeEvent (action) {
   event.endTime = newEvent.endTime;
 }
 
-function deleteEvent (state, eventId) {
+export function deleteEvent (state, eventId) {
   return state.events.slice().filter((event) => {
      return event._id !== eventId;
    });

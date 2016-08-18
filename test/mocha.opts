@@ -1,0 +1,6 @@
+--colors
+--reporter spec
+--timeout 1000
+--recursive
+--compilers js:babel-core/register
+--require ./test/helper.js
