@@ -19,7 +19,7 @@ import { LOGIN_FORM_OPEN,
          MESSAGE_POPUP_OPEN,
          MESSAGE_POPUP_CLOSE } from '../actions/popups';
 
-const initialState = {
+export const initialState = {
   loginFormVisibility: false,
   userMenuVisibility: false,
   editUserFormVisibility: false,

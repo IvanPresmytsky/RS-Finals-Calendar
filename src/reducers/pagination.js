@@ -2,7 +2,7 @@ import date, { getTargetDate } from '../utils/date.js';
 
 import { CHANGE_TARGET_DATE } from '../constants/actions.js';
 
-const initialState = {
+export const initialState = {
   targetDate: new Date()
 }
 

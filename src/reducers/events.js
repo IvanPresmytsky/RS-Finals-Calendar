@@ -19,11 +19,9 @@ function events (state = initialState, action) {
                events: addEvent(state, action)
              };
     case SAVE_EVENT:
-      let eventsArr = state.events.slice();
-      changeEvent(action);
-      return { 
+      return {
                ...state,
-               events: eventsArr
+               events: changeEvent(state, action)
              };
     case EDIT_EVENT:
       return { 
@@ -51,7 +49,8 @@ export function addEvent (state, action) {
   return eventsArr;
 }
 
-export function changeEvent (action) {
+export function changeEvent (state, action) {
+  let eventsArr = state.events.slice();
   let event = action.event;
   let newEvent = action.newEvent;
 
@@ -60,6 +59,8 @@ export function changeEvent (action) {
   event.date = newEvent.date;
   event.startTime = newEvent.startTime;
   event.endTime = newEvent.endTime;
+
+  return eventsArr;
 }
 
 export function deleteEvent (state, eventId) {

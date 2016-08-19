@@ -1,6 +1,6 @@
 import { SIGN_IN } from '../constants/authorization.js';
 
-const initialState = {
+export const initialState = {
   username: null,
   id: null
 }

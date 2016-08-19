@@ -1,6 +1,6 @@
 import { SET_VIEW_MONTH, SET_VIEW_SCHEDULE } from '../constants/actions.js';
 
-const initialState = {
+export const initialState = {
   view: SET_VIEW_MONTH
 }
 
