@@ -1,3 +1,5 @@
+import { validateDate, validatePosition, validateEvent, validateText } from '../utils/actionsInputValidator.js';
+
 export const LOGIN_FORM_OPEN = 'LOGIN_FORM_OPEN';
 export const LOGIN_FORM_CLOSE = 'LOGIN_FORM_CLOSE';
 export const USER_MENU_OPEN = 'USER_MENU_OPEN';
@@ -80,6 +82,12 @@ export function closeRegisterForm () {
 }
 
 export function openAddEventForm (position, date) {
+  if (date && !validateDate(date)) {
+    throw new Error('uncorrect date!');
+  }
+  if (position) {
+    position = validatePosition(position);
+  }
   return {
     type: ADD_EVENT_FORM_OPEN,
     position,
@@ -94,10 +102,17 @@ export function closeAddEventForm () {
 }
 
 export function openEventMenu (event, position) {
+  console.log(event);
+  if (!validateEvent(event)) {
+    throw new Error('uncorrect event!');
+  }
+
+  position = validatePosition(position);
+
   return {
     type: EVENT_MENU_OPEN,
-    event: event,
-    position: position
+    event,
+    position
   };
 }
 
@@ -108,6 +123,12 @@ export function closeEventMenu () {
 }
 
 export function openDayEventsPopup (id, position) {
+  if (!validateDate(id)) {
+    throw new Error('uncorrect id!');
+  }
+
+  position = validatePosition(position);
+
   return {
     type: DAY_EVENTS_POPUP_OPEN,
     dayId: id,
@@ -122,6 +143,10 @@ export function closeDayEventsPopup () {
 }
 
 export function openNotificationPopup (event) {
+  console.log(event);
+  if (!validateEvent(event)) {
+    throw new Error('uncorrect event!');
+  }
   return {
     type: NOTIFICATION_POPUP_OPEN,
     event
@@ -135,6 +160,9 @@ export function closeNotificationPopup () {
 }
 
 export function openMessagePopup (message) {
+  if (!validateText(message)) {
+    throw new Error('uncorrect message!');
+  }
   return {
     type: MESSAGE_POPUP_OPEN,
     message
@@ -146,3 +174,4 @@ export function closeMessagePopup () {
     type: MESSAGE_POPUP_CLOSE,
   };
 }
+

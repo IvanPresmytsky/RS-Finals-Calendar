@@ -1,6 +1,13 @@
 import { ADD_EVENT, EDIT_EVENT, SAVE_EVENT, DELETE_EVENT } from '../constants/actions.js';
+import * as eventsAPI from '../api/eventsAPI.js';
+import { validateEvent, validateText, validateDate } from '../utils/actionsInputValidator.js';
 
 export function eventAdded (event, newDate) {
+  console.log(event);
+  if (!validateEvent(event)) throw new Error('uncorrect event!');
+  if (newDate) {
+    if (!validateDate(newDate)) throw new Error('uncorrect newDate');
+  }
   return {
     type: ADD_EVENT,
     event,
@@ -9,21 +16,21 @@ export function eventAdded (event, newDate) {
 }
 
 export function addEvent (event, userId, newDate) {
+  if (!validateEvent(event)) throw new Error('uncorrect event!');
+  if (!validateText(userId)) throw new Error('uncorrect userId!');
+  if (newDate) {
+    if(!validateDate(newDate)) throw new Error('uncorrect newDate');
+  }
+  let payload = {
+    event,
+    token: sessionStorage.token
+  }
   return (dispatch, getState) => {
-    return fetch('http://localhost:3000/api/users/' + userId + '/events', {
-      method: 'post',
-      headers: {
-        'Content-type': 'application/json; charset=utf-8'
-      },
-        body: JSON.stringify({ event: event, token: sessionStorage.token })
-    })
-    .then((response) => {
-       return response.json();
-    })
-    .then((data) => dispatch(eventAdded(data.event)))
-    .catch((error) => {
-      console.log(error);
-    });
+    return eventsAPI.createEvent(userId, payload)
+      .then((data) => dispatch(eventAdded(data.event, newDate)))
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }
 
@@ -36,29 +43,23 @@ export function eventSaved (event, newEvent) {
 }
 
 export function saveEvent (event, newEvent, userId) {
-  let path = 'http://localhost:3000/api/users/' + userId + '/events/' + event._id;
+  if (!validateEvent(event)) throw new Error('uncorrect event!');
+  if (!validateEvent(newEvent)) throw new Error('uncorrect newEvent!');
+  if (!validateText(userId)) throw new Error('uncorrect userId!');
+  let payload = {
+    event: newEvent,
+    token: sessionStorage.token
+  };
   return (dispatch, getState) => {
-    return fetch(path, {
-      method: 'put',
-      headers: {
-        'Content-type': 'application/json; charset=utf-8'
-      },
-      body: JSON.stringify({event: newEvent, token: sessionStorage.token})
-    })
-    .then((response) => {
-      if (response.status === 201) {
-        dispatch(eventSaved(event, newEvent));
-      } else {
-        console.log("response status is not equal to 201! It is: " + response.status);
-      }
-    })
+    return eventsAPI.editEvent(userId, event._id, payload)
+    .then((response) => dispatch(eventSaved(event, newEvent)))
     .catch((error) => {
-       console.log(error);
+       console.error(error);
     });
   }
 }
-
 export function eventDeleted (eventId) {
+  if (!validateText(eventId)) throw new Error('uncorrect eventId!');
   return {
    type: DELETE_EVENT,
    eventId
@@ -66,28 +67,27 @@ export function eventDeleted (eventId) {
 }
 
 export function deleteEvent (event, userId) {
+  if (!validateEvent(event)) throw new Error('uncorrect event!');
+  if (!validateText(userId)) throw new Error('uncorrect userId!');
+
+  let payload = {
+    token: sessionStorage.token
+  };
   return (dispatch, getState) => {
-    return fetch('http://localhost:3000/api/users/' + userId + '/events/' + event._id, {
-      method: 'delete',
-      headers: {
-        'Content-type': 'application/json; charset=utf-8'
-      },
-      body: JSON.stringify({ token: sessionStorage.token })
-    })
-    .then((response) => {
-      if (response.status === 200) {
+    return eventsAPI.removeEvent(userId, event._id, payload)
+      .then((data) => {
         dispatch(eventDeleted(event._id));
-      } else {
-        console.log("response status is not equal to 200! It is: " + response.status);
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }
 
 export function editEvent (event) {
+  if (event) {
+    if (!validateEvent(event)) throw new Error('uncorrect event!');
+  }
   return {
     type: EDIT_EVENT,
     event
