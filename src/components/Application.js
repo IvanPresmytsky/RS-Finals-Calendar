@@ -59,7 +59,6 @@ export class App extends Component {
 
   render () {
     let calendarView = this.getCurrentView(this.props.view);
-
     return (
       <div className="container">
          <div className="wrapper">

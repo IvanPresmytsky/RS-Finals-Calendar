@@ -42,28 +42,28 @@ export class UserMenu extends Component {
       <div className={popupClass}>
         <a 
           href="#" 
-          className="user-menu__item" 
+          className="user-menu__item user-menu__edit-user-btn" 
           onClick={this.onEditUserClick.bind(this)}
         >
           edit user
         </a>
         <a 
           href="#" 
-          className="user-menu__item"
+          className="user-menu__item user-menu__delete-user-btn"
           onClick={this.onDeleteUserClick.bind(this)}
         >
           delete user
         </a>
         <a 
           href="#" 
-          className="user-menu__item"
+          className="user-menu__item user-menu__sign-out-btn"
           onClick={this.onSignOutClick.bind(this)}
         >
           sign out
         </a>
         <a 
           href="#" 
-          className="user-menu__item" 
+          className="user-menu__item user-menu__close-btn" 
           onClick={this.onBtnCloseClick.bind(this)}
         >
           close

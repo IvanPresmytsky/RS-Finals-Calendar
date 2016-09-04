@@ -36,15 +36,17 @@ export function performRequest(url, method, payload) {
       }
     })
     .then((response) => {
-      return response.json();
-    },
-    (response) => {
-      if(response.status === 404) {
-        console.log('хохохо');
+      console.log(response.status);
+      if (response.status === 404) {
+        throw new Error('404');
       }
-    })
-    .catch((error) => {
-      console.error(error);
+      if (response.status === 300) {
+        return '300';
+      }
+      if (response.status === 401) {
+        throw new Error('401');
+      }
+      return response.json();
     });
 };
 

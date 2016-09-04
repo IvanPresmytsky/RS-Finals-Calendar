@@ -361,54 +361,5 @@ describe('Authorization actions', () => {
       expect(() => editUser(confirmedNewPasswordEmpty, id)).to.throw(Error);
       expect(() => editUser(confirmedNewPasswordNotTrimed, id)).to.throw(Error);
     });
-
-/*
-    it('should throw an error if id is uncorrect', () => {
-      const id = 'id';
-      const password = 'password';
-      const idObject = { id: 'id'};
-      const idEmpty = '';
-      const idTrimed = '  ';
-
-      expect(() => editUser(password, id)).to.not.throw(Error);
-
-      expect(() => editUser()).to.throw(Error);
-      expect(() => editUser(id)).to.throw(Error);
-      expect(() => editUser(password, idObject)).to.throw(Error);
-      expect(() => editUser(password, idEmpty)).to.throw(Error);
-      expect(() => editUser(password, idTrimed)).to.throw(Error);
-    });
-
-    it('should throw an error if password is uncorrect', () => {
-      const id = 'id';
-      const password = 'password';
-      const passswordObject = { password: 'password'};
-      const passswordEmpty = '';
-      const passswordTrimed = '  ';
-
-      expect(() => editUser(password, id)).to.not.throw(Error);
-
-      expect(() => editUser()).to.throw(Error);
-      expect(() => editUser(password)).to.throw(Error);
-      expect(() => editUser(passwordObject, id)).to.throw(Error);
-      expect(() => editUser(passwordEmpty, id)).to.throw(Error);
-      expect(() => editUser(passwordNotTrimed, id)).to.throw(Error);
-    });
-
-    it('should throw an error if id is uncorrect', () => {
-      const id = 'id';
-      const password = 'password';
-      const idObject = { id: 'id'};
-      const idEmpty = '';
-      const idTrimed = '  ';
-
-      expect(() => editUser(password, id)).to.not.throw(Error);
-
-      expect(() => editUser()).to.throw(Error);
-      expect(() => editUser(id)).to.throw(Error);
-      expect(() => editUser(password, idObject)).to.throw(Error);
-      expect(() => editUser(password, idEmpty)).to.throw(Error);
-      expect(() => editUser(password, idTrimed)).to.throw(Error);
-    });*/
   });
 });

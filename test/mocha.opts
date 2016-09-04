@@ -1,6 +1,7 @@
 --colors
 --reporter spec
---timeout 1000
+--timeout 5000
 --recursive
 --compilers js:babel-core/register
 --require ./test/helper.js
+--harmony-proxies

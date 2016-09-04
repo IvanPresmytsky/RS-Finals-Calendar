@@ -20,7 +20,7 @@ export class MessagePopup extends Component {
 
 
   render() {
-    let message = this.props.message;
+    let message = this.props.message || 'no message' ;
     let popupClass = classNames('message-popup', {
       ' popup-visible': this.props.visibility
     });
@@ -34,7 +34,7 @@ export class MessagePopup extends Component {
           className="message-popup__ok-btn"
           onClick={this.onOkBtnClick.bind(this)}
         >
-          OK
+        OK
         </a>
         <div className="message-popup__close">
           <a href="#" onClick={this.onBtnCloseClick.bind(this)}>X</a>

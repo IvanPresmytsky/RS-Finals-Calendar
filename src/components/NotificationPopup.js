@@ -23,7 +23,7 @@ export class NotificationPopup extends Component {
     return (
       <div className={popupClass}>
         <p className="notification-popup__title">
-          'Attention!!!'
+          Attention!!!
         </p>
         <p className="notification-popup__event-title">
           {eventTitle}
