@@ -45,6 +45,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.15.0",
     "ignore-styles": "^5.0.1",
+    "jsdom": "^9.5.0",
     "mocha": "^3.0.2",
     "mock-css-modules": "^1.0.0",
     "proxyquire": "^1.7.10",

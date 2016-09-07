@@ -3,7 +3,10 @@ import chai from 'chai';
 import sinon from 'sinon';
 import { shallow, mount } from 'enzyme';
 import proxyquire from 'proxyquire';
-var mockCssModules = require("mock-css-modules");
+import mockCssModules from 'mock-css-modules';
+import jsdom from 'jsdom';
+
+const DEFAULT_HTML = '<html><body></body></html>';
 
 
 global.expect = chai.expect;
@@ -13,4 +16,7 @@ global.proxyquire = proxyquire;
 global.shallow = shallow;
 global.mount = mount;
 global.sinon = sinon;
+
+global.document = jsdom.jsdom(DEFAULT_HTML);
+global.window = document.defaultView;
 

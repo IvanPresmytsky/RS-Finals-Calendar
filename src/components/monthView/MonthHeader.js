@@ -12,7 +12,7 @@ export class MonthHeader extends Component {
     });
     return (
       <div key={day} className={dayClass}>
-        <span>{day}</span>
+        <span className="month-header__day-name-text">{day}</span>
       </div>
     );
   }

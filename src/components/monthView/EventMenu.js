@@ -31,11 +31,11 @@ export class EventMenu extends Component {
     let time = event ? `${event.startTime} - ${event.endTime}` : '';
     let popupClass = classNames('event-menu', {
       'event-menu--visible': this.props.visibility
-    })
+    });
     let style = {
       top: this.props.position.top,
       left: this.props.position.left,
-    }
+    };
     return (
       <div className={popupClass} style={style}>
         <p className="event-menu__title">{title}</p>
@@ -48,14 +48,14 @@ export class EventMenu extends Component {
             className="event-menu__change-btn"
             onClick={this.onChangeBtnClick.bind(this)}
           >
-            change event 
+            change event
           </button>
           <button 
             type="button" 
             className="event-menu__delete-btn"
             onClick={this.onDeleteBtnClick.bind(this)}
           > 
-            delete event 
+            delete event
           </button>
         </div>
         <div className="event-menu__close">

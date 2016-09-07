@@ -88,7 +88,6 @@ export class AddEventForm extends Component {
     let eventStartTime = '00:00';
     let eventEndTime = '00:00';
     let submitText = 'add event';
-    let eventColor = 'yellow';
 
     if (this.props.editedEvent) {
       let event = this.props.editedEvent;
@@ -97,7 +96,6 @@ export class AddEventForm extends Component {
       eventDate = event.date;
       eventStartTime = event.startTime;
       eventEndTime = event.endTime;
-      eventColor = event.color;
       submitText = 'change event';
     }
 
@@ -136,7 +134,7 @@ export class AddEventForm extends Component {
             />
           </div>
           <div className="add-event-form__time-block">
-            <span>from</span>
+            <span className="time-block__text-from">from</span>
             <input
               type="time"
               className="add-event-form__event-start-time"
@@ -144,7 +142,7 @@ export class AddEventForm extends Component {
               ref="eventStartTime"
               required
             />
-            <span>to</span>
+            <span className="time-block__text-to">to</span>
             <input
               type="time"
               className="add-event-form__event-end-time"

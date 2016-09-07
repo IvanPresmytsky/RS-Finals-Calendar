@@ -114,14 +114,11 @@ export class Event extends Component {
 
   render () {
     let event = this.props.event;
-    let style = {
-      background: event.color
-    }
+
     return (
       <div id={event.id} 
         className="event-body" 
         data-name="event" 
-        style={style}
         onMouseDown={this.onEventMouseDown.bind(this)}
         onMouseUp={this.onEventMouseUp.bind(this)}
         onDragStart={this.onDragStart.bind(this)}
