@@ -85,11 +85,11 @@ describe('Events actions', () => {
       const dateCorrect = '2016-01-01';
 
       expect(() => addEvent()).to.throw(Error);
-      expect(() => addEvent(event, id)).to.throw(Error);
       expect(() => addEvent(event, id, dateNumber)).to.throw(Error);
       expect(() => addEvent(event, id, dateUncorrect)).to.throw(Error);
       expect(() => addEvent(event, id, dateObject)).to.throw(Error);
-      //expect(() => addEvent(event, id, dateCorrect)).to.not.throw(Error);
+      expect(() => addEvent(event, id)).to.not.throw(Error);
+      expect(() => addEvent(event, id, dateCorrect)).to.not.throw(Error);
     });
 
     it('should trow error if userId is not correct', () => {
@@ -102,11 +102,11 @@ describe('Events actions', () => {
 
       expect(() => addEvent()).to.throw(Error);
       expect(() => addEvent(event)).to.throw(Error);
-      expect(() => addEvent(event, newDate)).to.throw(Error);
-      expect(() => addEvent(event, newDate, idObject)).to.throw(Error);
-      expect(() => addEvent(event, newDate, idEmpty)).to.throw(Error);
-      expect(() => addEvent(event, newDate, idNotTrimed)).to.throw(Error);
-      //expect(() => addEvent(event, newDate, id)).to.not.throw(Error);
+      expect(() => addEvent(event, idObject, newDate)).to.throw(Error);
+      expect(() => addEvent(event, idEmpty, newDate)).to.throw(Error);
+      expect(() => addEvent(event, idNotTrimed, newDate)).to.throw(Error);
+      expect(() => addEvent(event, id)).to.not.throw(Error);
+      expect(() => addEvent(event, id, newDate, )).to.not.throw(Error);
     });
   });
 
@@ -123,8 +123,6 @@ describe('Events actions', () => {
       const eventUncorrectDate = { title: 'title', text: 'text', date: '2016-01-35', startTime: '00:00', endTime: '00:00' };
       const eventUncorrectTime = { title: '', text: 'text', date: '2016-01-01', startTime: '00:60', endTime: '00:00' };
 
-
-      //expect(() => saveEvent(event, newEvent, id)).to.not.throw(Error);
       expect(() => saveEvent()).to.throw(Error);
       expect(() => saveEvent(newEvent, id, event)).to.throw(Error);
       expect(() => saveEvent(eventString, newEvent, id)).to.throw(Error);
@@ -132,6 +130,7 @@ describe('Events actions', () => {
       expect(() => saveEvent(eventUncorrectTitle, newEvent, id)).to.throw(Error);
       expect(() => saveEvent(eventUncorrectDate, newEvent, id)).to.throw(Error);
       expect(() => saveEvent(eventUncorrectTime, newEvent, id)).to.throw(Error);
+      expect(() => saveEvent(event, newEvent, id)).to.not.throw(Error);
     });
 
     it('should trow error if newEvent is not correct', () => {
@@ -144,7 +143,6 @@ describe('Events actions', () => {
       const newEventUncorrectDate = { title: 'title', text: 'text', date: '2016-01-35', startTime: '00:00', endTime: '00:00' };
       const newEventUncorrectTime = { title: '', text: 'text', date: '2016-01-01', startTime: '00:60', endTime: '00:00' };
 
-      //expect(() => saveEvent(event, newEvent, id)).to.not.throw(Error);
       expect(() => saveEvent()).to.throw(Error);
       expect(() => saveEvent(event, id, newEvent)).to.throw(Error);
       expect(() => saveEvent(event, newEventString, id)).to.throw(Error);
@@ -152,6 +150,7 @@ describe('Events actions', () => {
       expect(() => saveEvent(event, newEventUncorrectTitle, id)).to.throw(Error);
       expect(() => saveEvent(event, newEventUncorrectDate, id)).to.throw(Error);
       expect(() => saveEvent(event, newEventUncorrectTime, id)).to.throw(Error);
+      expect(() => saveEvent(event, newEvent, id)).to.not.throw(Error);
     });
 
     it('should trow error if userId is not correct', () => {
@@ -168,7 +167,7 @@ describe('Events actions', () => {
       expect(() => saveEvent(event, newEvent, idObject)).to.throw(Error);
       expect(() => saveEvent(event, newEvent, idEmpty)).to.throw(Error);
       expect(() => saveEvent(event, newEvent, idNotTrimed)).to.throw(Error);
-      //expect(() => saveEvent(event, newEvent, id)).to.not.throw(Error);
+      expect(() => saveEvent(event, newEvent, id)).to.not.throw(Error);
     });
   });
 
@@ -210,13 +209,13 @@ describe('Events actions', () => {
       const eventUncorrectDate = { title: 'title', text: 'text', date: '2016-01-35', startTime: '00:00', endTime: '00:00' };
       const eventUncorrectTime = { title: '', text: 'text', date: '2016-01-01', startTime: '00:60', endTime: '00:00' };
 
-      expect(() => editEvent()).to.not.throw(Error);
-      expect(() => editEvent(event)).to.not.throw(Error);
       expect(() => editEvent(eventString)).to.throw(Error);
       expect(() => editEvent(eventUncorrect)).to.throw(Error);
       expect(() => editEvent(eventUncorrectTitle)).to.throw(Error);
       expect(() => editEvent(eventUncorrectDate)).to.throw(Error);
       expect(() => editEvent(eventUncorrectTime)).to.throw(Error);
+      expect(() => editEvent()).to.not.throw(Error);
+      expect(() => editEvent(event)).to.not.throw(Error);
     });
   });
 
@@ -238,7 +237,7 @@ describe('Events actions', () => {
       expect(() => deleteEvent(eventUncorrectTitle, id)).to.throw(Error);
       expect(() => deleteEvent(eventUncorrectDate, id)).to.throw(Error);
       expect(() => deleteEvent(eventUncorrectTime, id)).to.throw(Error);
-      //expect(() => deleteEvent(event, id)).to.not.throw(Error);
+      expect(() => deleteEvent(event, id)).to.not.throw(Error);
     });
 
     it('should trow error if userId is not correct', () => {
@@ -253,7 +252,7 @@ describe('Events actions', () => {
       expect(() => deleteEvent(event, idObject)).to.throw(Error);
       expect(() => deleteEvent(event, idEmpty)).to.throw(Error);
       expect(() => deleteEvent(event, idNotTrimed)).to.throw(Error);
-      //expect(() => deleteEvent(event, id)).to.not.throw(Error);
+      expect(() => deleteEvent(event, id)).to.not.throw(Error);
     });
   });
 
@@ -280,7 +279,7 @@ describe('Events actions', () => {
       expect(() => eventDeleted(idObject)).to.throw(Error);
       expect(() => eventDeleted(idEmpty)).to.throw(Error);
       expect(() => eventDeleted(idNotTrimed)).to.throw(Error);
-      //expect(() => eventDeleted(id)).to.not.throw(Error);
+      expect(() => eventDeleted(id)).to.not.throw(Error);
     });
   });
 });

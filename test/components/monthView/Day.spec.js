@@ -41,10 +41,6 @@ describe('Day', () => {
     assert(component.find('.day__day-number').hasClass('day__day-number'));
     assert.equal(component.find('.day__day-number').text(), days[0].getDate());
   });
-/*
-  it('should have "current-day" class if current date is equal target date', () => {
-    const { component}  = setup(targetDate2, events, days[0], '2016-01-01');
-    assert(component.find('.day__day-number').hasClass('prev-month-day'));
-  });
-*/
+
 });
+

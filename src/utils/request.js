@@ -1,4 +1,5 @@
 import { PATH } from '../constants/path.js';
+import fetch from 'isomorphic-fetch';
 
 export function get (resourceUrl) {
   const url = generateRequestUrl(resourceUrl);

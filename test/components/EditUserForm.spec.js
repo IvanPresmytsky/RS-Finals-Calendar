@@ -47,3 +47,4 @@ describe('EditUserForm', () => {
     assert.isFalse(component.hasClass('popup-visible'));
   });
 });
+

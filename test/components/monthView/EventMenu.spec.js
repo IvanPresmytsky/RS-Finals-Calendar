@@ -71,3 +71,4 @@ describe('EventMenu', () => {
     assert.equal(buttons.find('.event-menu__delete-btn').text(), 'delete event');
   });
 });
+

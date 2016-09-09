@@ -1,8 +1,15 @@
 import { SIGN_IN } from '../../src/constants/authorization.js';
 import { INITIALIZE_EVENTS } from '../../src/constants/actions.js';
 import { initializeEvents, initializeUser, signIn, signUp, deleteUser, editUser } from '../../src/actions/authorization.js';
+import { MESSAGE_POPUP_OPEN } from '../../src/actions/popups.js';
+import PATH from '../../src/constants/path.js';
+import thunk from 'redux-thunk';
+
+const middlewares = [ thunk ];
+const mockStore = configureMockStore(middlewares);
 
 describe('Authorization actions', () => {
+  
   describe('initialize events action', () => {
     it('should create an action to initialize events', () => {
       const events = [
@@ -90,6 +97,14 @@ describe('Authorization actions', () => {
   });
 
   describe('sign in action', () => {
+    const events = [
+                     { title: 'event1', text: 'text1', date: '2016-01-01', startTime: '00:00', endTime: '00:00' },
+                     { title: 'event2', text: 'text2', date: '2016-02-01', startTime: '00:01', endTime: '00:02' },
+                     { title: 'event3', text: 'text3', date: '2016-01-13', startTime: '00:00', endTime: '00:00' }
+                   ];
+    afterEach(() => {
+      nock.cleanAll()
+    });
 
     it('should throw an error if username is uncorrect', () => {
       const username = 'User';
@@ -122,6 +137,80 @@ describe('Authorization actions', () => {
       expect(() => signIn(username, passwordEmpty)).to.throw(Error);
       expect(() => signIn(username, passwordTrimed)).to.throw(Error);
     });
+
+    it('should create INITIALIZE_USER and SIGN_IN when sign in has been done', () => {
+      
+      nock('http://localhost:3000/api')
+        .post('/signin', {
+          username: 'user',
+          password: 'password'
+        })
+        .reply(200, { 
+          user: { 
+                  username: 'user', 
+                  _id: 'id',
+                  events 
+                }
+        });
+
+      const expectedActions = [
+        { type: SIGN_IN, username: 'user', id: 'id' },
+        { type: INITIALIZE_EVENTS, events }
+      ];
+
+      const store = mockStore({ username: null, password: null });
+
+      return store.dispatch(signIn('user', 'password'))
+      .then(() => {
+        console.log(store.getActions());
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+    });
+
+    it('should create MESSAGE_POPUP_OPEN when sign in has been done with uncorrect username', () => {
+
+      nock('http://localhost:3000/api')
+        .post('/signin', {
+          username: 'uncorrect user',
+          password: 'password'
+        })
+        .reply(404);
+
+      const expectedActions = [
+        { type: MESSAGE_POPUP_OPEN, message: 'invalid user'}
+      ];
+
+      const store = mockStore({ username: null, password: null });
+
+      return store.dispatch(signIn('uncorrect user', 'password'))
+      .then(() => {
+        console.log(store.getActions());
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+    });
+
+    it('should create MESSAGE_POPUP_OPEN when sign in has been done with uncorrect password', () => {
+
+      nock('http://localhost:3000/api')
+        .post('/signin', {
+          username: 'user',
+          password: 'uncorrect password'
+        })
+        .reply(401);
+
+      const expectedActions = [
+        { type: MESSAGE_POPUP_OPEN, message: 'invalid password'}
+      ];
+
+      const store = mockStore({ username: null, password: null });
+
+      return store.dispatch(signIn('user', 'uncorrect password'))
+      .then(() => {
+        console.log(store.getActions());
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+    });
+
   });
 
   describe('sign up action', () => {
@@ -157,6 +246,29 @@ describe('Authorization actions', () => {
       expect(() => signUp(username, passwordEmpty)).to.throw(Error);
       expect(() => signUp(username, passwordTrimed)).to.throw(Error);
     });
+
+    it('should create MESSAGE_POPUP_OPEN when sign up has been done with state 300', () => {
+      
+      nock('http://localhost:3000/api')
+        .post('/signup', {
+          username: 'user',
+          password: 'password'
+        })
+        .reply(300, '300');
+
+      const expectedActions = [
+        { type: MESSAGE_POPUP_OPEN, message: 'This user is already exist!'}
+      ];
+
+      const store = mockStore({ username: null, password: null });
+
+      return store.dispatch(signUp('user', 'password'))
+      .then(() => {
+        console.log(store.getActions());
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+    });
+
   });
 
   describe('delete user action', () => {
@@ -168,7 +280,7 @@ describe('Authorization actions', () => {
       const passswordEmpty = '';
       const passswordTrimed = '  ';
 
-      //expect(() => deleteUser(password, id)).to.not.throw(Error);
+      expect(() => deleteUser(password, id)).to.not.throw(Error);
 
       expect(() => deleteUser()).to.throw(Error);
       expect(() => deleteUser(password)).to.throw(Error);
@@ -184,7 +296,7 @@ describe('Authorization actions', () => {
       const idEmpty = '';
       const idTrimed = '  ';
 
-      //expect(() => deleteUser(password, id)).to.not.throw(Error);
+      expect(() => deleteUser(password, id)).to.not.throw(Error);
 
       expect(() => deleteUser()).to.throw(Error);
       expect(() => deleteUser(id)).to.throw(Error);
@@ -192,6 +304,50 @@ describe('Authorization actions', () => {
       expect(() => deleteUser(password, idEmpty)).to.throw(Error);
       expect(() => deleteUser(password, idTrimed)).to.throw(Error);
     });
+
+    it('should create INITIALIZE_EVENTS and SIGN_IN when delete user has been done', () => {
+      const userId = 'user'
+      nock('http://localhost:3000/api/users')
+        .delete('/' + userId, {
+          password: 'password'
+        })
+        .reply(200, {message: 'user removed successfully'});
+
+      const expectedActions = [
+        { type: SIGN_IN, username: null, id: null },
+        { type: INITIALIZE_EVENTS, events: [] }
+      ];
+
+      const store = mockStore({ username: null, password: null });
+
+      return store.dispatch(deleteUser('password', userId))
+      .then(() => {
+        console.log(store.getActions());
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+    });
+
+    it('should create MESSAGE_POPUP_OPEN when delete user has been done with uncorrect password', () => {
+      const userId = 'user'
+      nock('http://localhost:3000/api/users')
+        .delete('/' + userId, {
+          password: 'uncorrect password'
+        })
+        .reply(401, {message: 'Invalid password!'});
+
+      const expectedActions = [
+        { type: MESSAGE_POPUP_OPEN, message: 'Invalid password!' },
+      ];
+
+      const store = mockStore({ username: null, password: null });
+
+      return store.dispatch(deleteUser('uncorrect password', userId))
+      .then(() => {
+        console.log(store.getActions());
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+    });
+
   });
 
   describe('edit user action', () => {
@@ -361,5 +517,6 @@ describe('Authorization actions', () => {
       expect(() => editUser(confirmedNewPasswordEmpty, id)).to.throw(Error);
       expect(() => editUser(confirmedNewPasswordNotTrimed, id)).to.throw(Error);
     });
+
   });
 });

@@ -15,7 +15,7 @@ export function initializeEvents (events) {
 export function initializeUser (username, id) {
   console.log(username !== null);
   if (username !== null && !validateText(username)) throw new Error('uncorrect username!');
-  if (id !== null &&!validateText(id)) throw new Error('uncorrect id!');
+  if (id !== null && !validateText(id)) throw new Error('uncorrect id!');
   return {
     type: SIGN_IN,
     username,

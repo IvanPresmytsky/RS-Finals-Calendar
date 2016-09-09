@@ -43,3 +43,4 @@ describe('LoginForm', () => {
     assert.isFalse(component.hasClass('popup-visible'));
   });
 });
+
