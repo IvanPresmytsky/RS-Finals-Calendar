@@ -1,4 +1,5 @@
 import { SIGN_IN } from '../../src/constants/authorization.js';
+import deepFreeze from 'deep-freeze';
 
 describe('Authorization reducer', () => {
   const reducer = require('../../src/reducers/authorization.js');

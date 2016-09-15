@@ -3,7 +3,6 @@ import * as eventsAPI from '../api/eventsAPI.js';
 import { validateEvent, validateText, validateDate } from '../utils/actionsInputValidator.js';
 
 export function eventAdded (event, newDate) {
-  console.log(event);
   if (!validateEvent(event)) throw new Error('uncorrect event!');
   if (newDate) {
     if (!validateDate(newDate)) throw new Error('uncorrect newDate');

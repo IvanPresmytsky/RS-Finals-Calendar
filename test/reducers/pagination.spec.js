@@ -2,6 +2,7 @@ import { getTargetDate } from '../../src/utils/date.js';
 import { CHANGE_TARGET_DATE } from '../../src/constants/actions.js';
 import { TODAY, NEXT_MONTH, PREVIOUS_MONTH, NEXT_DAY, PREVIOUS_DAY} from '../../src/constants/pagination.js';
 import fecha from 'fecha';
+import deepFreeze from 'deep-freeze';
 
 
 describe('Pagination reducer', () => {

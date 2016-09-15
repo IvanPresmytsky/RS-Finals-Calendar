@@ -17,6 +17,14 @@ export class AddEventForm extends Component {
     ReactDOM.findDOMNode(this.refs.eventName).focus();
   }
 
+  clearForm () {
+    this.refs.eventName.value = '';
+    this.refs.eventDescription.value = '';
+    this.refs.eventStartTime.value = '00:00';
+    this.refs.eventEndTime.value = '00:00';
+    this.refs.eventDate.value = null;
+  }
+
   createEvent() {
     let title = this.refs.eventName.value.trim();
     let text = this.refs.eventDescription.value.trim();
@@ -35,6 +43,7 @@ export class AddEventForm extends Component {
 
   onBtnCloseClick (e) {
     e.preventDefault();
+    this.clearForm();
     this.props.closeAddEventForm();
   }
 
@@ -50,14 +59,15 @@ export class AddEventForm extends Component {
 
   onSubmit (e) {
     e.preventDefault();
+    
     if (this.props.userId) {
       let event = this.createEvent();
       this.saveEvent(event, this.props.userId);
       this.props.closeAddEventForm();
-      this.refs.eventDate.value = null
     } else {
       this.props.openMessagePopup('please sign in to start');
     }
+    this.clearForm();
   }
 
   render () {
@@ -82,20 +92,27 @@ export class AddEventForm extends Component {
       ' block-hidden': defaultDate
     });
 
-    let eventTitle = '';
-    let eventDescription = '';
-    let eventDate = '';
-    let eventStartTime = '00:00';
-    let eventEndTime = '00:00';
+    //let eventTitle = '';
+    //let eventDescription = '';
+    //let eventDate = '';
+    //let eventStartTime = '00:00';
+    //let eventEndTime = '00:00';
     let submitText = 'add event';
 
     if (this.props.editedEvent) {
+      
       let event = this.props.editedEvent;
-      eventTitle = event.title;
-      eventDescription = event.text;
-      eventDate = event.date;
-      eventStartTime = event.startTime;
-      eventEndTime = event.endTime;
+      this.refs.eventName.value = event.title;
+      this.refs.eventDescription.value = event.text;
+      this.refs.eventDate.value = event.date;
+      this.refs.eventStartTime.value = event.startTime;
+      this.refs.eventEndTime.value = event.endTime;
+
+      //eventTitle = event.title;
+      //eventDescription = event.text;
+      //eventDate = event.date;
+      //eventStartTime = event.startTime;
+      //eventEndTime = event.endTime;
       submitText = 'change event';
     }
 
@@ -108,7 +125,6 @@ export class AddEventForm extends Component {
               type="text"
               className="add-event-form__event-name"
               placeholder="enter task name"
-              defaultValue={eventTitle}
               ref="eventName"
               required
             />
@@ -118,7 +134,6 @@ export class AddEventForm extends Component {
             <textarea
               className="add-event-form__event-description"
               placeholder="enter task description"
-              defaultValue={eventDescription}
               ref="eventDescription"
             >
             </textarea>
@@ -128,7 +143,6 @@ export class AddEventForm extends Component {
             <input
               type="date"
               className="add-event-form__event-date"
-              defaultValue={eventDate}
               ref="eventDate"
               required = {required}
             />
@@ -138,7 +152,6 @@ export class AddEventForm extends Component {
             <input
               type="time"
               className="add-event-form__event-start-time"
-              defaultValue={eventStartTime}
               ref="eventStartTime"
               required
             />
@@ -146,7 +159,6 @@ export class AddEventForm extends Component {
             <input
               type="time"
               className="add-event-form__event-end-time"
-              defaultValue={eventEndTime}
               ref="eventEndTime"
             />
           </div>

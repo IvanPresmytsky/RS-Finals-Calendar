@@ -26,15 +26,28 @@
 .schedule-event__title {
   flex-grow: 2;
   margin-right: 2%;
+  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .schedule-event__description {
   flex-grow: 4;
-
   margin-right: 2%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .schedule-buttons {
+  max-width: 120px;
   flex-grow: 2;
   margin-right: 2%;
+}
+
+.schedule-buttons__change-btn,
+.schedule-buttons__delete-btn {
+  width: 120px;
 }

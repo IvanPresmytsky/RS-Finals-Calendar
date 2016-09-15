@@ -1,3 +1,4 @@
+import deepFreeze from 'deep-freeze';
 import { ADD_EVENT, EDIT_EVENT, SAVE_EVENT, DELETE_EVENT, INITIALIZE_EVENTS } from '../../src/constants/actions.js';
 
 describe('Events reducer', () => {

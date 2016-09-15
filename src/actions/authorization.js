@@ -3,6 +3,7 @@ import { INITIALIZE_EVENTS } from '../constants/actions.js';
 import { openMessagePopup } from './popups.js';
 import { validateEvents, validateText } from '../utils/actionsInputValidator.js';
 import * as usersAPI from '../api/usersAPI.js';
+import * as eventsAPI from '../api/eventsAPI.js';
 
 export function initializeEvents (events) {
   if (!validateEvents(events)) throw new Error('uncorrect events!');
@@ -12,8 +13,23 @@ export function initializeEvents (events) {
   }
 }
 
+export function loadEvents(id) {
+  if (id !== null && !validateText(id)) throw new Error('uncorrect id!');
+  return (dispatch, getState) => {
+    return eventsAPI.getEvents(id) 
+    .then((data) => {
+      if(!data) return;
+      dispatch(initializeEvents(data));
+    }, (error) => {
+      console.error(error);
+      if(error.toString() === 'Error: 404') {
+        dispatch(openMessagePopup('invalid events'));
+      }
+    });
+  }
+}
+
 export function initializeUser (username, id) {
-  console.log(username !== null);
   if (username !== null && !validateText(username)) throw new Error('uncorrect username!');
   if (id !== null && !validateText(id)) throw new Error('uncorrect id!');
   return {
@@ -35,9 +51,12 @@ export function signIn (username, password) {
     .then((data) => {
       if(!data) return;
       sessionStorage.setItem('token', data.token);
-      dispatch(initializeUser(data.user.username, data.user._id));
-      dispatch(initializeEvents(data.user.events));
-    }, (error) => {
+      sessionStorage.setItem('user', username);
+      sessionStorage.setItem('userId', data.userId);
+      dispatch(initializeUser(data.username, data.userId));
+      dispatch(loadEvents(data.userId));
+    })
+    .catch((error) => {
       console.error(error);
       if(error.toString() === 'Error: 404') {
         dispatch(openMessagePopup('invalid user'));
@@ -53,6 +72,8 @@ export function signOut () {
     return usersAPI.signOut()
       .then((date) => {
         sessionStorage.setItem('token', null);
+        sessionStorage.setItem('user', null);
+        sessionStorage.setItem('userId', null);
         dispatch(initializeUser(null, null));
         dispatch(initializeEvents([]));
       })
@@ -96,6 +117,8 @@ export function deleteUser (password, userId) {
     return usersAPI.deleteUser(payload, userId)
       .then((data) => {
         sessionStorage.setItem('token', null);
+        sessionStorage.setItem('user', null);
+        sessionStorage.setItem('userId', null);
         dispatch(initializeUser(null, null));
         dispatch(initializeEvents([]));
       })

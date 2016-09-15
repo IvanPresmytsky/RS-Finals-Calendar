@@ -1,3 +1,4 @@
+import deepFreeze from 'deep-freeze';
 import { SET_VIEW_MONTH, SET_VIEW_SCHEDULE } from '../../src/constants/actions.js';
 
 describe('Views reducer', () => {
@@ -35,6 +36,5 @@ describe('Views reducer', () => {
 
     expect(actual).to.deep.equal(expected);
   });
-
 
 });

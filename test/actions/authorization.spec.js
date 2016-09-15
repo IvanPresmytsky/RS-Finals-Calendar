@@ -1,6 +1,6 @@
 import { SIGN_IN } from '../../src/constants/authorization.js';
 import { INITIALIZE_EVENTS } from '../../src/constants/actions.js';
-import { initializeEvents, initializeUser, signIn, signUp, deleteUser, editUser } from '../../src/actions/authorization.js';
+import { initializeEvents, initializeUser, loadEvents, signIn, signUp, deleteUser, editUser } from '../../src/actions/authorization.js';
 import { MESSAGE_POPUP_OPEN } from '../../src/actions/popups.js';
 import PATH from '../../src/constants/path.js';
 import thunk from 'redux-thunk';
@@ -96,6 +96,47 @@ describe('Authorization actions', () => {
     });
   });
 
+  describe('load events action', () => {
+    const userId = '1';
+    const events = [
+                     { title: 'event1', text: 'text1', date: '2016-01-01', startTime: '00:00', endTime: '00:00' },
+                     { title: 'event2', text: 'text2', date: '2016-02-01', startTime: '00:01', endTime: '00:02' },
+                     { title: 'event3', text: 'text3', date: '2016-01-13', startTime: '00:00', endTime: '00:00' }
+                   ];
+
+    it('should create MESSAGE_POPUP_OPEN when load events has been done with uncorrect userId', () => {
+
+      nock('http://localhost:3000/api/users')
+        .get('/' + userId + '/events/')
+        .reply(404);
+
+      const expectedActions = [
+        { type: MESSAGE_POPUP_OPEN, message: 'invalid events'}
+      ];
+
+      const store = mockStore({ events: null });
+
+      return store.dispatch(loadEvents(userId))
+      .then(() => {
+        expect(store.getActions()).to.deep.equal(expectedActions);
+      });
+    });
+
+    it('should throw an error if id is uncorrect', () => {
+      const id = '1';
+      const idObject = { id: 'id'};
+      const idEmpty = '';
+      const idTrimed = '  ';
+
+      expect(() => loadEvents(id)).to.not.throw(Error);
+
+      expect(() => loadEvents()).to.throw(Error);
+      expect(() => loadEvents(idObject)).to.throw(Error);
+      expect(() => loadEvents(idEmpty)).to.throw(Error);
+      expect(() => loadEvents(idTrimed)).to.throw(Error);
+    });
+  });
+
   describe('sign in action', () => {
     const events = [
                      { title: 'event1', text: 'text1', date: '2016-01-01', startTime: '00:00', endTime: '00:00' },
@@ -146,23 +187,18 @@ describe('Authorization actions', () => {
           password: 'password'
         })
         .reply(200, { 
-          user: { 
-                  username: 'user', 
-                  _id: 'id',
-                  events 
-                }
+           username: 'user', 
+           userId: 'id',
         });
 
       const expectedActions = [
-        { type: SIGN_IN, username: 'user', id: 'id' },
-        { type: INITIALIZE_EVENTS, events }
+        { type: SIGN_IN, username: 'user', id: 'id' }
       ];
 
       const store = mockStore({ username: null, password: null });
 
       return store.dispatch(signIn('user', 'password'))
       .then(() => {
-        console.log(store.getActions());
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
     });
@@ -184,7 +220,6 @@ describe('Authorization actions', () => {
 
       return store.dispatch(signIn('uncorrect user', 'password'))
       .then(() => {
-        console.log(store.getActions());
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
     });
@@ -206,7 +241,6 @@ describe('Authorization actions', () => {
 
       return store.dispatch(signIn('user', 'uncorrect password'))
       .then(() => {
-        console.log(store.getActions());
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
     });
@@ -264,7 +298,6 @@ describe('Authorization actions', () => {
 
       return store.dispatch(signUp('user', 'password'))
       .then(() => {
-        console.log(store.getActions());
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
     });
@@ -322,7 +355,6 @@ describe('Authorization actions', () => {
 
       return store.dispatch(deleteUser('password', userId))
       .then(() => {
-        console.log(store.getActions());
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
     });
@@ -343,7 +375,6 @@ describe('Authorization actions', () => {
 
       return store.dispatch(deleteUser('uncorrect password', userId))
       .then(() => {
-        console.log(store.getActions());
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
     });

@@ -102,7 +102,6 @@ export function closeAddEventForm () {
 }
 
 export function openEventMenu (event, position) {
-  console.log(event);
   if (!validateEvent(event)) {
     throw new Error('uncorrect event!');
   }
@@ -143,7 +142,6 @@ export function closeDayEventsPopup () {
 }
 
 export function openNotificationPopup (event) {
-  console.log(event);
   if (!validateEvent(event)) {
     throw new Error('uncorrect event!');
   }

@@ -17,15 +17,22 @@ export class LoginForm extends Component {
     ReactDOM.findDOMNode(this.refs.user).focus();
   }
 
+  clearForm () {
+    this.refs.user.value = '';
+    this.refs.password.value = '';
+  }
+
   onBtnCloseClick (e) {
     e.preventDefault();
     this.props.closeLoginForm();
+    this.clearForm();
   }
 
   onSubmit(e) {
     e.preventDefault();
     this.props.signIn(this.refs.user.value, this.refs.password.value);
     this.props.closeLoginForm();
+    this.clearForm();
   }
 
   render () {

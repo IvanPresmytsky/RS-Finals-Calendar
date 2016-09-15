@@ -15,6 +15,17 @@
   position: fixed;
 }
 
+.event-title {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-time {
+  display: inline-block;
+}
+
 .event--hidden {
   display: none;
 }

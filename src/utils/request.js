@@ -3,7 +3,6 @@ import fetch from 'isomorphic-fetch';
 
 export function get (resourceUrl) {
   const url = generateRequestUrl(resourceUrl);
-
   return performRequest(url, 'GET');
 };
 
@@ -26,18 +25,16 @@ export function remove (resourceUrl, payload) {
 };
 
 export function performRequest(url, method, payload) {
-  const data = JSON.stringify(payload);
-
+  const data = payload ? JSON.stringify(payload) : null;
   return fetch(url, {
       body: data,
       method,
- //     mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       }
     })
     .then((response) => {
-      console.log(response.status);
+
       if (response.status === 404) {
         throw new Error('404');
       }

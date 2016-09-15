@@ -1,12 +1,12 @@
 const webpack = require('webpack');
 const path = require('path');
+const PORT = require('./port.config.js');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: [
-//      "babel-polyfill",
-      "webpack-dev-server/client?http://localhost:8080",
+      "webpack-dev-server/client?http://localhost:" + PORT,
       "webpack/hot/only-dev-server",
       "./src/application.js"
       ],
@@ -36,6 +36,7 @@ module.exports = {
 
     devServer: {
       hot: true,
+      port: PORT,
       contentBase: "./"
     },
 

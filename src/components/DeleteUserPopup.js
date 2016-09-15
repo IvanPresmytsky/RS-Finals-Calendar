@@ -13,12 +13,18 @@ export class DeleteUserPopup extends Component {
   onBtnCloseClick (e) {
     e.preventDefault();
     this.props.closeDeleteUserPopup();
+    this.clearForm();
+  }
+
+  clearForm () {
+    this.refs.password.value = '';
   }
 
   onSubmit(e) {
     e.preventDefault();
     this.props.deleteUser(this.refs.password.value, this.props.userId);
     this.props.closeDeleteUserPopup();
+    this.clearForm();
   }
 
   render () {

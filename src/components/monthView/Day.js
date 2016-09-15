@@ -14,11 +14,11 @@ export class Day extends Component {
   onDayClick (e) {
     if (e.target.dataset.name === 'event' || e.target.parentNode.dataset.name === 'event') return;
     if (e.target.dataset.name === 'more') return;
-    if (e.target.classList.contains('prev-month-day')) {
+    if (e.target.classList.contains('prev-month-day') || e.target.parentNode.classList.contains('prev-month-day')) {
       this.props.changeTargetDate(PREVIOUS_MONTH);
       return;
     }
-    if (e.target.classList.contains('next-month-day')) {
+    if (e.target.classList.contains('next-month-day') || e.target.parentNode.classList.contains('next-month-day')) {
       this.props.changeTargetDate(NEXT_MONTH);
       return;
     }

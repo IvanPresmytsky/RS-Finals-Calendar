@@ -9,9 +9,7 @@ import App from './components/Application.js';
 
 import './stylesheets/application.css';
 
-let store = configureStore();
-
-console.log(store);
+const store = configureStore();
 
 render (
   <Provider store={store}>

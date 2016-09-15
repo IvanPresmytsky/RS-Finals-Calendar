@@ -1,3 +1,4 @@
+import deepFreeze from 'deep-freeze';
 import { LOGIN_FORM_OPEN,
          LOGIN_FORM_CLOSE,
          USER_MENU_OPEN,

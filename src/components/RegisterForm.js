@@ -14,9 +14,16 @@ export class RegisterForm extends Component {
     ReactDOM.findDOMNode(this.refs.user).focus();
   }
 
+  clearForm () {
+    this.refs.user.value = '';
+    this.refs.password.value = '';
+    this.refs.confirmedPassword.value = '';
+  }
+
   onBtnCloseClick (e) {
     e.preventDefault();
     this.props.closeRegisterForm();
+    this.clearForm();
   }
 
   onSubmit(e) {
@@ -31,6 +38,7 @@ export class RegisterForm extends Component {
     } else {
       this.props.openMessagePopup('Password and confirmPassword fields should be equal');
     }
+    this.clearForm();
   }
 
   render () {

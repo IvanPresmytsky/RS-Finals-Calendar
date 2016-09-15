@@ -19,6 +19,7 @@ import configureStore from '../store/configureStore.js';
 
 import { sortEventsByTime, getActualEvents } from '../utils/date.js';
 import { openNotificationPopup } from '../actions/popups.js';
+import { loadEvents, initializeUser } from '../actions/authorization.js';
 
 import {SET_VIEW_MONTH, SET_VIEW_SCHEDULE} from '../constants/actions.js';
 
@@ -26,6 +27,10 @@ export class App extends Component {
 
   componentDidMount () {
     let timer = setInterval(this.getTheNearestEvent.bind(this), 60000);
+    if (sessionStorage.token) {
+      this.props.loadEvents(sessionStorage.userId);
+      this.props.initializeUser(sessionStorage.user, sessionStorage.userId);
+    }
   }
 
   getCurrentView (view) {
@@ -41,7 +46,7 @@ export class App extends Component {
 
   getTheNearestEvent () {
     let events = this.props.events;
-    console.log(this.props);
+    
     if (events.length === 0) return;
 
     events = getActualEvents(events, new Date());
@@ -81,7 +86,10 @@ export class App extends Component {
 App.propTypes = {
   view: React.PropTypes.string.isRequired,
   events: React.PropTypes.array.isRequired,
-  openNotificationPopup: React.PropTypes.func.isRequired
+  userId: React.PropTypes.string,
+  openNotificationPopup: React.PropTypes.func.isRequired,
+  loadEvents: React.PropTypes.func.isRequired,
+  initializeUser: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
@@ -93,7 +101,9 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    openNotificationPopup: bindActionCreators(openNotificationPopup, dispatch)
+    openNotificationPopup: bindActionCreators(openNotificationPopup, dispatch),
+    loadEvents: bindActionCreators(loadEvents, dispatch),
+    initializeUser: bindActionCreators(initializeUser, dispatch)
   };
 }
 

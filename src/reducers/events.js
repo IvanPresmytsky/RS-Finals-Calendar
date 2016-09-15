@@ -6,7 +6,6 @@ export const initialState = {
 }
 
 function events (state = initialState, action) {
-  console.log(action.type);
   switch (action.type) {
     case INITIALIZE_EVENTS:
       return {
@@ -40,7 +39,6 @@ function events (state = initialState, action) {
 
 export function addEvent (state, action) {
   let eventsArr = state.events.slice();
-  console.log(action.event);
   if (eventsArr.length > 0 && eventsArr.indexOf(action.event) !== -1) {
     action.event.date = action.newDate;
   } else {

@@ -41,7 +41,6 @@ export const initialState = {
 };
 
 function popups (state = initialState, action) {
-  console.log(action.type);
   switch (action.type) {
     case LOGIN_FORM_OPEN:
       return { 

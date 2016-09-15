@@ -6,6 +6,12 @@ export function generateResourcePath (userId, eventId) {
   return `${userPath}/events/${eventPath}`;
 };
 
+export function getEvents(userId) {
+  const resourcePath = generateResourcePath(userId);
+
+  return request.get(resourcePath);
+};
+
 export function createEvent(userId, payload) {
   const resourcePath = generateResourcePath(userId);
 

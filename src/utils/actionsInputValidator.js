@@ -34,7 +34,6 @@ export function validateEvent (event) {
 }
 
 export function validateOption (option) {
-  console.log(option);
   if (!option) return;
   const options = [NEXT_MONTH, PREVIOUS_MONTH, NEXT_DAY, PREVIOUS_DAY, TODAY];
   return options.indexOf(option) !== -1;

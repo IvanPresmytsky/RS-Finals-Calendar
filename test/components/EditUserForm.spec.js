@@ -3,7 +3,7 @@ import React from 'react';
 
 function setup(visibility) {
   const props = {
-    visibility
+    visibility,
   };
 
   const component = shallow(<EditUserForm { ...props }/>);

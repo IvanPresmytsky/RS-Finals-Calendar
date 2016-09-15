@@ -3,7 +3,7 @@
   top: 40%;
   left: 40%;
   width: 200px;
-
+  overflow: hidden;
   text-align: center;
 
   background: #F5F3ED;
@@ -21,6 +21,18 @@
 .notification-popup__close a {
   text-decoration: none;
   color: #fff;
+}
+
+.notification-popup__event-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notification-popup__event-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .popup-visible {

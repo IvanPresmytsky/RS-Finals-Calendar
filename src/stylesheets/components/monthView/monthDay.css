@@ -5,6 +5,7 @@
   flex-basis: 50px;
   flex-grow: 1;
 
+  overflow: hidden;
   border: 1px solid #000;
   cursor: pointer;
 }
