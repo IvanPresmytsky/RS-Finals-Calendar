@@ -1,4 +1,4 @@
-# RS-Finals-Calendar
+# RS-Finals-Calendar [![Build Status](https://travis-ci.org/IvanPresmytsky/RS-Finals-Calendar.svg?branch=master)](https://travis-ci.org/IvanPresmytsky/RS-Finals-Calendar)
 
 Web application for planning affairs
 
