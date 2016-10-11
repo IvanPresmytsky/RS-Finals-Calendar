@@ -22714,7 +22714,7 @@
 	        _react2.default.createElement(_AddEventForm2.default, null),
 	        _react2.default.createElement(_NotificationPopup2.default, null),
 	        _react2.default.createElement(_MessagePopup2.default, null),
-	        _react2.default.createElement('audio', { id: 'notificationSound', src: 'src/content/sounds/notificationSound.wav' })
+	        _react2.default.createElement('audio', { id: 'notificationSound', src: '../src/content/sounds/notificationSound.wav' })
 	      );
 	    }
 	  }]);
