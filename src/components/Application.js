@@ -82,7 +82,7 @@ export class App extends Component {
          <AddEventForm />
          <NotificationPopup />
          <MessagePopup />
-         <audio id="notificationSound" src="../src/content/sounds/notificationSound.wav"></audio>
+         <audio id="notificationSound" src="content/sounds/notificationSound.wav"></audio>
       </div>
     );
   }
