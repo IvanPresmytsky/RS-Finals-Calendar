@@ -197,10 +197,12 @@
   display: block;
   padding-left: 5px;
   text-decoration: none;
+  color: #4E6F95;
 }
 
 .user-menu__item:hover {
   background: grey;
+  color: #fff;
 }
 
 .popup-visible {
@@ -213,7 +215,7 @@
 
   padding: 0 10px 0 10px;
   height: 100%;
-  background: #93B8D3;
+  background: #4E6F95;
   flex-grow: 6;
   flex-basis: 40px;
 }
@@ -221,7 +223,9 @@
 .main-title {
   margin: 0;
   padding: 0;
-  color: #fff;
+  color: rgba(0,0,0,0.6);
+  text-shadow: 2px 2px 3px rgba(255,255,255,0.1);
+
 }
 
 .main-nav {
@@ -236,6 +240,25 @@
   padding: 0;
   list-style: none;
 }
+
+.login-btn,
+.register-btn {
+  text-decoration: none;
+  text-shadow: 0 1px 0 #444;
+  color: #fff;
+}
+
+.login-btn:active,
+.register-btn:active {
+  color: rgba(0,0,0,0.6);
+  text-shadow: 2px 2px 3px rgba(255,255,255,0.1);
+}
+
+.login-btn:hover,
+.register-btn:hover {
+  color: #93B8D3;
+}
+
 
 
 .login-popup {
@@ -288,15 +311,17 @@
   justify-content: space-between;
   min-width: 100px;
   height: 20px;
-  background: yellow;
+  background: #4E6F95;
 
   box-sizing: border-box;
 
   font-size: 12px;
+  color: #fff;
 }
 
 .event--position-fixed {
   position: fixed;
+  opacity: .5;
 }
 
 .event-title {
@@ -321,6 +346,7 @@
   display: none;
 
   box-sizing: border-box;
+  color: #4E6F95;
   background: #F5F3ED;
   box-shadow: 2px 2px 15px grey;
 }
@@ -404,24 +430,26 @@
   flex-basis: 24px;
   flex-grow: 4;
 
-  background: #FFEE5F;
-  background: #D3EEE0;
+  background: #93B8D3;
   border-top: 1px solid #000;
   border-left: 1px solid #000;
   border-right: 1px solid #000;
 }
 
 .month-header__day-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-basis: 50px;
   flex-grow: 1;
 
-  color: #48B484;
+  color: #000;
   text-align: center;
   border: 1px solid #000;
 }
 
 .day-name-holiday {
-  color: red;
+  color: #CC3366;
 }
 .month-view__day {
   display: flex;
@@ -442,18 +470,32 @@
 }
 
 .holiday-day {
-  color: red;
+  color: #CC3366;
 }
 .current-day {
-  color: green;
+  color: #93B8D3;
   font-weight: bold;
-
-  background: #D3EEE0;
+  background: #FBF7F0;
 }
 
 .day__day-number {
   padding: 0;
+  padding-left: 5px;
   margin: 0;
+}
+
+.current-day .day-number__number {
+  position: relative;
+  ackground: #93B8D3;
+  color: #24313F;
+}
+
+.current-day .day-number__number:after {
+  position: absolute;
+  top: 0;
+  left: 25px;
+  content: 'today';
+  color: #24313F;
 }
 
 .day__event-list {
@@ -506,7 +548,7 @@
   height: 100%;
   font-weight: bold;
   color: #000;
-  background: #93B8D3;
+  background: #4E6F95;
   flex-grow: 4;
   flex-basis: 30px;
 }
@@ -561,6 +603,11 @@
 
 .next-btn {
   margin-right: 20px;
+}
+
+.current-date {
+  color: rgba(0,0,0,0.6);
+  text-shadow: 2px 2px 3px rgba(255,255,255,0.1);
 }
 
 

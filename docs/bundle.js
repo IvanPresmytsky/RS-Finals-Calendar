@@ -22687,7 +22687,11 @@
 	      var notificationTime = event.date + event.startTime;
 	      var currentDate = _fecha2.default.format(new Date(), 'YYYY-MM-DDHH:mm');
 
-	      if (notificationTime === currentDate) this.props.openNotificationPopup(event);
+	      if (notificationTime === currentDate) {
+	        this.props.openNotificationPopup(event);
+	        var notificationSound = document.getElementById('notificationSound');
+	        notificationSound.play();
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -22709,7 +22713,8 @@
 	        _react2.default.createElement(_RegisterForm2.default, null),
 	        _react2.default.createElement(_AddEventForm2.default, null),
 	        _react2.default.createElement(_NotificationPopup2.default, null),
-	        _react2.default.createElement(_MessagePopup2.default, null)
+	        _react2.default.createElement(_MessagePopup2.default, null),
+	        _react2.default.createElement('audio', { id: 'notificationSound', src: 'src/content/sounds/notificationSound.wav' })
 	      );
 	    }
 	  }]);
@@ -24165,6 +24170,7 @@
 	    password: password,
 	    token: sessionStorage.token
 	  };
+	  console.log(payload);
 	  return function (dispatch, getState) {
 	    return usersAPI.deleteUser(payload, userId).then(function (data) {
 	      sessionStorage.setItem('token', null);
@@ -25237,12 +25243,14 @@
 
 	  function Event() {
 	    var cursorPosition = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+	    var draggedEvent = arguments[1];
 
 	    _classCallCheck(this, Event);
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Event).call(this));
 
 	    _this.cursorPosition = cursorPosition;
+	    _this.draggedEvent = draggedEvent;
 	    return _this;
 	  }
 
@@ -25250,18 +25258,22 @@
 	    key: 'findTargetDragged',
 	    value: function findTargetDragged(e) {
 	      var target = e.target;
+
 	      while (target.dataset.name !== 'event') {
 	        target = target.parentNode;
 	      }
+
 	      return target;
 	    }
 	  }, {
 	    key: 'findTargetDroppedDate',
 	    value: function findTargetDroppedDate(e) {
 	      var dropped = document.elementFromPoint(e.pageX, e.pageY);
+
 	      while (dropped.dataset.name !== 'monthDay') {
 	        dropped = dropped.parentNode;
 	      }
+
 	      return dropped ? dropped.id : this.props.event.date;
 	    }
 	  }, {
@@ -25288,7 +25300,7 @@
 	      var coords = (0, _position.getCoords)(event);
 	      var shiftX = e.pageX - coords.left;
 	      var shiftY = e.pageY - coords.top;
-
+	      this.draggedEvent = event;
 	      this.currentX = e.pageX;
 	      this.currentY = e.pageY;
 
@@ -25307,12 +25319,10 @@
 	      };
 
 	      monthBody.addEventListener('mousemove', this.onMouseMove.bind(this));
-
+	      document.addEventListener('mouseup', this.onDocumentMouseUp.bind(this));
 	      document.onselectstart = function (e) {
 	        return false;
 	      };
-
-	      // document.addEventListener('selectstart', this.onSelectStart.bind(this));
 	    }
 	  }, {
 	    key: 'onDragStart',
@@ -25333,7 +25343,7 @@
 	      var event = this.findTargetDragged(e);
 	      var monthBody = document.getElementsByClassName('month-body')[0];
 	      if (!event) {
-	        this.props.addEvent(this.props.event, "2016-05-01");
+	        this.props.addEvent(this.props.event, this.props.event.date);
 	        return;
 	      }
 
@@ -25345,13 +25355,26 @@
 
 	      event.classList.remove('event--hidden');
 	      this.props.saveEvent(this.props.event, newEvent, this.props.userId);
-	      event.classList.remove('event--position-absolute');
 	      monthBody.removeEventListener('mousemove', this.onMouseMove.bind(this));
+	      document.removeEventListener('mouseup', this.onDocumentMouseUp.bind(this));
+	    }
+	  }, {
+	    key: 'onDocumentMouseUp',
+	    value: function onDocumentMouseUp(e) {
+	      e.preventDefault();
+	      if (e.target.dataset.name !== 'event') {
+	        var monthBody = document.getElementsByClassName('month-body')[0];
+	        this.draggedEvent.classList.remove('event--position-fixed');
+	        monthBody.removeEventListener('mousemove', this.onMouseMove.bind(this));
+	      }
+	      document.removeEventListener('mouseup', this.onDocumentMouseUp.bind(this));
 	    }
 	  }, {
 	    key: 'onEventMouseUp',
 	    value: function onEventMouseUp(e) {
-	      if (this.cursorPosition === e.pageX + '/' + e.pageY) this.onEventClick(e);else this.eventDrop(e);
+	      if (this.cursorPosition === e.pageX + '/' + e.pageY) this.onEventClick(e);else {
+	        this.eventDrop(e);
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -25475,7 +25498,6 @@
 	    eventTop = monthBodyCoords.top;
 	  }
 
-	  event.style.opacity = '0.5';
 	  event.style.top = eventTop + 'px';
 	  event.style.left = eventLeft + 'px';
 	}
@@ -42464,6 +42486,15 @@
 	      this.props.openDayEventsPopup(id, position);
 	    }
 	  }, {
+	    key: 'getDayNumber',
+	    value: function getDayNumber(day, currentDate) {
+	      var dayNumber = day.getDate();
+	      if (dayNumber <= 9) {
+	        return '0' + dayNumber;
+	      }
+	      return dayNumber;
+	    }
+	  }, {
 	    key: 'renderEventsList',
 	    value: function renderEventsList(event, index) {
 	      var eventKey = (0, _date.getOriginalId)();
@@ -42535,7 +42566,11 @@
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'day__day-number' },
-	          day.getDate()
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'day-number__number' },
+	            this.getDayNumber(day, currentDate)
+	          )
 	        ),
 	        eventsList
 	      );
