@@ -41,6 +41,14 @@ export class Day extends Component {
     this.props.openDayEventsPopup(id, position);
   }
 
+  getDayNumber (day, currentDate) {
+    let dayNumber = day.getDate();
+    if(dayNumber <= 9) {
+      return '0' + dayNumber;
+    }
+    return dayNumber;
+  }
+
   renderEventsList (event, index) {
     let eventKey = getOriginalId();
     return (
@@ -105,7 +113,9 @@ export class Day extends Component {
     return (
       <div id={id} className={dayClass} data-name="monthDay" onClick={this.onDayClick.bind(this)}>
         <span className="day__day-number">
-          {day.getDate()}
+          <span className='day-number__number'>
+            {this.getDayNumber(day, currentDate)}
+          </span>
         </span>
         {eventsList}
       </div>

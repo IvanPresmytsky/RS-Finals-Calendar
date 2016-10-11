@@ -113,6 +113,7 @@ export function deleteUser (password, userId) {
     password: password,
     token: sessionStorage.token
   };
+  console.log(payload);
   return (dispatch, getState) => {
     return usersAPI.deleteUser(payload, userId)
       .then((data) => {

@@ -7,7 +7,7 @@
   height: 100%;
   font-weight: bold;
   color: #000;
-  background: #93B8D3;
+  background: #4E6F95;
   flex-grow: 4;
   flex-basis: 30px;
 }
@@ -62,6 +62,11 @@
 
 .next-btn {
   margin-right: 20px;
+}
+
+.current-date {
+  color: rgba(0,0,0,0.6);
+  text-shadow: 2px 2px 3px rgba(255,255,255,0.1);
 }
 
 

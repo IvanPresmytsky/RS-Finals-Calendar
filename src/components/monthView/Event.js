@@ -6,24 +6,29 @@ import '../../stylesheets/components/monthView/event.css';
 
 export class Event extends Component {
 
-  constructor (cursorPosition = '') {
+  constructor (cursorPosition = '', draggedEvent) {
     super();
     this.cursorPosition = cursorPosition;
+    this.draggedEvent = draggedEvent;
   }
 
   findTargetDragged (e) {
     let target = e.target;
+
     while (target.dataset.name !=='event') {
       target = target.parentNode;
     }
+
     return target;
   }
 
   findTargetDroppedDate (e) {
     let dropped = document.elementFromPoint(e.pageX, e.pageY);
+
     while (dropped.dataset.name !== 'monthDay') {
       dropped = dropped.parentNode;
     }
+    
     return dropped ? dropped.id : this.props.event.date;
   }
 
@@ -39,7 +44,6 @@ export class Event extends Component {
     return;
   }
 
-
   onEventMouseDown (e) {
     let event = this.findTargetDragged(e);
     if (!event) return;
@@ -48,7 +52,7 @@ export class Event extends Component {
     let coords = getCoords(event);
     let shiftX = e.pageX - coords.left;
     let shiftY = e.pageY - coords.top;
-    
+    this.draggedEvent = event;
     this.currentX = e.pageX;
     this.currentY = e.pageY;
 
@@ -67,12 +71,10 @@ export class Event extends Component {
     };
 
     monthBody.addEventListener('mousemove', this.onMouseMove.bind(this));
-
+    document.addEventListener('mouseup', this.onDocumentMouseUp.bind(this));
     document.onselectstart = function(e) {
       return false;
     };
-
-   // document.addEventListener('selectstart', this.onSelectStart.bind(this));
   }
 
   onDragStart (e) {
@@ -90,7 +92,7 @@ export class Event extends Component {
     let event = this.findTargetDragged(e);
     let monthBody = document.getElementsByClassName('month-body')[0];
     if (!event) {
-      this.props.addEvent(this.props.event, "2016-05-01");
+      this.props.addEvent(this.props.event, this.props.event.date);
       return;
     }
 
@@ -102,13 +104,25 @@ export class Event extends Component {
 
     event.classList.remove('event--hidden');
     this.props.saveEvent(this.props.event, newEvent, this.props.userId);
-    event.classList.remove('event--position-absolute');
     monthBody.removeEventListener('mousemove', this.onMouseMove.bind(this));
+    document.removeEventListener('mouseup', this.onDocumentMouseUp.bind(this));
+  }
+
+  onDocumentMouseUp(e) {
+    e.preventDefault();
+    if (e.target.dataset.name !== 'event') {
+      let monthBody = document.getElementsByClassName('month-body')[0];
+      this.draggedEvent.classList.remove('event--position-fixed');
+      monthBody.removeEventListener('mousemove', this.onMouseMove.bind(this));
+    }
+    document.removeEventListener('mouseup', this.onDocumentMouseUp.bind(this));
   }
 
   onEventMouseUp (e) {
     if (this.cursorPosition === (e.pageX + '/' + e.pageY)) this.onEventClick(e);
-    else this.eventDrop(e);
+    else {
+      this.eventDrop(e);
+    }
   }
 
 

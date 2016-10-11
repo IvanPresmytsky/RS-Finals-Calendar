@@ -6,22 +6,24 @@
   flex-basis: 24px;
   flex-grow: 4;
 
-  background: #FFEE5F;
-  background: #D3EEE0;
+  background: #93B8D3;
   border-top: 1px solid #000;
   border-left: 1px solid #000;
   border-right: 1px solid #000;
 }
 
 .month-header__day-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-basis: 50px;
   flex-grow: 1;
 
-  color: #48B484;
+  color: #000;
   text-align: center;
   border: 1px solid #000;
 }
 
 .day-name-holiday {
-  color: red;
+  color: #CC3366;
 }

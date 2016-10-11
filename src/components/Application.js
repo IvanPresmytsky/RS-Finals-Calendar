@@ -58,7 +58,11 @@ export class App extends Component {
     let notificationTime = event.date + event.startTime;
     let currentDate = fecha.format(new Date(), 'YYYY-MM-DDHH:mm');
   
-    if (notificationTime === currentDate) this.props.openNotificationPopup(event);
+    if (notificationTime === currentDate) {
+      this.props.openNotificationPopup(event);
+      let notificationSound = document.getElementById('notificationSound');
+      notificationSound.play();
+    }
 
   }
 
@@ -78,6 +82,7 @@ export class App extends Component {
          <AddEventForm />
          <NotificationPopup />
          <MessagePopup />
+         <audio id="notificationSound" src="src/content/sounds/notificationSound.wav"></audio>
       </div>
     );
   }

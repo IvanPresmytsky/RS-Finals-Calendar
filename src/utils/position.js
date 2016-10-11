@@ -63,7 +63,6 @@ export function moveAt (e, positionAPI) {
       eventTop = monthBodyCoords.top;
     }
 
-    event.style.opacity = '0.5';
     event.style.top = eventTop + 'px';
     event.style.left = eventLeft + 'px';
 }

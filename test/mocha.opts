@@ -5,3 +5,4 @@
 --compilers js:babel-core/register
 --require ./test/helper.js
 --harmony-proxies
+

@@ -4,15 +4,17 @@
   justify-content: space-between;
   min-width: 100px;
   height: 20px;
-  background: yellow;
+  background: #4E6F95;
 
   box-sizing: border-box;
 
   font-size: 12px;
+  color: #fff;
 }
 
 .event--position-fixed {
   position: fixed;
+  opacity: .5;
 }
 
 .event-title {

@@ -6,26 +6,26 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: [
-      "webpack-dev-server/client?http://localhost:" + PORT,
-      "webpack/hot/only-dev-server",
+   //   "webpack-dev-server/client?http://localhost:" + PORT,
+     // "webpack/hot/only-dev-server",
       "./src/application.js"
       ],
 
     output: {
-        path: path.join(__dirname, "dist"),
+        path: path.join(__dirname, "docs"),
         filename: "bundle.js"
     },
 
     module: {
       loaders: [
-        { test: /\.js$/, exclude: /node_modules/, loaders: ["react-hot", "babel-loader"] },
+        { test: /\.js$/, exclude: /node_modules/, loaders: [/*"react-hot"*/, "babel-loader"] },
         { test: /\.jpg$/, loader: "file-loader" },
         { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') }
       ]
     },
 
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+    //    new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin('bundle.css'),
         new HtmlWebpackPlugin({
           title: 'Calendar',
@@ -33,13 +33,13 @@ module.exports = {
           inject: 'body'
           })
         ],
-
+/*
     devServer: {
-      hot: true,
+   //   hot: true,
       port: PORT,
       contentBase: "./"
     },
-
-    devtool: 'source-map'
+*/
+  //  devtool: 'source-map'
 };
  

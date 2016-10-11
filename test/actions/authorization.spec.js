@@ -118,6 +118,8 @@ describe('Authorization actions', () => {
 
       return store.dispatch(loadEvents(userId))
       .then(() => {
+        console.log(store.getActions());
+        console.log(expectedActions);
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
     });
@@ -351,10 +353,11 @@ describe('Authorization actions', () => {
         { type: INITIALIZE_EVENTS, events: [] }
       ];
 
-      const store = mockStore({ username: null, password: null });
+      const store = mockStore({ username: null, id: null, events: [] });
 
       return store.dispatch(deleteUser('password', userId))
       .then(() => {
+        console.log(store.getActions());
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
     });
