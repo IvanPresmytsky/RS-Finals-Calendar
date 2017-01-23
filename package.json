@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "mocha",
-    "build": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server"
+    "build": "webpack --config webpack_development_config.js",
+    "start": "webpack-dev-server --display-error-details --config webpack_development_config.js --hot"
   },
   "repository": {
     "type": "git",
@@ -44,7 +44,7 @@
     "css-loader": "^0.23.1",
     "deep-freeze": "0.0.1",
     "enzyme": "^2.4.1",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta.5",
     "html-webpack-plugin": "^2.15.0",
     "ignore-styles": "^5.0.1",
     "jsdom": "^9.5.0",
@@ -57,7 +57,7 @@
     "redux-mock-store": "^1.2.0",
     "sinon": "^1.17.5",
     "style-loader": "^0.13.1",
-    "webpack": "^1.12.14",
+    "webpack": "^2.2.0",
     "webpack-dev-server": "^1.15.0"
   }
 }

@@ -1,5 +1,6 @@
 import  { Header } from '../../src/components/Header.js';
 import React from 'react';
+import styles from '../../application.css';
 
 function setup(username) {
   const props = {
