@@ -1,0 +1,16 @@
+.day-events-dropdown {
+  display: none;
+
+  box-sizing: border-box;
+  color: #4E6F95;
+  background: #F5F3ED;
+  box-shadow: 2px 2px 15px grey;
+  z-index: 100;
+}
+
+.day-events-dropdown--visible {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}

@@ -1,0 +1,49 @@
+.message-popup {
+  text-align: center;
+
+  background: #F5F3ED;
+}
+
+.message-popup__ok-btn {
+  display: block;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 5px;
+  
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+
+  background: #EFEFEF;
+  background: -webkit-linear-gradient(top, #F5F5F5, #E7E7E7);
+  box-shadow: 0 1px #f1f1f1 inset, 0 -1px #f8f8f8 inset, -1px 0 #f8f8f8 inset, 1px 0 #fff inset, 0 1px #C7C6BE;
+
+  border: none;
+  outline: none;
+  border-radius: 2px;
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: #DDD;
+  border-right-color: #DDD;
+  border-bottom-color: #C4C4C4;
+  border-left-color:#DDD;
+}
+
+.message-popup__ok-btn:hover {
+  color: #044E8C;
+
+  background: -webkit-linear-gradient(top,#FEFEFF,#F1F6FB 50%, #E7F0F7);
+  box-shadow: 0 1px #fff inset, 0 -1px #fff inset, -1px 0 #fff inset, 1px 0 #fff inset, 0 1px #95BBD7;
+
+  border-top-color: #93B8D3;
+  border-right-color: #8EB4CF;
+  border-bottom-color: #93B8D3;
+  border-left-color: #8EB4CF;
+}
+
+.message-popup__ok-btn:active {
+  background: transparent;
+  color: #fff;
+}

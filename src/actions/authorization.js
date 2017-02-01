@@ -1,9 +1,9 @@
-import { SIGN_IN } from '../constants/authorization.js';
-import { INITIALIZE_EVENTS } from '../constants/actions.js';
-import { openMessagePopup } from './popups.js';
-import { validateEvents, validateText } from '../utils/actionsInputValidator.js';
-import * as usersAPI from '../api/usersAPI.js';
-import * as eventsAPI from '../api/eventsAPI.js';
+import { SIGN_IN } from '../constants/authorization';
+import { INITIALIZE_EVENTS } from '../constants/actions';
+import { openMessagePopup } from '../components/popups/message_popup/message_popup_actions';
+import { validateEvents, validateText } from '../utils/actionsInputValidator';
+import * as usersAPI from '../api/usersAPI';
+import * as eventsAPI from '../api/eventsAPI';
 
 export function initializeEvents (events) {
   if (!validateEvents(events)) throw new Error('uncorrect events!');
@@ -23,7 +23,7 @@ export function loadEvents(id) {
     }, (error) => {
       console.error(error);
       if(error.toString() === 'Error: 404') {
-        dispatch(openMessagePopup('invalid events'));
+        dispatch(openMessagePopup({ message: 'invalid events' }));
       }
     });
   }
@@ -59,9 +59,9 @@ export function signIn (username, password) {
     .catch((error) => {
       console.error(error);
       if(error.toString() === 'Error: 404') {
-        dispatch(openMessagePopup('invalid user'));
+        dispatch(openMessagePopup({ message: 'invalid user' }));
       } else if (error.toString() === 'Error: 401') {
-        dispatch(openMessagePopup('invalid password'));
+        dispatch(openMessagePopup({ message: 'invalid password' }));
       }
     });
   }
@@ -94,7 +94,7 @@ export function signUp (username, password) {
     return usersAPI.signUp(payload)
       .then((data) => {
         if (data === '300') {
-          dispatch(openMessagePopup('This user is already exist!'));
+          dispatch(openMessagePopup({ message:'This user is already exist!' }));
         } else {
           dispatch(signOut());
           dispatch(signIn(username, password));
@@ -124,7 +124,7 @@ export function deleteUser (password, userId) {
         dispatch(initializeEvents([]));
       })
       .catch((error) => {
-        dispatch(openMessagePopup('Invalid password!'));
+        dispatch(openMessagePopup({ message:'Invalid password!' }));
         console.error(error);
       });
   }
@@ -140,7 +140,7 @@ export function editUser (editUserData, userId) {
     return usersAPI.editUser(editUserData, userId)
       .then((data) => {
         if (data === '300') {
-          dispatch(openMessagePopup('This user is already exist!'));
+          dispatch(openMessagePopup({ message: 'This user is already exist!' }));
         } else {
           dispatch(signIn(editUserData.newUsername, editUserData.newPassword));
         }

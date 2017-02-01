@@ -1,0 +1,33 @@
+.event-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+  padding: 2%;
+
+  text-align: center;
+  overflow: hidden;
+  background: #F5F3ED;
+}
+
+.event-menu__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-menu__description {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-menu-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+

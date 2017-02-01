@@ -1,0 +1,35 @@
+.popup {
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  right: 40%;
+  
+  border: 1px solid #ccc;
+  background: #fff;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 4px;
+  outline: none;
+}
+
+.overlay: {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  ackground-color: rgba(255, 255, 255, 0.75);
+  background: red;
+}
+
+.popup-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.popup_close__btn {
+  text-decoration: none;
+  color: red;
+}

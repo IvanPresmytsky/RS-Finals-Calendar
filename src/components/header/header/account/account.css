@@ -1,0 +1,20 @@
+.account {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.account-btn {
+  text-decoration: none;
+  text-shadow: 0 1px 0 #444;
+  color: #fff;
+}
+
+.account-btn:active {
+  color: rgba(0,0,0,0.6);
+  text-shadow: 2px 2px 3px rgba(255,255,255,0.1);
+}
+
+.account-btn:hover {
+  color: #93B8D3;
+}

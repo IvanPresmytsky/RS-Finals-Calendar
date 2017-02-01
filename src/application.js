@@ -3,17 +3,17 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 
-import { configureStore } from './store/configureStore.js';
+import { configureStore } from './store/configure_store.js';
 
-import App from './components/Application.js';
+import Calendar from './components/calendar.js';
 
-import './stylesheets/application.css';
+import './application.css';
 
 const store = configureStore();
 
 render (
   <Provider store={store}>
-    <App />
+    <Calendar />
   </Provider>,
   document.getElementById('root')
 );

@@ -1,0 +1,20 @@
+.notification-popup {
+  overflow: hidden;
+  text-align: center;
+
+  background: #F5F3ED;
+}
+
+.notification-popup__event-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notification-popup__event-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+

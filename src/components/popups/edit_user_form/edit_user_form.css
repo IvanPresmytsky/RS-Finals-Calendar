@@ -1,0 +1,25 @@
+.edit-user-popup {
+  background: #F5F3ED;
+}
+
+.edit-user-form {
+  text-align: center;
+}
+
+.edit-user-form p{
+  margin: 0;
+  padding: 0;
+}
+
+.edit-user-form input{
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.edit-user-form__submit {
+  display: block;
+  margin: 0 auto;
+}
+
+
+

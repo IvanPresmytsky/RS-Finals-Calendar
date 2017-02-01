@@ -1,0 +1,78 @@
+.add-event-popup {
+  box-sizing: border-box;
+  background: #F5F3ED;
+}
+
+.add-event-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  height: 100%;
+}
+
+.add-event-form p {
+  margin: 0;
+  padding: 0;
+}
+
+.add-event-form input {
+  padding: 0;
+  margin: 0 auto;
+}
+
+.add-event-form__event-name {
+  width: 90%;
+}
+
+.add-event-form__event-description {
+  width: 90%;
+  height: 100px;
+}
+
+.add-event-form__event-date {
+  margin: 0;
+}
+
+.add-event-form__date-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.add-event-form__color-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.add-event-form__time-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.add-event-form__time-block input,
+.add-event-form__date-block input,
+.add-event-form__time-block input {
+  margin: 0;
+  padding: 0;
+}
+
+.add-event-form__submit {
+  display: block;
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.block-hidden {
+  display: none;
+}
+

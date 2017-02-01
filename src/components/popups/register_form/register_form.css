@@ -1,0 +1,23 @@
+.register-popup {
+  background: #F5F3ED;
+}
+
+.register-form {
+  text-align: center;
+}
+
+.register-form p{
+  margin: 0;
+  padding: 0;
+}
+
+.register-form input{
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.register-form__submit {
+  display: block;
+  margin: 0 auto;
+}
+

@@ -50,4 +50,6 @@ module.exports = (options) => ({
 
   devtool: options.devtool,
 
+  devServer: options.devServer || null,
+
 });

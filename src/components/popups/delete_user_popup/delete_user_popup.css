@@ -1,0 +1,24 @@
+.delete-user-popup {
+  width: 100%;
+  background: #F5F3ED;
+}
+
+.delete-user-form {
+  text-align: center;
+}
+
+.delete-user-form p{
+  margin: 0;
+  padding: 0;
+}
+
+.delete-user-form input{
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.delete-user-form__submit {
+  display: block;
+  margin: 0 auto;
+}
+
