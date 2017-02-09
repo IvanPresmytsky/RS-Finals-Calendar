@@ -173,7 +173,7 @@ AddEventForm.propTypes = {
 function mapStateToProps (state) {
   return {
     userId: state.authorization.id,
-    defaultDate: state.popup_reducer.popupOptions.defaultDate,
+    defaultDate: state.popups.popupOptions.defaultDate,
     editedEvent: state.events.editedEvent,
   }
 }

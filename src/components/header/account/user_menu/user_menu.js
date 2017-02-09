@@ -1,31 +1,18 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 import './user_menu.css';
 
 export class UserMenu extends Component {
   constructor(props) {
     super(props);
-    this.onEditUserBtnClick = this.onEditUserBtnClick.bind(this);
-    this.onDeleteUserBtnClick = this.onDeleteUserBtnClick.bind(this);
     this.onSignOutClick = this.onSignOutClick.bind(this);
-  }
-
-  onEditUserBtnClick (e) {
-    console.log('edit user');
-    e.preventDefault();
-    
-    this.props.editUser();
   }
 
   onSignOutClick (e) {
     e.preventDefault();
     this.props.signOut();
-  }
-
-  onDeleteUserBtnClick (e) {
-    e.preventDefault();
-    this.props.deleteUser();
   }
 
   render () {
@@ -35,20 +22,12 @@ export class UserMenu extends Component {
 
     return (
       <div className={popupClass}>
-        <a 
-          href="#" 
-          className="user-menu__item user-menu__edit-user-btn" 
-          onClick={this.onEditUserBtnClick}
+        <Link 
+          to={{pathname: "/settings"}}
+          className="user-menu__item user-menu__settings-btn" 
         >
-          edit user
-        </a>
-        <a 
-          href="#" 
-          className="user-menu__item user-menu__delete-user-btn"
-          onClick={this.onDeleteUserBtnClick}
-        >
-          delete user
-        </a>
+          settings
+        </Link>
         <a 
           href="#" 
           className="user-menu__item user-menu__sign-out-btn"
@@ -63,8 +42,6 @@ export class UserMenu extends Component {
 
 UserMenu.propTypes = {
   expanded: React.PropTypes.bool.isRequired,
-  editUser: React.PropTypes.func.isRequired,
-  deleteUser: React.PropTypes.func.isRequired,
   signOut: React.PropTypes.func.isRequired
 }
 

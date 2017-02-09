@@ -8,7 +8,7 @@ export const initialState = {
 
 };
 
-function popups (state = initialState, action) {
+function popupsReducer (state = initialState, action) {
   switch (action.type) {
     case OPEN_POPUP:
       return {
@@ -24,4 +24,4 @@ function popups (state = initialState, action) {
   }
 }
 
-export default popups;
+export default popupsReducer;

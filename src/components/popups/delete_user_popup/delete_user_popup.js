@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { closePopup } from '../popups_actions';
-import { deleteUser } from '../../../actions/authorization.js';
+import { deleteUser } from '../../user_settings/user_settings_actions';
 
 import './delete_user_popup.css';
 

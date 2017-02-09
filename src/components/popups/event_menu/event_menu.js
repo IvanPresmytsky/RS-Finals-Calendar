@@ -75,7 +75,7 @@ EventMenu.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    event: state.popup_reducer.popupOptions.actualEvent,
+    event: state.popups.popupOptions.actualEvent,
     userId: state.authorization.id,
   };
 }

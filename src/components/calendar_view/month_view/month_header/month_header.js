@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
 
-import { weekDays } from '../../../constants/weekDays';
+import { weekDays } from '../../../../constants/weekDays';
 
 import './month_header.css';
 

@@ -1,4 +1,4 @@
-import { SIGN_IN } from '../constants/authorization.js';
+import { SIGN_IN, SIGN_OUT } from '../constants/authorization.js';
 
 export const initialState = {
   username: null,
@@ -13,6 +13,8 @@ function authorization (state = initialState, action) {
                username: action.username,
                id: action.id
              };
+    case SIGN_OUT:
+      return initialState;
     default:
       return state;
   }

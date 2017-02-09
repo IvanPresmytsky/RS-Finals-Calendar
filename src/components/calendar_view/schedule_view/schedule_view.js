@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import  SceduleEvent from './schedule_event/schedule_event';
 
-import { editEvent, deleteEvent } from '../../actions/events';
-import { openAddEventForm } from '../popups/add_event_form/add_event_form_actions';
+import { editEvent, deleteEvent } from '../../../actions/events';
+import { openAddEventForm } from '../../popups/add_event_form/add_event_form_actions';
 
-import { getActualEvents, sortEventsByTime } from '../../utils/date';
+import { getActualEvents, sortEventsByTime } from '../../../utils/date';
 
 import './schedule_view.css';
 

@@ -3,9 +3,9 @@ import { chunk } from 'lodash';
 
 import MonthWeek from './month_week/month_week.js';
 
-import { getTargetMonthDays } from '../../../utils/date';
+import { getTargetMonthDays } from '../../../../utils/date';
 
-import { weekDays } from '../../../constants/weekDays';
+import { weekDays } from '../../../../constants/weekDays';
 
 import './month_body.css';
 

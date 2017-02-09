@@ -1,11 +1,9 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import enhanceWithClickOutside from '../../../../lib/components/enhance_with_click_outside';
+import enhanceWithClickOutside from '../../../lib/components/enhance_with_click_outside';
 
-import { openEditUserForm } from '../../../popups/edit_user_form/edit_user_form_actions.js';
-import { openDeleteUserPopup } from '../../../popups/delete_user_popup/delete_user_popup_actions';
-import { signOut } from '../../../../actions/authorization';
+import { signOut } from '../../../actions/authorization';
 import UserMenu from './user_menu/user_menu';
 
 import './account.css';
@@ -40,8 +38,6 @@ export class Account extends Component {
          <a href="#" className="account-btn" data-name="account-btn" onClick={this.onAccountBtnClick}>{username}</a>
          <UserMenu 
            expanded={this.state.expanded}
-           editUser={this.props.openEditUserForm}
-           deleteUser={this.props.openDeleteUserPopup}
            signOut={this.props.signOut}
          />
        </div>
@@ -51,8 +47,6 @@ export class Account extends Component {
 
 Account.propTypes = {
   username: React.PropTypes.string.isRequired,
-  openEditUserForm: React.PropTypes.func.isRequired,
-  openDeleteUserPopup: React.PropTypes.func.isRequired,
   signOut: React.PropTypes.func.isRequired
 }
 
@@ -64,9 +58,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    openEditUserForm: bindActionCreators(openEditUserForm, dispatch),
     signOut: bindActionCreators(signOut, dispatch),
-    openDeleteUserPopup: bindActionCreators(openDeleteUserPopup, dispatch),
   };
 }
 

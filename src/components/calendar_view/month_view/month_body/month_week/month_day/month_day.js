@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
 
-import enhanceWithClickOutside from '../../../../../lib/components/enhance_with_click_outside';
+import enhanceWithClickOutside from '../../../../../../lib/components/enhance_with_click_outside';
 
 import MonthEvent from './month_event/month_event.js';
 
-import { getCurrentFormatedDate, getOriginalId } from '../../../../../utils/date';
-import { countAddEventPosition } from '../../../../../utils/position';
-import { EVENT_HEIGHT } from '../../../../../constants/sizes';
-import { NEXT_MONTH, PREVIOUS_MONTH} from '../../../../../constants/pagination.js';
+import { getCurrentFormatedDate, getOriginalId } from '../../../../../../utils/date';
+import { countAddEventPosition } from '../../../../../../utils/position';
+import { EVENT_HEIGHT } from '../../../../../../constants/sizes';
+import { NEXT_MONTH, PREVIOUS_MONTH} from '../../../../../../constants/pagination.js';
 import DayEventsDropdown from './day_events_dropdown/day_events_dropdown';
 
 import './month_day.css';

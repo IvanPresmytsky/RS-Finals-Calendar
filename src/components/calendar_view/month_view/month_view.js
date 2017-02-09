@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import MonthHeader from './month_header/month_header';
 import MonthBody from './month_body/month_body';
 
-import { openAddEventForm } from '../popups/add_event_form/add_event_form_actions';
-import { openEventMenu } from '../popups/event_menu/event_menu_actions';
-import { closePopup } from '../popups/popups_actions';
-import { addEvent, editEvent, saveEvent, deleteEvent } from '../../actions/events';
-import { changeTargetDate } from '../../actions/pagination';
+import { openAddEventForm } from '../../popups/add_event_form/add_event_form_actions';
+import { openEventMenu } from '../../popups/event_menu/event_menu_actions';
+import { closePopup } from '../../popups/popups_actions';
+import { addEvent, editEvent, saveEvent, deleteEvent } from '../../../actions/events';
+import { changeTargetDate } from '../../../actions/pagination';
 
 import './month_view.css';
 
@@ -57,7 +57,7 @@ function mapStateToProps (state) {
     userId: state.authorization.id,
     targetDate: state.pagination.targetDate,
     events: state.events.events,
-    eventMenuTargetEvent: state.popup_reducer.popupOptions.actualEvent
+    eventMenuTargetEvent: state.popups.popupOptions.actualEvent,
   };
 }
 

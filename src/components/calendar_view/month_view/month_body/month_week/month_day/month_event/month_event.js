@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { moveAt, getCoords } from '../../../../../../utils/position';
+import { moveAt, getCoords } from '../../../../../../../utils/position';
 
 import './month_event.css';
 

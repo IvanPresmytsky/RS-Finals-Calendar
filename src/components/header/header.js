@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
-import { openLoginForm } from '../../popups/login_form/login_form_actions';
-import { openRegisterForm } from '../../popups/register_form/register_form_actions';
+import { openLoginForm } from '../popups/login_form/login_form_actions';
+import { openRegisterForm } from '../popups/register_form/register_form_actions';
 
 import Account from './account/account.js';
 import './header.css';
@@ -52,7 +53,9 @@ export class Header extends Component{
     let mainNav = this.renderMainNav();
     return (
        <header className="main-header">
-         <h1 className="main-title">Calendar</h1>
+         <h1 className="main-title">
+           <Link to="/" className="main-title__home">Calendar</Link>
+         </h1>
          {mainNav}
        </header>
     );

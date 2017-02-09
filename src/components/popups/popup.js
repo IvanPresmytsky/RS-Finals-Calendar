@@ -73,8 +73,8 @@ export class Popup extends Component {
 
 function mapStateToProps(state) {
   return {
-    isOpen: state.popup_reducer.isPopupOpen,
-    popupType: state.popup_reducer.popupType,
+    isOpen: state.popups.isPopupOpen,
+    popupType: state.popups.popupType,
   };
 }
 

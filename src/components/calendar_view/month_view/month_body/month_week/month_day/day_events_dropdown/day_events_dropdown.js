@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 
 import Event from '../month_event/month_event.js';
 
-import { getOriginalId } from '../../../../../../utils/date';
+import { getOriginalId } from '../../../../../../../utils/date';
 
-import { EVENT_HEIGHT, DAY_EVENTS_POPUP_WIDTH } from '../../../../../../constants/sizes.js';
+import { EVENT_HEIGHT, DAY_EVENTS_POPUP_WIDTH } from '../../../../../../../constants/sizes.js';
 
 import './day_events_dropdown.css';
 

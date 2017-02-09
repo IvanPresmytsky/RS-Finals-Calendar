@@ -46,6 +46,7 @@ module.exports = require('./webpack_base_config.js')({
   devServer: {
     hot: true,
     port: PORT,
+    historyApiFallback: true,
     contentBase: './'
   },
 

@@ -3,42 +3,35 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import fecha from 'fecha';
 
-import Header from './header/header/header.js';
-import MonthView from './month_view/month_view';
-import NavAndTools from './header/nav_and_tools/nav_and_tools';
+import Header from './header/header';
 import Popup from './popups/popup';
-import ScheduleView from './schedule_view/schedule_view';
 
 import { sortEventsByTime, getActualEvents } from '../utils/date';
 import { openNotificationPopup } from './popups/notification_popup/notification_popup_actions.js';
 import { loadEvents, initializeUser } from '../actions/authorization';
 
-import {SET_VIEW_MONTH, SET_VIEW_SCHEDULE} from '../constants/actions';
 import * as popypTypes from './popups/popups_actions';
 
 export class Calendar extends Component {
   constructor(props) {
     super(props);
     this.getTheNearestEvent = this.getTheNearestEvent.bind(this);
+    this.timer;
   }
 
   componentDidMount () {
-    let timer = setInterval(this.getTheNearestEvent, 60000);
+    this.timer = setInterval(this.getTheNearestEvent, 60000);
     if (sessionStorage.token) {
+      console.log(typeof sessionStorage.token);
+      console.log(sessionStorage.user);
+      console.log(sessionStorage.userId);
       this.props.loadEvents(sessionStorage.userId);
       this.props.initializeUser(sessionStorage.user, sessionStorage.userId);
     }
   }
 
-  getCurrentView (view) {
-    switch (view) {
-      case SET_VIEW_MONTH:
-        return <MonthView />;
-      case SET_VIEW_SCHEDULE:
-        return <ScheduleView />;
-      default:
-        throw new Error("invalid view!");
-      }
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   getTheNearestEvent () {
@@ -62,16 +55,11 @@ export class Calendar extends Component {
     }
 
   }
-
   render () {
-    let calendarView = this.getCurrentView(this.props.view);
     return (
       <div className="container">
-         <div className="wrapper">
-           <Header />
-           <NavAndTools />
-         </div>
-         {calendarView}
+         <Header />
+         {this.props.children}
          <Popup />
          <audio id="notificationSound" src="content/sounds/notification_sound.wav"></audio>
       </div>
@@ -80,7 +68,6 @@ export class Calendar extends Component {
 };
 
 Calendar.propTypes = {
-  view: React.PropTypes.string.isRequired,
   events: React.PropTypes.array.isRequired,
   userId: React.PropTypes.string,
   openNotificationPopup: React.PropTypes.func.isRequired,
@@ -90,7 +77,6 @@ Calendar.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    view: state.views.view,
     events: state.events.events,
   };
 }
